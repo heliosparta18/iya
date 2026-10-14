@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pavilion Game Berdua 🎮 4th Anniversary</title>
+
+    <!-- Google Fonts for Luxury & Romantic Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Modular Stylesheets -->
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="game.css" />
+  </head>
+  <body>
+    <!-- Floating Petal Canvas -->
+    <canvas id="petal-canvas"></canvas>
+
+    <!-- ==========================================
+       UNIVERSAL PORTAL NAVBAR
+       ========================================== -->
+    <header class="portal-header">
+      <a href="index.html" class="portal-brand">
+        <div class="brand-crest">
+          <span>IV</span>
+        </div>
+        <div class="brand-info">
+          <span class="brand-title"><i class="fa-solid fa-gamepad"></i> Pavilion Game Berdua</span>
+          <span class="brand-sub">Main Ganti-Gantian &bull; 10.11.2021</span>
+        </div>
+      </a>
+
+      <!-- Direct Navigation Links -->
+      <ul class="portal-nav-links">
+        <li class="nav-link-item">
+          <a href="index.html"><i class="fa-solid fa-house"></i> Portal Utama</a>
+        </li>
+        <li class="nav-link-item">
+          <a href="cerita.html"><i class="fa-solid fa-book-open"></i> Kisah Kita</a>
+        </li>
+        <li class="nav-link-item">
+          <a href="surat.html"><i class="fa-solid fa-envelope"></i> Surat Rahasia</a>
+        </li>
+        <li class="nav-link-item active">
+          <a href="game.html"><i class="fa-solid fa-gamepad"></i> Main Berdua</a>
+        </li>
+        <li class="nav-link-item">
+          <a href="editor.html"><i class="fa-solid fa-images"></i> Galeri & Edit</a>
+        </li>
+      </ul>
+
+      <!-- Controls Right -->
+      <div class="portal-controls-right">
+        <button class="portal-teleport-trigger-btn" type="button" title="Pindah Portal / Dimensi">
+          <i class="fa-solid fa-door-open"></i>
+          <span>Portal Kenangan</span>
+        </button>
+
+        <button id="audio-toggle-btn" class="audio-control-btn" type="button" title="Putar / Jeda Musik">
+          <i class="fa-solid fa-volume-high"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- ==========================================
+       MAIN GAME CONTAINER
+       ========================================== -->
+    <main class="game-page-wrapper">
+      <div class="game-modal-container">
+        <!-- Royal Game Header -->
+        <div class="game-header">
+          <div class="game-header-title">
+            <i class="fa-solid fa-gamepad"></i>
+            <span>Pavilion Game Cinta &bull; Main Berdua ✨</span>
+          </div>
+        </div>
+
+        <!-- Mode Switcher Tabs -->
+        <div class="game-tabs">
+          <button class="game-tab-btn active" data-game-tab="tictactoe" type="button">
+            <i class="fa-solid fa-crown"></i> Tic-Tac-Toe Cinta
+          </button>
+          <button class="game-tab-btn" data-game-tab="lovecards" type="button">
+            <i class="fa-solid fa-heart-circle-bolt"></i> Kartu Rahasia Berdua
+          </button>
+        </div>
+
+        <!-- ==========================================
+           GAME 1: ROYAL TIC-TAC-TOE (MAHKOTA 👑 vs HATI 💖)
+           ========================================== -->
+        <div id="game-tab-tictactoe" class="game-tab-panel active">
+          <!-- Turn Indicator Banner -->
+          <div class="turn-banner" id="turn-banner">
+            <div class="turn-player-card player-1 active" id="turn-card-p1">
+              <span class="player-symbol">👑</span>
+              <div class="player-info">
+                <span class="player-label">Pemain 1</span>
+                <span class="player-name" id="name-p1">Aku</span>
+              </div>
+              <span class="player-score" id="score-p1">0</span>
+            </div>
+
+            <div class="turn-vs-badge">
+              <span class="vs-text">VS</span>
+              <span class="draw-count" id="score-draw">Seri: 0</span>
+            </div>
+
+            <div class="turn-player-card player-2" id="turn-card-p2">
+              <span class="player-symbol">💖</span>
+              <div class="player-info">
+                <span class="player-label">Pemain 2</span>
+                <span class="player-name" id="name-p2">Kamu</span>
+              </div>
+              <span class="player-score" id="score-p2">0</span>
+            </div>
+          </div>
+
+          <!-- Dynamic Status Text -->
+          <div class="game-status-line" id="game-status-line">
+            <span class="pulse-sparkle">✨</span>
+            <span id="game-status-text">Giliran <strong>Aku (👑)</strong> &mdash; Pilih kotakmu!</span>
+            <span class="pulse-sparkle">✨</span>
+          </div>
+
+          <!-- 3x3 Luxury Game Board -->
+          <div class="board-wrapper">
+            <div class="tictactoe-board" id="tictactoe-board">
+              <button class="board-cell" data-index="0" type="button" aria-label="Kotak 1"></button>
+              <button class="board-cell" data-index="1" type="button" aria-label="Kotak 2"></button>
+              <button class="board-cell" data-index="2" type="button" aria-label="Kotak 3"></button>
+              <button class="board-cell" data-index="3" type="button" aria-label="Kotak 4"></button>
+              <button class="board-cell" data-index="4" type="button" aria-label="Kotak 5"></button>
+              <button class="board-cell" data-index="5" type="button" aria-label="Kotak 6"></button>
+              <button class="board-cell" data-index="6" type="button" aria-label="Kotak 7"></button>
+              <button class="board-cell" data-index="7" type="button" aria-label="Kotak 8"></button>
+              <button class="board-cell" data-index="8" type="button" aria-label="Kotak 9"></button>
+            </div>
+            <!-- Win Line Indicator -->
+            <div class="win-strike-line hidden" id="win-strike-line"></div>
+          </div>
+
+          <!-- Winner Reward Announcement Popup Card -->
+          <div class="game-reward-card hidden" id="game-reward-card">
+            <div class="reward-crown-glow">👑✨</div>
+            <h3 class="reward-title" id="reward-winner-text">Selamat, Kamu Menang!</h3>
+            <p class="reward-subtitle">Hadiah Romantis Ronde Ini:</p>
+            <div class="reward-box">
+              <i class="fa-solid fa-gift"></i>
+              <span id="reward-content-text">Pemenang berhak minta 1 pelukan erat & ciuman hangat!</span>
+            </div>
+          </div>
+
+          <!-- Game Controls Footer -->
+          <div class="game-controls">
+            <button class="game-action-btn primary" id="reset-board-btn" type="button">
+              <i class="fa-solid fa-rotate-right"></i> Main Ronde Baru
+            </button>
+            <button class="game-action-btn secondary" id="reset-score-btn" type="button">
+              <i class="fa-solid fa-arrow-rotate-left"></i> Reset Skor
+            </button>
+          </div>
+        </div>
+
+        <!-- ==========================================
+           GAME 2: KARTU RAHASIA & TANTANGAN CINTA BERDUA
+           ========================================== -->
+        <div id="game-tab-lovecards" class="game-tab-panel">
+          <div class="lovecards-intro">
+            <div class="lovecards-turn-pill" id="card-turn-pill">
+              <i class="fa-solid fa-crown"></i>
+              <span>Giliran: <strong id="card-turn-name">Aku</strong> yang Membuka Kartu</span>
+            </div>
+            <p class="lovecards-hint">
+              Sentuh kartu emas di bawah untuk membuka pertanyaan intim, kenangan manis, atau tantangan berdua secara bergantian!
+            </p>
+          </div>
+
+          <!-- 3D Flippable Royal Gold Card -->
+          <div class="lovecard-scene" id="lovecard-scene">
+            <div class="lovecard-3d" id="lovecard-3d">
+              <!-- FRONT OF CARD (Decorated Royal Gold Crest) -->
+              <div class="lovecard-face lovecard-front">
+                <div class="card-gold-frame"></div>
+                <div class="card-front-content">
+                  <div class="front-crest">
+                    <span class="front-crest-iv">IV</span>
+                  </div>
+                  <h4 class="front-title">Kartu Rahasia Cinta</h4>
+                  <div class="front-divider">
+                    <span>✧</span>
+                    <i class="fa-solid fa-heart"></i>
+                    <span>✧</span>
+                  </div>
+                  <p class="front-tap-prompt">Sentuh Untuk Membuka ✨</p>
+                </div>
+              </div>
+
+              <!-- BACK OF CARD (Prompt / Truth / Dare Revealed) -->
+              <div class="lovecard-face lovecard-back">
+                <div class="card-gold-frame"></div>
+                <div class="card-back-content">
+                  <span class="card-category-badge" id="card-category-badge">✨ Momen Indah</span>
+                  <p class="card-prompt-text" id="card-prompt-text">
+                    "Apa hal pertama yang terlintas di pikiranmu saat pertama kali kita memutuskan untuk kembali bersama?"
+                  </p>
+                  <div class="card-prompt-note">
+                    <i class="fa-solid fa-quote-left"></i> Jawab dengan jujur & tatap mata pasanganmu!
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lovecard-controls">
+            <button class="game-action-btn primary" id="next-card-btn" type="button">
+              <span>Ganti Giliran & Kartu Baru</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Room-to-Room Bottom Portal Bar -->
+      <section class="bottom-portal-bar" style="width: 100%; max-width: 540px; margin-top: 35px;">
+        <div class="bottom-portal-title">
+          <i class="fa-solid fa-door-open"></i>
+          <span>Portal Ruang Lainnya:</span>
+        </div>
+        <div class="bottom-portal-actions">
+          <a href="surat.html" class="bottom-portal-btn">
+            <i class="fa-solid fa-envelope"></i> Surat Cinta
+          </a>
+          <a href="editor.html" class="bottom-portal-btn primary">
+            <i class="fa-solid fa-images"></i> Galeri & Edit
+          </a>
+          <a href="index.html" class="bottom-portal-btn">
+            <i class="fa-solid fa-house"></i> Portal Utama
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==========================================
+       UNIVERSAL PORTAL TELEPORTATION MODAL
+       ========================================== -->
+    <div id="portal-teleport-modal" class="portal-modal-backdrop">
+      <div class="portal-modal-content">
+        <button id="portal-modal-close-btn" class="portal-modal-close-btn" type="button" title="Tutup">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="portal-modal-header">
+          <span class="portal-modal-tag"><i class="fa-solid fa-wand-magic-sparkles"></i> Pintu Dimensi Kenangan</span>
+          <h2 class="portal-modal-title">Teleportasi ke <span>Ruang Cinta</span></h2>
+          <p class="portal-modal-subtitle">Pilih portal yang ingin kamu masuki untuk langsung berpindah ke momen tersebut.</p>
+        </div>
+
+        <div class="portal-grid-destinations">
+          <a href="index.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-house"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Beranda Hub</span>
+              <h3 class="portal-dest-title">Portal Utama</h3>
+              <p class="portal-dest-desc">Gerbang utama & ringkasan kenangan</p>
+            </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+
+          <a href="cerita.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-book-open"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">5 Chapter Slide</span>
+              <h3 class="portal-dest-title">Kisah & Perjalanan</h3>
+              <p class="portal-dest-desc">5 bab presentasi & foto bergerak</p>
+            </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+
+          <a href="surat.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Surat Rahasia</span>
+              <h3 class="portal-dest-title">Amplop Surat Cinta</h3>
+              <p class="portal-dest-desc">Kertas lipat otentik & pesan hati</p>
+            </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+
+          <a href="game.html" class="portal-destination-card current">
+            <div class="portal-dest-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Sedang Dibuka</span>
+              <h3 class="portal-dest-title">Main Berdua</h3>
+              <p class="portal-dest-desc">Tic-Tac-Toe & Kartu Rahasia</p>
+            </div>
+            <i class="fa-solid fa-check portal-dest-arrow"></i>
+          </a>
+
+          <a href="editor.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-images"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Kustomisasi</span>
+              <h3 class="portal-dest-title">Galeri & Edit Teks</h3>
+              <p class="portal-dest-desc">Ganti foto dump & teks ucapan</p>
+            </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+        </div>
+
+        <div class="portal-modal-footer">
+          <a href="index.html" class="portal-hub-return-btn">
+            <i class="fa-solid fa-house"></i> Kembali ke Portal Utama
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="common.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1717 @@
+/* ==========================================================================
+   BABAK CERITA & PERJALANAN CINTA - SLIDES STYLESHEET (CERITA.CSS)
+   ========================================================================== */
+
+/* ==========================================================================
+   2. MAIN ANNIVERSARY EXPERIENCE (HALAMAN ASLI)
+   ========================================================================== */
+.main-container {
+  height: 100%;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.main-container.hidden {
+  display: none;
+  opacity: 0;
+}
+
+/* Top Header Bar */
+.experience-header {
+  height: 64px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(12px);
+  background: rgba(26, 17, 11, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  z-index: 50;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.anniv-pill {
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(198, 139, 89, 0.18);
+  padding: 6px 14px;
+  border-radius: 30px;
+  border: 1px solid rgba(198, 139, 89, 0.38);
+}
+
+.anniv-pill i {
+  color: var(--primary-brown);
+  animation: heartPulse 1.6s infinite ease-in-out;
+}
+
+@keyframes heartPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.22); }
+}
+
+.music-tag {
+  font-size: 0.8rem;
+  color: var(--gold-accent);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.85;
+}
+
+.rotating {
+  animation: spinSlow 8s linear infinite;
+}
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-control-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.07);
+  color: #FFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s;
+}
+.icon-control-btn:hover {
+  background: rgba(198, 139, 89, 0.28);
+  border-color: var(--primary-brown);
+  transform: scale(1.06);
+}
+
+.pill-btn {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFF;
+  padding: 7px 16px;
+  border-radius: 30px;
+  font-size: 0.84rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s;
+}
+.pill-btn:hover {
+  background: rgba(198, 139, 89, 0.25);
+  border-color: var(--primary-brown);
+  transform: translateY(-1px);
+}
+.letter-pill-btn {
+  background: linear-gradient(135deg, rgba(198, 139, 89, 0.3), rgba(140, 83, 60, 0.4));
+  border-color: rgba(198, 139, 89, 0.5);
+}
+
+/* ==========================================================================
+   3. PRESENTATION SLIDES & DYNAMIC PHOTO MOTION
+   ========================================================================== */
+.slides-viewport {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 40px;
+  overflow: hidden;
+}
+
+/* Base Slide Container */
+.slide-item {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100%;
+  max-width: 1300px;
+  height: 100%;
+  padding: 24px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.75s ease, visibility 0.75s ease;
+  z-index: 1;
+}
+
+/* Active Slide: Fully visible and stable (diem) */
+.slide-item.active {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  z-index: 10;
+}
+
+.slide-item.leaving-to-next,
+.slide-item.leaving-to-prev {
+  z-index: 5;
+  pointer-events: none;
+}
+
+.slide-item.entering-from-next,
+.slide-item.entering-from-prev {
+  z-index: 10;
+}
+
+.slide-content-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 50px;
+  width: 100%;
+}
+
+/* Left Typography / Text Side */
+.slide-text-side {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  z-index: 5;
+}
+
+.tag-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(229, 169, 101, 0.2), rgba(140, 83, 60, 0.28));
+  border: 1px solid rgba(229, 169, 101, 0.45);
+  box-shadow: 0 0 16px rgba(229, 169, 101, 0.16);
+  color: #FFFDF9;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+.hero-title .title-primary {
+  font-family: var(--font-serif);
+  font-size: clamp(1.85rem, 3.2vw, 2.85rem);
+  font-weight: 700;
+  color: #FFFDF9;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  display: block;
+}
+.hero-title .title-accent {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 4.2vw, 3.6rem);
+  background: linear-gradient(135deg, #FFFDF9 10%, #F5DEB3 35%, #E5A965 65%, #C68B59 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  margin: 0;
+  line-height: 1.05;
+  filter: drop-shadow(0 0 16px rgba(229, 169, 101, 0.45));
+}
+
+.slide-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 2.9vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+.slide-title .title-primary {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: #FFFDF9;
+  letter-spacing: -0.5px;
+}
+.slide-title span:not(.title-primary) {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(2.3rem, 3.8vw, 3.2rem);
+  background: linear-gradient(135deg, #FFFDF9 10%, #F5DEB3 35%, #E5A965 65%, #C68B59 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 4px;
+  filter: drop-shadow(0 0 16px rgba(229, 169, 101, 0.45));
+}
+
+.hero-subtitle, .slide-desc {
+  font-size: 1.02rem;
+  color: rgba(255, 253, 249, 0.88);
+  line-height: 1.62;
+  max-width: 540px;
+}
+
+/* Live Love Counter Widget */
+.love-counter-box {
+  background: radial-gradient(circle at 50% 10%, rgba(42, 24, 16, 0.82), rgba(20, 11, 7, 0.9));
+  border: 1px solid rgba(229, 169, 101, 0.32);
+  border-radius: 20px;
+  padding: 16px 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 
+              0 0 30px rgba(198, 139, 89, 0.18),
+              inset 0 1px 2px rgba(255, 255, 255, 0.25);
+  max-width: 520px;
+  margin-top: 2px;
+}
+.counter-header {
+  font-size: 0.85rem;
+  color: var(--gold-accent);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.counter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.time-block {
+  background: linear-gradient(145deg, rgba(46, 26, 17, 0.85), rgba(18, 10, 6, 0.95));
+  border: 1px solid rgba(229, 169, 101, 0.28);
+  border-radius: 16px;
+  padding: 10px 6px;
+  text-align: center;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.time-val {
+  display: block;
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(1.2rem, 3.5vw, 1.65rem);
+  font-weight: 700;
+  color: #FFFDF9;
+  line-height: 1.1;
+  text-shadow: 0 0 14px rgba(229, 169, 101, 0.55);
+}
+.time-lbl {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: rgba(229, 169, 101, 0.85);
+  margin-top: 5px;
+  display: block;
+  font-weight: 600;
+}
+.counter-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 10px;
+  font-style: italic;
+  text-align: right;
+}
+
+/* Quote Cards & Typography Callouts */
+.quote-card {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: #FFFDF9;
+  border-left: 3px solid #E5A965;
+  border-top: 1px solid rgba(229, 169, 101, 0.18);
+  border-right: 1px solid rgba(229, 169, 101, 0.12);
+  border-bottom: 1px solid rgba(229, 169, 101, 0.12);
+  padding: 14px 20px;
+  background: linear-gradient(135deg, rgba(45, 26, 17, 0.65), rgba(22, 12, 7, 0.8));
+  border-radius: 0 20px 20px 0;
+  position: relative;
+  max-width: 540px;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.45), 0 0 20px rgba(198, 139, 89, 0.12);
+}
+.quote-icon {
+  color: #E5A965;
+  margin-right: 6px;
+  filter: drop-shadow(0 0 8px rgba(229, 169, 101, 0.5));
+}
+
+.typographic-callout {
+  font-family: var(--font-hand);
+  font-size: 1.75rem;
+  color: #E5A965;
+  line-height: 1.4;
+  margin-top: 8px;
+  text-shadow: 0 0 15px rgba(229, 169, 101, 0.35);
+}
+
+.memory-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.98rem;
+  color: var(--text-main);
+}
+.check-item i {
+  color: #E5A965;
+  filter: drop-shadow(0 0 6px rgba(229, 169, 101, 0.5));
+}
+
+.gratitude-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 540px;
+}
+.gratitude-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, rgba(38, 22, 15, 0.75), rgba(20, 11, 7, 0.85));
+  border: 1px solid rgba(229, 169, 101, 0.24);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  padding: 12px 18px;
+  border-radius: 18px;
+}
+.g-num {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #E5A965;
+  text-shadow: 0 0 10px rgba(229, 169, 101, 0.4);
+}
+.g-text {
+  font-size: 0.92rem;
+  color: rgba(255, 253, 249, 0.85);
+}
+
+.reasons-pill-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  max-width: 540px;
+}
+.reason-pill {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(198, 139, 89, 0.18), rgba(46, 26, 17, 0.35));
+  border: 1px solid rgba(229, 169, 101, 0.28);
+  padding: 10px 14px;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  line-height: 1.35;
+  color: #FFFDF9;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s;
+}
+.reason-pill:hover {
+  background: rgba(198, 139, 89, 0.28);
+  border-color: #E5A965;
+  box-shadow: 0 6px 18px rgba(198, 139, 89, 0.35);
+  transform: translateY(-2px);
+}
+
+.action-card-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.cta-celebrate-btn, .cta-letter-btn, .cta-game-btn {
+  padding: 12px 20px;
+  border-radius: 30px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  border: none;
+  transition: all 0.3s;
+}
+.cta-celebrate-btn {
+  background: linear-gradient(135deg, #F3C285 0%, #D8985A 50%, #9E5B3D 100%);
+  color: #1A0D07;
+  box-shadow: 0 10px 25px rgba(198, 139, 89, 0.45);
+}
+.cta-celebrate-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(198, 139, 89, 0.65);
+}
+.cta-letter-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFF;
+  border: 1px solid rgba(229, 169, 101, 0.35);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+.cta-letter-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: #E5A965;
+  transform: translateY(-3px);
+}
+.cta-game-btn {
+  background: linear-gradient(135deg, rgba(229, 169, 101, 0.28) 0%, rgba(140, 83, 60, 0.55) 100%);
+  color: #FFFDF9;
+  border: 1px solid rgba(229, 169, 101, 0.5);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 16px rgba(229, 169, 101, 0.2);
+  justify-content: center;
+  text-align: center;
+}
+.cta-game-btn:hover {
+  background: linear-gradient(135deg, rgba(229, 169, 101, 0.45) 0%, rgba(140, 83, 60, 0.75) 100%);
+  border-color: #F3C285;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(198, 139, 89, 0.5);
+}
+
+.signature-block {
+  margin-top: 14px;
+}
+.sig-note {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+}
+.sig-name {
+  font-family: var(--font-script);
+  font-size: 2.5rem;
+  color: var(--gold-accent);
+}
+
+/* ==========================================================================
+   4. CHOREOGRAPHED PHOTO COMPOSITIONS & TRANSITION DYNAMICS
+   ========================================================================== */
+.slide-photos-side {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-composition {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Individual Motion Photo Container */
+.motion-photo {
+  position: absolute;
+  translate: 0 0;
+  scale: 1;
+  opacity: 1;
+  transition: translate 0.65s var(--motion-curve), 
+              scale 0.65s var(--motion-curve), 
+              opacity 0.55s ease;
+  will-change: translate, scale, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.gallery-photo,
+.photo-frame img {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Photo Frames (Polaroids, Filmstrip) */
+.photo-frame {
+  position: relative;
+  background: #FFFDF9;
+  border-radius: 12px;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.58), 0 0 18px rgba(198, 139, 89, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  overflow: visible; /* Mencegah pin bunga dan washi tape terpotong */
+  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), 
+              box-shadow 0.45s cubic-bezier(0.25, 1, 0.5, 1), 
+              border-color 0.45s ease,
+              opacity 0.45s ease,
+              filter 0.45s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.photo-frame:hover {
+  transform: translateY(-3px) scale(1.025);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.72), 0 0 28px rgba(229, 169, 101, 0.38);
+}
+
+/* Focused / Magnified Interactive State ("Klik foto akan memperbesar") */
+.motion-photo.photo-focused {
+  z-index: 150 !important;
+}
+
+.motion-photo.photo-focused .photo-frame,
+.motion-photo.photo-focused .photo-frame:hover {
+  transform: scale(1.22) rotate(0deg) !important;
+  box-shadow: 0 35px 85px rgba(0, 0, 0, 0.9), 0 0 45px rgba(229, 169, 101, 0.6) !important;
+  border: 2px solid #E5A965 !important;
+  cursor: zoom-out !important;
+}
+
+/* Cross-Transition: Pencet lainnya -> A mengecil rapi, B membesar secara mulus */
+.photo-composition.has-focused-photo .motion-photo:not(.photo-focused) .photo-frame {
+  transform: scale(0.92) !important;
+  opacity: 0.6;
+  filter: blur(0.5px);
+}
+.photo-composition.has-focused-photo .motion-photo:not(.photo-focused) .photo-frame:hover {
+  opacity: 0.88;
+  filter: blur(0px);
+  transform: scale(0.98) !important;
+}
+
+.photo-frame.polaroid {
+  padding: 10px 10px 16px 10px;
+  width: 235px;
+}
+.photo-frame.polaroid .photo-img-wrap {
+  width: 100%;
+  height: 205px;
+  border-radius: 7px;
+  overflow: hidden;
+  background: #251610;
+}
+.photo-frame.polaroid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.photo-caption {
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  color: #2D1A10;
+  text-align: center;
+  margin-top: 8px;
+  font-weight: 700;
+  line-height: 1.25;
+  padding: 0 4px;
+}
+
+/* Film Strip & Special Layouts */
+.photo-frame.film-strip {
+  width: 230px;
+  background: #1A1A1A;
+  border: 4px solid #333;
+  padding: 10px;
+  color: #FFF;
+  border-radius: 8px;
+}
+.photo-frame.film-strip img {
+  width: 100%;
+  height: 205px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.film-label {
+  font-size: 0.8rem;
+  font-family: var(--font-sans);
+  color: #BBB;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.photo-frame.hero-polaroid,
+.photo-frame.mini-photo {
+  padding: 10px 10px 16px 10px;
+  width: 235px;
+}
+.photo-frame.hero-polaroid .photo-img-wrap,
+.photo-frame.mini-photo .photo-img-wrap {
+  width: 100%;
+  height: 205px;
+  border-radius: 7px;
+  overflow: hidden;
+  background: #251610;
+}
+
+/* Decorative Stickers & Washi Tapes */
+.pin-tape {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 20px;
+  background: linear-gradient(135deg, rgba(255, 248, 235, 0.88), rgba(229, 169, 101, 0.55));
+  border: 1px solid rgba(229, 169, 101, 0.35);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+.pin-heart {
+  position: absolute;
+  top: -12px;
+  right: 14px;
+  font-size: 1.4rem;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.45));
+}
+.pin-stamp {
+  position: absolute;
+  bottom: 12px;
+  right: 14px;
+  border: 1px dashed rgba(229, 169, 101, 0.6);
+  color: #E5A965;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  transform: rotate(-10deg);
+  background: rgba(30, 16, 10, 0.65);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Dainty Botanical Flower Accent for Main Web ("Kecil-kecil aja") */
+.pin-flower {
+  position: absolute;
+  top: -14px;
+  left: -14px;
+  width: 44px;
+  height: 44px;
+  background: url('mini-flower-accent.svg') no-repeat center / contain;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.55));
+  pointer-events: none;
+  z-index: 15;
+  transition: transform 0.45s ease;
+}
+.pin-flower.pin-bottom-right {
+  top: auto;
+  left: auto;
+  bottom: -12px;
+  right: -12px;
+  transform: rotate(180deg);
+}
+
+.viewport-flower-decor {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  background: url('mini-flower-accent.svg') no-repeat center / contain;
+  opacity: 0.65;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.45));
+  z-index: 5;
+}
+.viewport-flower-decor.top-right {
+  top: 18px;
+  right: 25px;
+  transform: rotate(35deg);
+}
+.viewport-flower-decor.bottom-left {
+  bottom: 18px;
+  left: 25px;
+  transform: rotate(-145deg);
+}
+.viewport-flower-decor.bottom-right {
+  bottom: 18px;
+  right: 25px;
+  transform: rotate(145deg);
+}
+
+/* Botanical garland framing the bottom of the main viewport */
+.viewport-bottom-garland {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 52px;
+  background-image: url('floral-garland.svg');
+  background-repeat: repeat-x;
+  background-size: 480px 52px;
+  transform: scaleY(-1);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 -4px 12px rgba(0, 0, 0, 0.5));
+}
+
+.tag-badge .tag-flower-icon {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  background: url('mini-flower-accent.svg') no-repeat center / contain;
+  vertical-align: -2px;
+  margin-right: 5px;
+}
+
+.floating-sticker {
+  position: absolute;
+  background: radial-gradient(circle at 50% 0%, rgba(55, 32, 20, 0.85), rgba(24, 14, 8, 0.92));
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(229, 169, 101, 0.4);
+  color: #FFFDF9;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45), 0 0 18px rgba(229, 169, 101, 0.18);
+  pointer-events: none;
+  z-index: 25;
+}
+.sticker-1 { top: 10px; left: 50%; transform: translateX(-50%); }
+.sticker-2 { top: 10px; left: 50%; transform: translateX(-50%); }
+.sticker-3 { top: 18px; right: 25px; }
+.sticker-4 { top: 10px; left: 50%; transform: translateX(-50%); }
+.sticker-5 { top: 18px; right: 25px; }
+
+/* --------------------------------------------------------------------------
+   PHOTO COMPOSITION PLACEMENTS (RESTING / IDLE POSITIONS = "DIEM")
+   -------------------------------------------------------------------------- */
+/* Slide 1 Composition */
+.comp-1 .photo-item-1 { top: 25px; left: 18px; transform: rotate(-3.5deg); z-index: 2; }
+.comp-1 .photo-item-2 { top: 20px; right: 18px; transform: rotate(3.5deg); z-index: 2; }
+.comp-1 .photo-item-3 { bottom: 25px; left: 155px; transform: rotate(-1deg); z-index: 4; }
+
+/* Slide 2 Composition */
+.comp-2 .photo-item-2a { top: 25px; left: 18px; transform: rotate(-3deg); z-index: 2; }
+.comp-2 .photo-item-2b { top: 20px; right: 18px; transform: rotate(3.5deg); z-index: 2; }
+.comp-2 .photo-item-2c { bottom: 25px; left: 155px; transform: rotate(-1deg); z-index: 4; }
+
+/* Slide 3 Composition (2 Photos) */
+.comp-3 .photo-item-3a { top: 40px; left: 35px; transform: rotate(-3deg); z-index: 2; }
+.comp-3 .photo-item-3b { bottom: 40px; right: 35px; transform: rotate(3deg); z-index: 3; }
+
+/* Slide 4 Composition */
+.comp-4 .photo-item-4a { top: 25px; left: 18px; transform: rotate(-3.5deg); z-index: 2; }
+.comp-4 .photo-item-4b { top: 20px; right: 18px; transform: rotate(3.5deg); z-index: 2; }
+.comp-4 .photo-item-4c { bottom: 25px; left: 155px; transform: rotate(1deg); z-index: 4; }
+
+/* Slide 5 Composition (2 Photos) */
+.comp-5 .photo-item-5a { top: 40px; left: 35px; transform: rotate(-3.5deg); z-index: 2; }
+.comp-5 .photo-item-5b { bottom: 40px; right: 35px; transform: rotate(3.5deg); z-index: 3; }
+
+/* --------------------------------------------------------------------------
+   TRANSITION MOTION DYNAMICS (DARI TEMPAT A KE B KETIKA NEXT/PREV!)
+   -------------------------------------------------------------------------- */
+
+/* LEAVING TO NEXT: Element glides away smoothly with fade */
+.slide-item.leaving-to-next .photo-composition .motion-photo:nth-child(1) {
+  translate: -80px -20px;
+  scale: 0.9;
+  opacity: 0;
+  transition: translate 0.65s var(--motion-curve), scale 0.65s var(--motion-curve), opacity 0.55s ease;
+  transition-delay: 0s;
+}
+.slide-item.leaving-to-next .photo-composition .motion-photo:nth-child(2) {
+  translate: 90px 25px;
+  scale: 0.9;
+  opacity: 0;
+  transition: translate 0.65s var(--motion-curve), scale 0.65s var(--motion-curve), opacity 0.55s ease;
+  transition-delay: 0.05s;
+}
+.slide-item.leaving-to-next .photo-composition .motion-photo:nth-child(3) {
+  translate: -35px 50px;
+  scale: 0.9;
+  opacity: 0;
+  transition: translate 0.65s var(--motion-curve), scale 0.65s var(--motion-curve), opacity 0.55s ease;
+  transition-delay: 0.1s;
+}
+.slide-item.leaving-to-next .slide-text-side {
+  translate: -35px 0;
+  opacity: 0;
+  transition: translate 0.55s var(--motion-curve), opacity 0.5s ease;
+}
+.slide-item.leaving-to-next .floating-sticker {
+  opacity: 0;
+  scale: 0.88;
+  transition: opacity 0.45s ease, scale 0.45s ease;
+}
+
+/* ENTERING FROM NEXT: Element glides seamlessly into resting position */
+.slide-item.entering-from-next .photo-composition .motion-photo:nth-child(1) {
+  animation: enterPhotoRight1 0.65s var(--motion-curve) 0s both;
+}
+.slide-item.entering-from-next .photo-composition .motion-photo:nth-child(2) {
+  animation: enterPhotoRight2 0.65s var(--motion-curve) 0.06s both;
+}
+.slide-item.entering-from-next .photo-composition .motion-photo:nth-child(3) {
+  animation: enterPhotoRight3 0.65s var(--motion-curve) 0.12s both;
+}
+.slide-item.entering-from-next .slide-text-side {
+  animation: enterTextRight 0.65s var(--motion-curve) both;
+}
+.slide-item.entering-from-next .floating-sticker {
+  animation: stickerEnter 0.6s var(--motion-curve) 0.1s both;
+}
+
+@keyframes enterPhotoRight1 {
+  from { translate: 90px -20px; scale: 0.9; opacity: 0; }
+  to { translate: 0 0; scale: 1; opacity: 1; }
+}
+@keyframes enterPhotoRight2 {
+  from { translate: 110px 25px; scale: 0.9; opacity: 0; }
+  to { translate: 0 0; scale: 1; opacity: 1; }
+}
+@keyframes enterPhotoRight3 {
+  from { translate: 70px 40px; scale: 0.9; opacity: 0; }
+  to { translate: 0 0; scale: 1; opacity: 1; }
+}
+@keyframes enterTextRight {
+  from { translate: 40px 0; opacity: 0; }
+  to { translate: 0 0; opacity: 1; }
+}
+
+/* LEAVING TO PREV: Opposite direction with graceful fade */
+.slide-item.leaving-to-prev .photo-composition .motion-photo:nth-child(1) {
+  translate: 80px 20px;
+  scale: 0.9;
+  opacity: 0;
+  transition: translate 0.65s var(--motion-curve), scale 0.65s var(--motion-curve), opacity 0.55s ease;
+  transition-delay: 0s;
+}
+.slide-item.leaving-to-prev .photo-composition .motion-photo:nth-child(2) {
+  translate: -90px -25px;
+  scale: 0.9;
+  opacity: 0;
+  transition: translate 0.65s var(--motion-curve), scale 0.65s var(--motion-curve), opacity 0.55s ease;
+  transition-delay: 0.05s;
+}
+.slide-item.leaving-to-prev .photo-composition .motion-photo:nth-child(3) {
+  translate: 35px -50px;
+  scale: 0.9;
+  opacity: 0;
+  transition: translate 0.65s var(--motion-curve), scale 0.65s var(--motion-curve), opacity 0.55s ease;
+  transition-delay: 0.1s;
+}
+.slide-item.leaving-to-prev .slide-text-side {
+  translate: 35px 0;
+  opacity: 0;
+  transition: translate 0.55s var(--motion-curve), opacity 0.5s ease;
+}
+.slide-item.leaving-to-prev .floating-sticker {
+  opacity: 0;
+  scale: 0.88;
+  transition: opacity 0.45s ease, scale 0.45s ease;
+}
+
+/* ENTERING FROM PREV: Element glides into place from left */
+.slide-item.entering-from-prev .photo-composition .motion-photo:nth-child(1) {
+  animation: enterPhotoLeft1 0.65s var(--motion-curve) 0s both;
+}
+.slide-item.entering-from-prev .photo-composition .motion-photo:nth-child(2) {
+  animation: enterPhotoLeft2 0.65s var(--motion-curve) 0.06s both;
+}
+.slide-item.entering-from-prev .photo-composition .motion-photo:nth-child(3) {
+  animation: enterPhotoLeft3 0.65s var(--motion-curve) 0.12s both;
+}
+.slide-item.entering-from-prev .slide-text-side {
+  animation: enterTextLeft 0.65s var(--motion-curve) both;
+}
+.slide-item.entering-from-prev .floating-sticker {
+  animation: stickerEnter 0.6s var(--motion-curve) 0.1s both;
+}
+
+@keyframes enterPhotoLeft1 {
+  from { translate: -90px 20px; scale: 0.9; opacity: 0; }
+  to { translate: 0 0; scale: 1; opacity: 1; }
+}
+@keyframes enterPhotoLeft2 {
+  from { translate: -110px -25px; scale: 0.9; opacity: 0; }
+  to { translate: 0 0; scale: 1; opacity: 1; }
+}
+@keyframes enterPhotoLeft3 {
+  from { translate: -70px -40px; scale: 0.9; opacity: 0; }
+  to { translate: 0 0; scale: 1; opacity: 1; }
+}
+@keyframes enterTextLeft {
+  from { translate: -40px 0; opacity: 0; }
+  to { translate: 0 0; opacity: 1; }
+}
+@keyframes stickerEnter {
+  from { opacity: 0; scale: 0.88; }
+  to { opacity: 1; scale: 1; }
+}
+
+/* ==========================================================================
+   5. PRESENTATION NAVIGATION FOOTER
+   ========================================================================== */
+.experience-footer {
+  height: 72px;
+  padding: 0 40px;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(14px);
+  background: rgba(22, 11, 19, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  z-index: 50;
+}
+
+.nav-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFF;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s;
+}
+.nav-btn:hover {
+  background: rgba(198, 139, 89, 0.28);
+  border-color: var(--primary-brown);
+  transform: translateY(-2px);
+}
+.nav-btn:active {
+  transform: scale(0.96);
+}
+
+.nav-btn.primary-nav {
+  background: linear-gradient(135deg, var(--primary-brown) 0%, var(--primary-deep) 100%);
+  border: none;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(198, 139, 89, 0.35);
+}
+.nav-btn.primary-nav:hover {
+  box-shadow: 0 10px 28px rgba(198, 139, 89, 0.55);
+}
+
+/* Slide Indicator Dots */
+.slide-dots-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.dot-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.dot-btn:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(1.2);
+}
+.dot-btn.active {
+  width: 32px;
+  border-radius: 12px;
+  background: var(--primary-brown);
+  box-shadow: 0 0 10px var(--brown-glow);
+}
+
+.footer-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.slide-counter-badge {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-family: var(--font-serif);
+  letter-spacing: 0.5px;
+}
+
+
+/* --- RESPONSIVE MEDIA QUERIES --- */
+/* ==========================================================================
+   7. RESPONSIVENESS (MOBILE & TABLET OPTIMIZATIONS)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .slides-viewport {
+    padding: 16px 20px;
+  }
+  .slide-item {
+    padding: 16px 24px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .slide-content-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    text-align: center;
+    padding-bottom: 20px;
+    margin: auto auto;
+  }
+  .slide-text-side {
+    align-items: center;
+  }
+  .hero-title, .slide-title {
+    font-size: 2.3rem;
+  }
+  .hero-title span, .slide-title span {
+    font-size: 3rem;
+  }
+  .slide-photos-side {
+    height: 340px;
+  }
+  .counter-grid {
+    gap: 8px;
+  }
+}
+
+/* SMARTPHONE & COMPACT MOBILE (PORTRAIT & LANDSCAPE) */
+@media (max-width: 768px) {
+  /* Header Compact Bar */
+  .experience-header {
+    padding: 0 12px;
+    height: 52px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .header-left {
+    gap: 8px;
+  }
+  .anniv-pill {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    gap: 5px;
+  }
+  .music-tag {
+    display: none;
+  }
+  .header-right {
+    gap: 8px;
+  }
+  .icon-control-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+  .letter-pill-btn {
+    font-size: 0.72rem;
+    padding: 5px 11px;
+    gap: 5px;
+  }
+  .edit-pill-btn {
+    display: none;
+  }
+
+  /* Viewport Container & Crucial Scroll Fix */
+  .slides-viewport {
+    padding: 0;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* CRITICAL: display: flex with margin: auto centers content gracefully when space permits, preventing awkward empty space at bottom */
+  .slide-item {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 12px 16px 18px 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    text-align: center;
+  }
+
+  .slide-content-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 440px;
+    margin: auto auto;
+    padding-bottom: 8px;
+  }
+
+  .slide-text-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  /* Typography Scale Down (Sleek, Compact & Editorial) */
+  .tag-badge {
+    font-size: 0.68rem;
+    padding: 3px 10px;
+    letter-spacing: 0.8px;
+    margin-bottom: 2px;
+  }
+
+  .hero-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+    margin-bottom: 2px;
+  }
+  .hero-title .title-primary {
+    font-family: var(--font-serif) !important;
+    font-size: clamp(1.2rem, 5.2vw, 1.6rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    color: #FFFDF9 !important;
+    -webkit-text-fill-color: #FFFDF9 !important;
+    display: block !important;
+    white-space: nowrap !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+  }
+  .hero-title .title-accent {
+    font-family: var(--font-script) !important;
+    font-size: clamp(1.85rem, 7.8vw, 2.35rem) !important;
+    line-height: 1.05 !important;
+    display: block !important;
+    margin-top: -2px;
+  }
+
+  .slide-title {
+    font-size: clamp(1.25rem, 4.8vw, 1.55rem);
+    line-height: 1.25;
+    letter-spacing: -0.3px;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .slide-title .title-primary {
+    font-family: var(--font-serif) !important;
+    color: #FFFDF9 !important;
+    -webkit-text-fill-color: #FFFDF9 !important;
+    font-size: inherit;
+    font-weight: 700;
+  }
+  .slide-title span:not(.title-primary) {
+    font-family: var(--font-script) !important;
+    font-size: clamp(1.75rem, 6.8vw, 2.15rem) !important;
+    line-height: 1;
+    margin: 0 2px;
+    vertical-align: baseline;
+  }
+
+  .hero-subtitle, .slide-desc {
+    font-size: 0.82rem;
+    line-height: 1.48;
+    color: rgba(255, 255, 255, 0.76);
+    max-width: 100%;
+    margin-bottom: 2px;
+  }
+
+  /* Realtime Love Counter Widget */
+  .love-counter-box {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 10px 10px;
+    border-radius: 16px;
+    margin: 4px 0;
+  }
+  .counter-header {
+    font-size: 0.74rem;
+    margin-bottom: 6px;
+    justify-content: center;
+  }
+  .counter-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    width: 100%;
+  }
+  .time-block {
+    min-width: 0;
+    padding: 7px 2px;
+    border-radius: 10px;
+  }
+  .time-val {
+    font-family: var(--font-sans);
+    font-variant-numeric: tabular-nums;
+    font-size: clamp(1.05rem, 4.4vw, 1.35rem);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .time-lbl {
+    font-size: 0.6rem;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+  .counter-note {
+    font-size: 0.68rem;
+    margin-top: 5px;
+    text-align: center;
+  }
+
+  /* Quote Typography Card */
+  .quote-card {
+    font-size: 0.8rem;
+    padding: 10px 14px;
+    border-radius: 14px;
+    margin-top: 4px;
+    line-height: 1.45;
+    max-width: 100%;
+  }
+  .quote-icon {
+    font-size: 0.85rem;
+  }
+
+  /* Checklist Items (Chapter 2) */
+  .memory-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    margin: 4px 0;
+    text-align: left;
+  }
+  .check-item {
+    font-size: 0.78rem;
+    gap: 8px;
+    line-height: 1.35;
+  }
+  .check-item i {
+    font-size: 0.82rem;
+    flex-shrink: 0;
+  }
+
+  .typographic-callout {
+    font-size: 1.15rem;
+    line-height: 1.35;
+    margin-top: 4px;
+  }
+
+  /* Gratitude Cards (Chapter 3) */
+  .gratitude-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    margin: 4px 0;
+  }
+  .gratitude-box {
+    padding: 8px 12px;
+    gap: 10px;
+    border-radius: 12px;
+  }
+  .g-num {
+    font-size: 0.95rem;
+  }
+  .g-text {
+    font-size: 0.76rem;
+    line-height: 1.35;
+  }
+
+  /* Reason Pills Grid (Chapter 4) */
+  .reasons-pill-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+    width: 100%;
+    margin: 4px 0;
+  }
+  .reason-pill {
+    font-size: 0.76rem;
+    padding: 6px 12px;
+    border-radius: 16px;
+    text-align: left;
+  }
+  .typographic-big {
+    font-size: 1.05rem;
+    line-height: 1.35;
+    margin-top: 4px;
+  }
+
+  /* Celebration Actions & Signatures (Chapter 5) */
+  .action-card-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    margin-top: 6px;
+  }
+  .cta-celebrate-btn, .cta-letter-btn, .cta-game-btn {
+    padding: 9px 16px;
+    font-size: 0.78rem;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  .sig-note {
+    font-size: 0.74rem;
+  }
+  .sig-name {
+    font-size: 1.7rem;
+  }
+
+  /* Photo Composition & Frames on Mobile - Well proportioned to fill the slide nicely */
+  .slide-photos-side {
+    width: 100%;
+    height: 255px;
+    margin-top: 6px;
+    position: relative;
+    overflow: visible;
+  }
+
+  .photo-frame.polaroid {
+    width: 142px;
+    padding: 6px 6px 12px 6px;
+    border-radius: 9px;
+  }
+  .photo-frame.polaroid .photo-img-wrap {
+    height: 120px;
+    border-radius: 6px;
+  }
+  .photo-caption {
+    font-size: 0.78rem;
+    margin-top: 4px;
+  }
+
+  .photo-frame.hero-polaroid {
+    width: 155px;
+    padding: 6px 6px 12px 6px;
+    border-radius: 9px;
+  }
+  .photo-frame.hero-polaroid .photo-img-wrap {
+    height: 130px;
+  }
+
+  .photo-frame.film-strip {
+    width: 135px;
+    padding: 6px;
+    border-radius: 7px;
+  }
+  .photo-frame.film-strip img {
+    height: 120px;
+  }
+  .film-label {
+    font-size: 0.72rem;
+    padding: 4px 0;
+  }
+
+  .photo-frame.hero-polaroid,
+  .photo-frame.mini-photo {
+    width: 142px;
+    padding: 6px 6px 12px 6px;
+    border-radius: 9px;
+  }
+  .photo-frame.hero-polaroid .photo-img-wrap,
+  .photo-frame.mini-photo .photo-img-wrap {
+    height: 120px;
+    border-radius: 6px;
+  }
+
+  .floating-sticker {
+    font-size: 0.7rem;
+    padding: 4px 12px;
+  }
+
+  /* Mobile Focused / Enlarge Photo State */
+  .motion-photo.photo-focused {
+    z-index: 200 !important;
+  }
+  .motion-photo.photo-focused .photo-frame,
+  .motion-photo.photo-focused .photo-frame:hover {
+    transform: scale(1.2) rotate(0deg) !important;
+    box-shadow: 0 25px 65px rgba(0, 0, 0, 0.95), 0 0 32px rgba(229, 169, 101, 0.5) !important;
+  }
+  .photo-composition.has-focused-photo .motion-photo:not(.photo-focused) .photo-frame {
+    transform: scale(0.88) !important;
+    opacity: 0.5;
+  }
+
+  .pin-flower {
+    width: 32px;
+    height: 32px;
+    top: -10px;
+    left: -10px;
+  }
+  .pin-flower.pin-bottom-right {
+    bottom: -8px;
+    right: -8px;
+  }
+  .viewport-flower-decor {
+    width: 36px;
+    height: 36px;
+  }
+  .viewport-bottom-garland {
+    height: 38px;
+    background-size: 320px 38px;
+    opacity: 0.45;
+  }
+
+  /* Restructured Mobile Resting Coordinates for Photos */
+  .comp-1 .photo-item-1 { top: 6px; left: 5%; transform: rotate(-3.5deg); z-index: 2; }
+  .comp-1 .photo-item-2 { top: 4px; right: 5%; transform: rotate(3.5deg); z-index: 2; }
+  .comp-1 .photo-item-3 { bottom: 8px; left: 50%; transform: translateX(-50%) rotate(-1deg); z-index: 4; }
+
+  .comp-2 .photo-item-2a { top: 6px; left: 5%; transform: rotate(-3deg); z-index: 2; }
+  .comp-2 .photo-item-2b { top: 4px; right: 5%; transform: rotate(3.5deg); z-index: 2; }
+  .comp-2 .photo-item-2c { bottom: 8px; left: 50%; transform: translateX(-50%) rotate(-1deg); z-index: 4; }
+
+  .comp-3 .photo-item-3a { top: 12px; left: 8%; transform: rotate(-3.5deg); z-index: 2; }
+  .comp-3 .photo-item-3b { bottom: 14px; right: 8%; transform: rotate(3.5deg); z-index: 3; }
+
+  .comp-4 .photo-item-4a { top: 6px; left: 5%; transform: rotate(-3.5deg); z-index: 2; }
+  .comp-4 .photo-item-4b { top: 4px; right: 5%; transform: rotate(3.5deg); z-index: 2; }
+  .comp-4 .photo-item-4c { bottom: 8px; left: 50%; transform: translateX(-50%) rotate(1deg); z-index: 4; }
+
+  .comp-5 .photo-item-5a { top: 12px; left: 8%; transform: rotate(-3.5deg); z-index: 2; }
+  .comp-5 .photo-item-5b { bottom: 14px; right: 8%; transform: rotate(3.5deg); z-index: 3; }
+
+  /* Footer Navigation Bar */
+  .experience-footer {
+    padding: 0 12px;
+    height: calc(52px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .nav-btn {
+    padding: 7px 11px;
+    font-size: 0.76rem;
+    gap: 4px;
+    border-radius: 20px;
+  }
+  .nav-btn span {
+    display: inline;
+    font-size: 0.74rem;
+  }
+  .slide-dots-container {
+    gap: 5px;
+  }
+  .dot-btn {
+    width: 7px;
+    height: 7px;
+  }
+  .dot-btn.active {
+    width: 18px;
+  }
+  .slide-counter-badge {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+  }
+
+  /* Gate Card Mobile Optimization */
+  .gate-card {
+    padding: 24px 18px;
+    max-width: 90%;
+    border-radius: 28px;
+  }
+  .gate-title {
+    font-size: 1.8rem;
+  }
+  .gate-desc {
+    font-size: 0.84rem;
+    margin-bottom: 16px;
+  }
+  .open-gate-btn {
+    padding: 13px 24px;
+    font-size: 0.95rem;
+    width: 100%;
+  }
+
+  .floral-cluster {
+    width: 200px;
+    height: 200px;
+  }
+  .floral-cluster.top-left { top: -15px; left: -15px; }
+  .floral-cluster.top-right { top: -15px; right: -15px; }
+  .floral-cluster.bottom-left { bottom: -15px; left: -15px; }
+  .floral-cluster.bottom-right { bottom: -15px; right: -15px; }
+
+  .floral-garland {
+    height: 55px;
+    background-size: 360px 55px;
+  }
+
+  .curtain-floral-art {
+    width: 160px;
+    background-size: 160px 380px;
+    filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.6));
+  }
+
+  .env-envelope {
+    width: 90vw;
+    height: 230px;
+    margin-top: 45px;
+  }
+  .env-flap-top {
+    top: -95px;
+    height: 105px;
+  }
+  .env-open-cta-btn {
+    padding: 13px 26px;
+    font-size: 0.92rem;
+  }
+  .env-btn-row {
+    margin-top: 18px;
+  }
+  .env-peeking-card {
+    height: 200px;
+    transform: translateY(-48px);
+  }
+  .letter-paper {
+    padding: 34px 20px;
+    max-height: 84vh;
+    outline-offset: -6px;
+  }
+  .letter-scroll-area {
+    max-height: 68vh;
+  }
+  .letter-top-controls {
+    top: 14px;
+    right: 14px;
+    gap: 8px;
+  }
+  .letter-replay-btn {
+    padding: 6px 12px;
+    font-size: 0.76rem;
+  }
+  .letter-salutation {
+    font-size: 1.35rem;
+    margin-bottom: 14px;
+  }
+  .letter-body {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    gap: 12px;
+  }
+  .letter-signature {
+    font-size: 1.8rem;
+    margin-top: 16px;
+  }
+
+  .photo-editor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Minigame Pavilion Mobile Overrides */
+  .game-modal-container {
+    max-width: 95%;
+    max-height: 88vh;
+    border-radius: 24px;
+  }
+  .game-header {
+    padding: 12px 16px;
+  }
+  .game-header-title {
+    font-size: 0.95rem;
+    gap: 8px;
+  }
+  .game-tabs {
+    padding: 10px 14px;
+    gap: 6px;
+  }
+  .game-tab-btn {
+    padding: 7px 10px;
+    font-size: 0.78rem;
+    gap: 6px;
+  }
+  .game-tab-panel {
+    padding: 14px 14px 18px 14px;
+  }
+  .turn-banner {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .turn-player-card {
+    padding: 6px 10px;
+    gap: 6px;
+    border-radius: 12px;
+  }
+  .player-symbol {
+    font-size: 1.15rem;
+  }
+  .player-name {
+    font-size: 0.8rem;
+  }
+  .player-score {
+    font-size: 1.1rem;
+  }
+  .game-status-line {
+    font-size: 0.78rem;
+    margin-bottom: 8px;
+  }
+  .board-wrapper {
+    max-width: 250px;
+    margin: 4px 0 12px 0;
+  }
+  .tictactoe-board {
+    gap: 8px;
+  }
+  .board-cell {
+    font-size: 1.8rem;
+    border-radius: 14px;
+  }
+  .game-reward-card {
+    padding: 10px 14px;
+    margin-bottom: 10px;
+  }
+  .reward-title {
+    font-size: 1rem;
+  }
+  .reward-box {
+    font-size: 0.8rem;
+    padding: 8px 10px;
+  }
+  .game-action-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+  .lovecard-scene {
+    max-width: 300px;
+    height: 215px;
+    margin: 4px 0 14px 0;
+  }
+  .lovecard-front, .lovecard-back {
+    padding: 16px 18px;
+  }
+  .front-crest {
+    width: 48px;
+    height: 48px;
+  }
+  .front-crest-iv {
+    font-size: 1.25rem;
+  }
+  .front-title {
+    font-size: 1.05rem;
+  }
+  .card-prompt-text {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    min-height: 52px;
+  }
+}

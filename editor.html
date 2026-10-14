@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Galeri Foto & Editor Teks 📸 4th Anniversary</title>
+
+    <!-- Google Fonts for Luxury & Romantic Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Modular Stylesheets -->
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="editor.css" />
+  </head>
+  <body>
+    <!-- Floating Petal Canvas -->
+    <canvas id="petal-canvas"></canvas>
+
+    <!-- ==========================================
+       UNIVERSAL PORTAL NAVBAR
+       ========================================== -->
+    <header class="portal-header">
+      <a href="index.html" class="portal-brand">
+        <div class="brand-crest">
+          <span>IV</span>
+        </div>
+        <div class="brand-info">
+          <span class="brand-title"><i class="fa-solid fa-images"></i> Galeri & Editor</span>
+          <span class="brand-sub">Kustomisasi Momen &bull; 10.11.2021</span>
+        </div>
+      </a>
+
+      <!-- Direct Navigation Links -->
+      <ul class="portal-nav-links">
+        <li class="nav-link-item">
+          <a href="index.html"><i class="fa-solid fa-house"></i> Portal Utama</a>
+        </li>
+        <li class="nav-link-item">
+          <a href="cerita.html"><i class="fa-solid fa-book-open"></i> Kisah Kita</a>
+        </li>
+        <li class="nav-link-item">
+          <a href="surat.html"><i class="fa-solid fa-envelope"></i> Surat Rahasia</a>
+        </li>
+        <li class="nav-link-item">
+          <a href="game.html"><i class="fa-solid fa-gamepad"></i> Main Berdua</a>
+        </li>
+        <li class="nav-link-item active">
+          <a href="editor.html"><i class="fa-solid fa-images"></i> Galeri & Edit</a>
+        </li>
+      </ul>
+
+      <!-- Controls Right -->
+      <div class="portal-controls-right">
+        <button class="portal-teleport-trigger-btn" type="button" title="Pindah Portal / Dimensi">
+          <i class="fa-solid fa-door-open"></i>
+          <span>Portal Kenangan</span>
+        </button>
+
+        <button id="audio-toggle-btn" class="audio-control-btn" type="button" title="Putar / Jeda Musik">
+          <i class="fa-solid fa-volume-high"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- ==========================================
+       MAIN EDITOR CONTAINER
+       ========================================== -->
+    <main class="editor-page-wrapper">
+      <div class="editor-page-card">
+        <div class="editor-header">
+          <div class="editor-header-title">
+            <i class="fa-solid fa-sliders"></i>
+            <span>Sesuaikan Teks Ucapan & Foto Dump</span>
+          </div>
+        </div>
+
+        <div class="editor-body">
+          <div class="editor-tabs">
+            <button class="tab-btn active" data-tab="tab-text" type="button">
+              <i class="fa-solid fa-pen-nib"></i> Ubah Tulisan & Ucapan
+            </button>
+            <button class="tab-btn" data-tab="tab-photos" type="button">
+              <i class="fa-solid fa-camera"></i> Ganti 13 Foto Dump
+            </button>
+          </div>
+
+          <!-- TAB 1: EDIT TEXT CONTENT -->
+          <div id="tab-text" class="tab-content active">
+            <p class="tab-tip">
+              <i class="fa-solid fa-circle-info"></i> Ubah kata-kata ucapan dan isi surat cinta di bawah ini. Semua perubahan akan tersimpan di peramban dan otomatis langsung tampil di setiap portal!
+            </p>
+
+            <div class="form-group">
+              <label for="input-slide1-title">Judul Utama Slide 1:</label>
+              <input
+                type="text"
+                id="input-slide1-title"
+                class="custom-input"
+                placeholder="Happy 4th Anniversary, Sayangku ❤️"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="input-slide1-quote">Quotes / Kalimat Romantis:</label>
+              <textarea
+                id="input-slide1-quote"
+                class="custom-textarea"
+                rows="2"
+                placeholder="Empat tahun bukan sekadar perayaan angka..."
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="input-partner-name">Nama Panggilan / Penutup:</label>
+              <input
+                type="text"
+                id="input-partner-name"
+                class="custom-input"
+                placeholder="Selalu Mencintaimu • 10.11.2021 ∞"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="input-letter">Isi Surat Cinta (Muncul di Surat Rahasia):</label>
+              <textarea
+                id="input-letter"
+                class="custom-textarea"
+                rows="5"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- TAB 2: EDIT PHOTOS -->
+          <div id="tab-photos" class="tab-content">
+            <p class="tab-tip">
+              <i class="fa-solid fa-camera"></i> Ganti foto kenangan di setiap slide dengan foto favorit kalian berdua! Masukkan URL gambar atau unggah file foto langsung dari HP/komputer:
+            </p>
+
+            <div class="photo-editor-grid">
+              <!-- Photo Item 1 -->
+              <div class="photo-edit-card">
+                <span class="p-num">Foto 1 (Slide 1 - Kembali Bersama)</span>
+                <img src="" id="preview-p1" class="edit-thumb" alt="Preview 1" />
+                <input type="file" accept="image/*" class="file-uploader" data-target="p1" />
+                <input type="text" class="custom-input url-uploader" data-target="p1" placeholder="Atau tautan URL foto..." />
+              </div>
+
+              <!-- Photo Item 2 -->
+              <div class="photo-edit-card">
+                <span class="p-num">Foto 2 (Slide 1 - Senyum)</span>
+                <img src="" id="preview-p2" class="edit-thumb" alt="Preview 2" />
+                <input type="file" accept="image/*" class="file-uploader" data-target="p2" />
+                <input type="text" class="custom-input url-uploader" data-target="p2" placeholder="Atau tautan URL foto..." />
+              </div>
+
+              <!-- Photo Item 3 -->
+              <div class="photo-edit-card">
+                <span class="p-num">Foto 3 (Slide 1 - Bunga)</span>
+                <img src="" id="preview-p3" class="edit-thumb" alt="Preview 3" />
+                <input type="file" accept="image/*" class="file-uploader" data-target="p3" />
+                <input type="text" class="custom-input url-uploader" data-target="p3" placeholder="Atau tautan URL foto..." />
+              </div>
+
+              <!-- Photo Item 4 -->
+              <div class="photo-edit-card">
+                <span class="p-num">Foto 4 (Slide 2 - Film Strip)</span>
+                <img src="" id="preview-p4" class="edit-thumb" alt="Preview 4" />
+                <input type="file" accept="image/*" class="file-uploader" data-target="p4" />
+                <input type="text" class="custom-input url-uploader" data-target="p4" placeholder="Atau tautan URL foto..." />
+              </div>
+
+              <!-- Photo Item 5 -->
+              <div class="photo-edit-card">
+                <span class="p-num">Foto 5 (Slide 2 - Foto Couple)</span>
+                <img src="" id="preview-p5" class="edit-thumb" alt="Preview 5" />
+                <input type="file" accept="image/*" class="file-uploader" data-target="p5" />
+                <input type="text" class="custom-input url-uploader" data-target="p5" placeholder="Atau tautan URL foto..." />
+              </div>
+
+              <!-- Photo Item 6 -->
+              <div class="photo-edit-card">
+                <span class="p-num">Foto 6 (Slide 2 - Cantik)</span>
+                <img src="" id="preview-p6" class="edit-thumb" alt="Preview 6" />
+                <input type="file" accept="image/*" class="file-uploader" data-target="p6" />
+                <input type="text" class="custom-input url-uploader" data-target="p6" placeholder="Atau tautan URL foto..." />
+              </div>
+
+              <!-- Photo Item 7 -->
+              <div class="photo-edit-card">
+                <span class="p-num">Foto 7 (Slide 3 - Pelukan)</span>
+                <img src="" id="preview-p7" class="edit-thumb" alt="Preview 7" />
+                <input type="file" accept="image/*" class="file-uploader" data-target="p7" />
+                <input type="text" class="custom-input url-uploader" data-target="p7" placeholder="Atau tautan URL foto..." />
+              </div>
+
+              <!-- Photo Item 8 -->
+              <div class="photo-edit-card">
+                <span class="p-num">Foto 8 (Slide 3 - Bunga Disimpan)</span>
+                <img src="" id="preview-p8" class="edit-thumb" alt="Preview 8" />
+                <input type="file" accept="image/*" class="file-uploader" data-target="p8" />
+                <input type="text" class="custom-input url-uploader" data-target="p8" placeholder="Atau tautan URL foto..." />
+              </div>
+
+              <!-- Photo Item 9 -->
+              <div class="photo-edit-card">
+                <span class="p-num">Foto 9 (Slide 4 - Favorite View)</span>
+                <img src="" id="preview-p9" class="edit-thumb" alt="Preview 9" />
+                <input type="file" accept="image/*" class="file-uploader" data-target="p9" />
+                <input type="text" class="custom-input url-uploader" data-target="p9" placeholder="Atau tautan URL foto..." />
+              </div>
+
+              <!-- Photo Item 10 -->
+              <div class="photo-edit-card">
+                <span class="p-num">Foto 10 (Slide 4 - Jalan-Jalan Berdua)</span>
+                <img src="" id="preview-p10" class="edit-thumb" alt="Preview 10" />
+                <input type="file" accept="image/*" class="file-uploader" data-target="p10" />
+                <input type="text" class="custom-input url-uploader" data-target="p10" placeholder="Atau tautan URL foto..." />
+              </div>
+
+              <!-- Photo Item 11 -->
+              <div class="photo-edit-card">
+                <span class="p-num">Foto 11 (Slide 4 - Forever)</span>
+                <img src="" id="preview-p11" class="edit-thumb" alt="Preview 11" />
+                <input type="file" accept="image/*" class="file-uploader" data-target="p11" />
+                <input type="text" class="custom-input url-uploader" data-target="p11" placeholder="Atau tautan URL foto..." />
+              </div>
+
+              <!-- Photo Item 12 -->
+              <div class="photo-edit-card">
+                <span class="p-num">Foto 12 (Slide 5 - 4 Tahun Bersama)</span>
+                <img src="" id="preview-p12" class="edit-thumb" alt="Preview 12" />
+                <input type="file" accept="image/*" class="file-uploader" data-target="p12" />
+                <input type="text" class="custom-input url-uploader" data-target="p12" placeholder="Atau tautan URL foto..." />
+              </div>
+
+              <!-- Photo Item 13 -->
+              <div class="photo-edit-card">
+                <span class="p-num">Foto 13 (Slide 5 - Menua Bersama)</span>
+                <img src="" id="preview-p13" class="edit-thumb" alt="Preview 13" />
+                <input type="file" accept="image/*" class="file-uploader" data-target="p13" />
+                <input type="text" class="custom-input url-uploader" data-target="p13" placeholder="Atau tautan URL foto..." />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-footer">
+          <button id="reset-defaults-btn" class="reset-btn" type="button">
+            <i class="fa-solid fa-rotate-left"></i> Reset ke Awal
+          </button>
+          <button id="save-editor-btn" class="save-btn" type="button">
+            <i class="fa-solid fa-check"></i> Simpan Perubahan
+          </button>
+        </div>
+      </div>
+
+      <!-- Room-to-Room Bottom Portal Bar -->
+      <section class="bottom-portal-bar" style="width: 100%; margin-top: 35px;">
+        <div class="bottom-portal-title">
+          <i class="fa-solid fa-door-open"></i>
+          <span>Lihat Hasil di Portal Lainnya:</span>
+        </div>
+        <div class="bottom-portal-actions">
+          <a href="cerita.html" class="bottom-portal-btn primary">
+            <i class="fa-solid fa-book-open"></i> Buka Cerita Kita
+          </a>
+          <a href="surat.html" class="bottom-portal-btn">
+            <i class="fa-solid fa-envelope"></i> Buka Surat Cinta
+          </a>
+          <a href="index.html" class="bottom-portal-btn">
+            <i class="fa-solid fa-house"></i> Portal Utama
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==========================================
+       UNIVERSAL PORTAL TELEPORTATION MODAL
+       ========================================== -->
+    <div id="portal-teleport-modal" class="portal-modal-backdrop">
+      <div class="portal-modal-content">
+        <button id="portal-modal-close-btn" class="portal-modal-close-btn" type="button" title="Tutup">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="portal-modal-header">
+          <span class="portal-modal-tag"><i class="fa-solid fa-wand-magic-sparkles"></i> Pintu Dimensi Kenangan</span>
+          <h2 class="portal-modal-title">Teleportasi ke <span>Ruang Cinta</span></h2>
+          <p class="portal-modal-subtitle">Pilih portal yang ingin kamu masuki untuk langsung berpindah ke momen tersebut.</p>
+        </div>
+
+        <div class="portal-grid-destinations">
+          <a href="index.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-house"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Beranda Hub</span>
+              <h3 class="portal-dest-title">Portal Utama</h3>
+              <p class="portal-dest-desc">Gerbang utama & ringkasan kenangan</p>
+            </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+
+          <a href="cerita.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-book-open"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">5 Chapter Slide</span>
+              <h3 class="portal-dest-title">Kisah & Perjalanan</h3>
+              <p class="portal-dest-desc">5 bab presentasi & foto bergerak</p>
+            </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+
+          <a href="surat.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Surat Rahasia</span>
+              <h3 class="portal-dest-title">Amplop Surat Cinta</h3>
+              <p class="portal-dest-desc">Kertas lipat otentik & pesan hati</p>
+            </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+
+          <a href="game.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Pavilion Game</span>
+              <h3 class="portal-dest-title">Main Berdua</h3>
+              <p class="portal-dest-desc">Tic-Tac-Toe & Kartu Rahasia</p>
+            </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+
+          <a href="editor.html" class="portal-destination-card current">
+            <div class="portal-dest-icon"><i class="fa-solid fa-images"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Sedang Dibuka</span>
+              <h3 class="portal-dest-title">Galeri & Edit Teks</h3>
+              <p class="portal-dest-desc">Ganti foto dump & teks ucapan</p>
+            </div>
+            <i class="fa-solid fa-check portal-dest-arrow"></i>
+          </a>
+        </div>
+
+        <div class="portal-modal-footer">
+          <a href="index.html" class="portal-hub-return-btn">
+            <i class="fa-solid fa-house"></i> Kembali ke Portal Utama
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="common.js"></script>
+    <script src="editor.js"></script>
+  </body>
+</html>

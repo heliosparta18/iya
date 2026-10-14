@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Happy 4th Anniversary</title>
+    <title>Happy 4th Anniversary 🤎 Portal Kenangan</title>
 
     <!-- Google Fonts for Luxury & Romantic Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -19,17 +19,18 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
 
-    <link rel="stylesheet" href="style.css" />
+    <!-- Modular Stylesheets -->
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="portal.css" />
   </head>
   <body>
-    <!-- Canvas for Floating Flower Petals and Sparkles -->
+    <!-- Floating Petal & Starlight Canvas -->
     <canvas id="petal-canvas"></canvas>
 
     <!-- ==========================================
-       GERBANG BUNGA (ENTRANCE / LOCK SCREEN)
+       GERBANG BUNGA PEMBUKA (LOCK / WELCOME SCREEN)
        ========================================== -->
     <section id="gate-screen" class="gate-wrapper">
-      <!-- Full-screen Floral Background & Garlands -->
       <div class="floral-frame">
         <div class="floral-cluster top-left"></div>
         <div class="floral-cluster top-right"></div>
@@ -39,1276 +40,325 @@
         <div class="floral-garland garland-bottom"></div>
       </div>
 
-      <!-- Soft Curved Intermediate Card ("Kotak yang tidak runcing") -->
-      <div class="gate-card gate-opening-card luxury-gate-card">
-        <div class="card-glow"></div>
-        <div class="card-golden-frame"></div>
-        <div class="card-inner">
-          <div class="royal-crest">
-            <span class="crest-sparkle left">✧</span>
-            <span class="crest-monogram">IV</span>
-            <span class="crest-sparkle right">✧</span>
-          </div>
-          <div class="gate-badge luxury-badge">
-            <i class="fa-solid fa-crown"></i> 4 Years of Forever
-          </div>
+      <div class="gate-card luxury-gate-card">
+        <div class="royal-crest">
+          <span class="crest-sparkle left">✧</span>
+          <span class="crest-monogram">IV</span>
+          <span class="crest-sparkle right">✧</span>
+        </div>
+        <div class="luxury-badge">
+          <i class="fa-solid fa-crown"></i> 4 Years of Forever
+        </div>
 
-          <h1 class="gate-title luxury-shimmer-title">Gerbang Kenangan</h1>
+        <h1 class="luxury-shimmer-title">Gerbang Kenangan</h1>
 
-          <div class="luxury-divider">
-            <span class="divider-dot"></span>
-            <span class="divider-line"></span>
-            <i class="fa-solid fa-heart divider-heart"></i>
-            <span class="divider-line"></span>
-            <span class="divider-dot"></span>
-          </div>
+        <div class="luxury-divider">
+          <span class="divider-dot"></span>
+          <span class="divider-line"></span>
+          <i class="fa-solid fa-heart divider-heart"></i>
+          <span class="divider-line"></span>
+          <span class="divider-dot"></span>
+        </div>
 
-          <p class="gate-desc">
-            Di balik gerbang bunga ini, tersimpan sejuta detik perjalanan cinta
-            kita yang penuh kehangatan.
-          </p>
+        <p class="gate-desc">
+          Di balik gerbang bunga ini, tersimpan sejuta detik perjalanan cinta kita yang penuh kehangatan sejak 10 November 2021.
+        </p>
 
-          <button
-            id="open-gate-btn"
-            class="open-gate-btn luxury-btn"
-            type="button"
-          >
-            <span class="btn-shimmer-sweep"></span>
-            <span>Buka Pintu Kenangan</span>
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
-          </button>
+        <button id="open-gate-btn" class="luxury-btn" type="button">
+          <span>Buka Pintu Kenangan</span>
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </button>
 
-          <div class="gate-hint-note">
-            <i class="fa-solid fa-heart"></i> Klik tombol di atas untuk membuka
-            perayaan & memutar lagu Magnolia
-          </div>
+        <div class="gate-hint-note">
+          <i class="fa-solid fa-heart"></i> Klik tombol di atas untuk membuka perayaan & memutar lagu Magnolia
         </div>
       </div>
     </section>
 
     <!-- ==========================================
-       TRANSISI GERBANG BUNGA (FLORAL CURTAIN TRANSITION)
+       FLORAL CURTAIN TRANSITION OVERLAY
        ========================================== -->
     <div id="flower-gate-curtain" class="flower-curtain-overlay">
       <div class="curtain-panel curtain-left">
-        <div class="curtain-gold-trim trim-left"></div>
         <div class="curtain-floral-art floral-art-left"></div>
       </div>
       <div class="curtain-panel curtain-right">
-        <div class="curtain-gold-trim trim-right"></div>
         <div class="curtain-floral-art floral-art-right"></div>
       </div>
-      <div class="curtain-seam-flare"></div>
-      <div class="curtain-light-bloom"></div>
     </div>
 
     <!-- ==========================================
-       MAIN ANNIVERSARY EXPERIENCE (HALAMAN ASLI)
+       UNIVERSAL PORTAL NAVBAR
        ========================================== -->
-    <main id="main-experience" class="main-container hidden">
-      <!-- Top Navigation / Ambient Controls Bar -->
-      <header class="experience-header">
-        <div class="header-left">
-          <span class="anniv-pill">
-            <i class="fa-solid fa-heart"></i> 4th Anniversary &bull; 10.11.2021
-          </span>
-          <span class="music-tag">
-            <i class="fa-solid fa-compact-disc rotating"></i>
-            <span id="current-song-title">Magnolia</span>
-          </span>
+    <header class="portal-header">
+      <a href="index.html" class="portal-brand">
+        <div class="brand-crest">
+          <span>IV</span>
         </div>
-
-        <div class="header-right">
-          <!-- Background Music Control -->
-          <button
-            id="music-toggle"
-            class="icon-control-btn"
-            title="Putar / Jeda Musik"
-          >
-            <i class="fa-solid fa-volume-high"></i>
-          </button>
-
-          <!-- Edit Typography & Photo Toggle -->
-          <button
-            id="open-edit-modal"
-            class="pill-btn edit-pill-btn"
-            title="Ubah Teks & Foto"
-          >
-            <i class="fa-solid fa-pen-nib"></i> Edit Teks & Foto
-          </button>
-
-          <!-- Love Letter Quick Button -->
-          <button
-            id="open-letter-btn"
-            class="pill-btn letter-pill-btn"
-            title="Baca Surat Cinta"
-          >
-            <i class="fa-solid fa-envelope-open-text"></i> Surat Buat Kamu
-          </button>
+        <div class="brand-info">
+          <span class="brand-title"><i class="fa-solid fa-heart"></i> Happy 4th <span class="brand-anniv-text">Anniversary</span></span>
+          <span class="brand-sub">10.11.2021 &bull; Forever & Always</span>
         </div>
-      </header>
+      </a>
 
-      <!-- Presentation Viewport -->
-      <section class="slides-viewport">
-        <div class="viewport-flower-decor top-right"></div>
-        <div class="viewport-flower-decor bottom-left"></div>
-        <div class="viewport-flower-decor bottom-right"></div>
-        <div class="viewport-bottom-garland"></div>
+      <!-- Direct Navigation Links -->
+      <ul class="portal-nav-links">
+        <li class="nav-link-item active">
+          <a href="index.html"><i class="fa-solid fa-house"></i> Portal Utama</a>
+        </li>
+        <li class="nav-link-item">
+          <a href="cerita.html"><i class="fa-solid fa-book-open"></i> Kisah Kita</a>
+        </li>
+        <li class="nav-link-item">
+          <a href="surat.html"><i class="fa-solid fa-envelope"></i> Surat Rahasia</a>
+        </li>
+        <li class="nav-link-item">
+          <a href="game.html"><i class="fa-solid fa-gamepad"></i> Main Berdua</a>
+        </li>
+        <li class="nav-link-item">
+          <a href="editor.html"><i class="fa-solid fa-images"></i> Galeri & Edit</a>
+        </li>
+      </ul>
 
-        <!-- SLIDE 1: PERAYAAN 4 TAHUN & HITUNGAN CINTA -->
-        <article class="slide-item active" data-slide="1">
-          <div class="slide-content-grid layout-hero">
-            <!-- Text & Typography Column -->
-            <div class="slide-text-side">
-              <div class="tag-badge">
-                <span class="tag-flower-icon"></span> Chapter 1: Milad Cinta
-                Keempat
-              </div>
-              <h1 class="hero-title editable-text" data-key="slide1_title">
-                Happy 4th Anniversary, <span>Sayangku</span>
-              </h1>
-              <p class="hero-subtitle editable-text" data-key="slide1_subtitle">
-                Empat tahun berjalan beriringan, berbagi tawa, melewati suka
-                duka, sampai putus nyambung lagi, dan saling menyayangi tanpa
-                henti sejak 10 November 2021.
-              </p>
+      <!-- Controls Right -->
+      <div class="portal-controls-right">
+        <button class="portal-teleport-trigger-btn" type="button" title="Pindah Portal / Dimensi">
+          <i class="fa-solid fa-door-open"></i>
+          <span>Portal Kenangan</span>
+        </button>
 
-              <!-- Realtime Love Counter Widget -->
-              <div class="love-counter-box">
-                <div class="counter-header">
-                  <i class="fa-regular fa-clock"></i> Kita telah bersama selama:
-                </div>
-                <div class="counter-grid">
-                  <div class="time-block">
-                    <span id="days-val" class="time-val">1460</span>
-                    <span class="time-lbl">Hari</span>
-                  </div>
-                  <div class="time-block">
-                    <span id="hours-val" class="time-val">00</span>
-                    <span class="time-lbl">Jam</span>
-                  </div>
-                  <div class="time-block">
-                    <span id="minutes-val" class="time-val">00</span>
-                    <span class="time-lbl">Menit</span>
-                  </div>
-                  <div class="time-block">
-                    <span id="seconds-val" class="time-val">00</span>
-                    <span class="time-lbl">Detik</span>
-                  </div>
-                </div>
-                <div class="counter-note">
-                  dan setiap detiknya begitu berharga bersamamu.
-                </div>
-              </div>
+        <button id="audio-toggle-btn" class="audio-control-btn" type="button" title="Putar / Jeda Musik">
+          <i class="fa-solid fa-volume-high"></i>
+        </button>
+      </div>
+    </header>
 
-              <!-- Quote Typography Box -->
-              <div class="quote-card editable-text" data-key="slide1_quote">
-                <i class="fa-solid fa-quote-left quote-icon"></i>
-                "Empat tahun bukan sekadar perayaan angka, tapi bukti ribuan
-                alasan kenapa aku selalu memilihmu setiap hari."
-              </div>
+    <!-- ==========================================
+       GRAND PORTAL HUB MAIN WRAPPER
+       ========================================== -->
+    <main id="portal-hub-content" class="portal-main-wrapper" style="display: none;">
+      <!-- Hero Presentation -->
+      <section class="portal-hero-section">
+        <div class="portal-hero-badge">
+          <i class="fa-solid fa-crown"></i> Sanctuary Cinta 4 Tahun
+        </div>
+        <h1 class="portal-hero-title">
+          Portal Kenangan <span>Cinta Kita</span>
+        </h1>
+        <p class="portal-hero-desc">
+          Setiap portal di bawah ini menyimpan babak terindah dalam hubungan kita. Pilih portal yang ingin kamu jelajahi bersama hari ini:
+        </p>
+
+        <!-- Live Love Counter Widget Preview -->
+        <div class="hub-counter-box">
+          <div class="hub-counter-header">
+            <i class="fa-regular fa-clock"></i> Telah Bersama Menjalin Kasih:
+          </div>
+          <div class="hub-counter-grid">
+            <div class="hub-time-block">
+              <span id="hub-days" class="hub-time-val">1460</span>
+              <span class="hub-time-lbl">Hari</span>
             </div>
-
-            <!-- Choreographed Moving Photos Side (Position A -> B on Next) -->
-            <div class="slide-photos-side">
-              <div class="photo-composition comp-1">
-                <!-- Moving Photo 1 -->
-                <div class="motion-photo photo-item-1" data-motion-index="1">
-                  <div class="photo-frame polaroid">
-                    <div class="photo-img-wrap">
-                      <img
-                        src="foto3.jpg"
-                        alt="Moment 1"
-                        class="gallery-photo"
-                        data-photo-id="p1"
-                        decoding="async"
-                        loading="eager"
-                      />
-                    </div>
-                    <div class="photo-caption editable-text" data-key="p1_cap">
-                      Hari pertama kita Balikan &bull; 20.07.2026
-                    </div>
-                    <span class="pin-tape"></span>
-                    <span class="pin-flower"></span>
-                  </div>
-                </div>
-
-                <!-- Moving Photo 2 -->
-                <div class="motion-photo photo-item-2" data-motion-index="2">
-                  <div class="photo-frame polaroid rotate-r">
-                    <div class="photo-img-wrap">
-                      <img
-                        src="foto2.jpg"
-                        alt="Moment 2"
-                        class="gallery-photo"
-                        data-photo-id="p2"
-                        decoding="async"
-                        loading="eager"
-                      />
-                    </div>
-                    <div class="photo-caption editable-text" data-key="p2_cap">
-                      Senyum favoritku di dunia ✨
-                    </div>
-                    <span class="pin-heart">🤎</span>
-                  </div>
-                </div>
-
-                <!-- Moving Photo 3 -->
-                <div class="motion-photo photo-item-3" data-motion-index="3">
-                  <div class="photo-frame polaroid rotate-l">
-                    <div class="photo-img-wrap">
-                      <img
-                        src="foto4.jpg"
-                        alt="Moment 3"
-                        class="gallery-photo"
-                        data-photo-id="p3"
-                        decoding="async"
-                        loading="eager"
-                      />
-                    </div>
-                    <div class="photo-caption editable-text" data-key="p3_cap">
-                      Bunga Handmade Pertama dari Aku Buat Kamu
-                    </div>
-                    <span class="pin-stamp">YEAR 4</span>
-                    <span class="pin-flower pin-bottom-right"></span>
-                  </div>
-                </div>
-
-                <!-- Decorative Floating Typography Sticker -->
-                <div class="floating-sticker sticker-1">
-                  <span class="sticker-glow">4 Tahun Bersemi 🍂</span>
-                </div>
-              </div>
+            <div class="hub-time-block">
+              <span id="hub-hours" class="hub-time-val">00</span>
+              <span class="hub-time-lbl">Jam</span>
+            </div>
+            <div class="hub-time-block">
+              <span id="hub-minutes" class="hub-time-val">00</span>
+              <span class="hub-time-lbl">Menit</span>
+            </div>
+            <div class="hub-time-block">
+              <span id="hub-seconds" class="hub-time-val">00</span>
+              <span class="hub-time-lbl">Detik</span>
             </div>
           </div>
-        </article>
-
-        <!-- SLIDE 2: PERJALANAN & RIBUAN TAWA KITA -->
-        <article class="slide-item" data-slide="2">
-          <div class="slide-content-grid layout-story">
-            <div class="slide-text-side">
-              <div class="tag-badge">
-                <span class="tag-flower-icon"></span> Chapter 2: Petualangan &
-                Kenangan
-              </div>
-              <h2 class="slide-title editable-text" data-key="slide2_title">
-                Jejak Langkah & <span>Ribuan Tawa</span>
-              </h2>
-              <p class="slide-desc editable-text" data-key="slide2_desc">
-                Dari jalan-jalan tanpa tujuan, obrolan larut malam sampai
-                ketiduran, tempat favorit yang selalu kita kunjungi, hingga momen
-                konyol yang cuma kita berdua yang paham.
-              </p>
-
-              <div class="memory-checklist">
-                <div class="check-item">
-                  <i class="fa-solid fa-circle-check"></i>
-                  <span class="editable-text" data-key="check_1"
-                    >Ribuan foto dump di galeri HP kita</span
-                  >
-                </div>
-                <div class="check-item">
-                  <i class="fa-solid fa-circle-check"></i>
-                  <span class="editable-text" data-key="check_2"
-                    >Lagu-lagu yang selalu mengingatkanku padamu</span
-                  >
-                </div>
-                <div class="check-item">
-                  <i class="fa-solid fa-circle-check"></i>
-                  <span class="editable-text" data-key="check_3"
-                    >Tempat-tempat yang jadi saksi perjalanan 4 tahun</span
-                  >
-                </div>
-              </div>
-
-              <div
-                class="typographic-callout editable-text"
-                data-key="slide2_callout"
-              >
-                "Bersamamu, tempat biasa pun selalu berubah jadi tempat terindah
-                di dunia."
-              </div>
-            </div>
-
-            <div class="slide-photos-side">
-              <div class="photo-composition comp-2">
-                <div class="motion-photo photo-item-2a" data-motion-index="1">
-                  <div class="photo-frame film-strip">
-                    <img
-                      src="foto6.jpg"
-                      alt="Moment 4"
-                      class="gallery-photo"
-                      data-photo-id="p4"
-                      decoding="async"
-                      loading="eager"
-                    />
-                    <div class="film-label editable-text" data-key="p4_cap">
-                      sama aja cuma ini versiku
-                    </div>
-                  </div>
-                </div>
-
-                <div class="motion-photo photo-item-2b" data-motion-index="2">
-                  <div class="photo-frame polaroid tilted">
-                    <div class="photo-img-wrap">
-                      <img
-                        src="foto5.jpg"
-                        alt="Moment 5"
-                        class="gallery-photo"
-                        data-photo-id="p5"
-                        decoding="async"
-                        loading="eager"
-                      />
-                    </div>
-                    <div class="photo-caption editable-text" data-key="p5_cap">
-                      Foto couple pertama
-                    </div>
-                    <span class="pin-flower"></span>
-                  </div>
-                </div>
-
-                <div class="motion-photo photo-item-2c" data-motion-index="3">
-                  <div class="photo-frame polaroid tilted-opp">
-                    <div class="photo-img-wrap">
-                      <img
-                        src="foto1.jpg"
-                        alt="Moment 6"
-                        class="gallery-photo"
-                        data-photo-id="p6"
-                        decoding="async"
-                        loading="eager"
-                      />
-                    </div>
-                    <div class="photo-caption editable-text" data-key="p6_cap">
-                      Foto yang selalu aku liat, cantiknya kamu di mataku
-                    </div>
-                    <span class="pin-flower pin-bottom-right"></span>
-                  </div>
-                </div>
-
-                <div class="floating-sticker sticker-2">
-                  <span>Favorite Human ☕</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- SLIDE 3: MELEWATI BADAI & SALING MENJAGA -->
-        <article class="slide-item" data-slide="3">
-          <div class="slide-content-grid layout-deep">
-            <div class="slide-text-side">
-              <div class="tag-badge">
-                <span class="tag-flower-icon"></span> Chapter 3: Kedewasaan &
-                Kesetiaan
-              </div>
-              <h2 class="slide-title editable-text" data-key="slide3_title">
-                Tumbuh Bersama & <span>Saling Menguatkan</span>
-              </h2>
-              <p class="slide-desc editable-text" data-key="slide3_desc">
-                4 tahun tentu bukan hanya tentang pelangi. Ada hari-hari berat,
-                perbedaan pandangan, dan rasa lelah. Tapi hal yang paling aku
-                syukuri adalah: kita tidak pernah saling melepas tangan alias putus nyambung
-              </p>
-
-              <div class="gratitude-cards">
-                <div class="gratitude-box">
-                  <div class="g-num">01</div>
-                  <div class="g-text editable-text" data-key="g1_text">
-                    Terima kasih untuk kesabaranmu yang tak pernah habis
-                    menghadapiku.
-                  </div>
-                </div>
-                <div class="gratitude-box">
-                  <div class="g-num">02</div>
-                  <div class="g-text editable-text" data-key="g2_text">
-                    Terima kasih telah menjadi rumah ternyaman tempatku pulang.
-                  </div>
-                </div>
-                <div class="gratitude-box">
-                  <div class="g-num">03</div>
-                  <div class="g-text editable-text" data-key="g3_text">
-                    Terima kasih selalu percaya pada mimpi dan masa depan kita.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="slide-photos-side">
-              <div class="photo-composition comp-3">
-                <div class="motion-photo photo-item-3a" data-motion-index="1">
-                  <div class="photo-frame polaroid rotate-l">
-                    <div class="photo-img-wrap">
-                      <img
-                        src="foto10.jpg"
-                        alt="Moment 7"
-                        class="gallery-photo"
-                        data-photo-id="p7"
-                        decoding="async"
-                        loading="eager"
-                      />
-                    </div>
-                    <div
-                      class="photo-caption editable-text"
-                      data-key="p7_cap"
-                    >
-                      Di setiap pelukanmu, aku selalu merasa aman ✨
-                    </div>
-                    <span class="pin-tape"></span>
-                  </div>
-                </div>
-
-                <div class="motion-photo photo-item-3b" data-motion-index="2">
-                  <div class="photo-frame polaroid">
-                    <div class="photo-img-wrap">
-                      <img
-                        src="foto7.jpg"
-                        alt="Moment 8"
-                        class="gallery-photo"
-                        data-photo-id="p8"
-                        decoding="async"
-                        loading="eager"
-                      />
-                    </div>
-                    <div class="photo-caption editable-text" data-key="p8_cap">
-                      Bunga handmade pertamamu buat aku, yang selalu aku simpan
-                    </div>
-                    <span class="pin-flower"></span>
-                  </div>
-                </div>
-
-                <div class="floating-sticker sticker-3">
-                  <span>Stronger Than Ever 🤎</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- SLIDE 4: HAL-HAL KECIL YANG BIKIN JATUH CINTA -->
-        <article class="slide-item" data-slide="4">
-          <div class="slide-content-grid layout-reasons">
-            <div class="slide-text-side">
-              <div class="tag-badge">
-                <span class="tag-flower-icon"></span> Chapter 4: Little Things I
-                Adore
-              </div>
-              <h2 class="slide-title editable-text" data-key="slide4_title">
-                Hal-Hal Kecil yang <span>Bikin Jatuh Cinta</span>
-              </h2>
-              <p class="slide-desc editable-text" data-key="slide4_desc">
-                Cinta tidak melulu tentang pesta besar. Cinta adalah
-                detail-detail kecil yang kamu lakukan setiap hari tanpa kamu
-                sadari:
-              </p>
-
-              <div class="reasons-pill-grid">
-                <div class="reason-pill editable-text" data-key="r1">
-                  Caramu tertawa lepas saat bersamaku
-                </div>
-                <div class="reason-pill editable-text" data-key="r2">
-                  Inget ga makanan favoritku apa?
-                </div>
-                <div class="reason-pill editable-text" data-key="r3">
-                  Chat manis "atii' sayanggg"
-                </div>
-                <div class="reason-pill editable-text" data-key="r4">
-                  Tatapan matamu yang selalu teduh, lucu sampe' pengen ku gigit
-                </div>
-                <div class="reason-pill editable-text" data-key="r5">
-                  Playlist kita yang diputar berulang
-                </div>
-                <div class="reason-pill editable-text" data-key="r6">
-                  Doa-doa baik yang selalu kamu kasih buat aku ga nyerah sama keaadaan
-                </div>
-              </div>
-
-              <div
-                class="typographic-big editable-text"
-                data-key="slide4_quote"
-              >
-                "Kamu adalah hal terbaik yang pernah terjadi dalam hidupku."
-              </div>
-            </div>
-
-            <div class="slide-photos-side">
-              <div class="photo-composition comp-4">
-                <div class="motion-photo photo-item-4a" data-motion-index="1">
-                  <div class="photo-frame polaroid tilt-1">
-                    <div class="photo-img-wrap">
-                      <img
-                        src="foto9.jpg"
-                        alt="Moment 9"
-                        class="gallery-photo"
-                        data-photo-id="p9"
-                        decoding="async"
-                        loading="eager"
-                      />
-                    </div>
-                    <div class="photo-caption editable-text" data-key="p9_cap">
-                      my fineshytt
-                    </div>
-                    <span class="pin-flower"></span>
-                  </div>
-                </div>
-
-                <div class="motion-photo photo-item-4b" data-motion-index="2">
-                  <div class="photo-frame polaroid tilt-2">
-                    <div class="photo-img-wrap">
-                      <img
-                        src="foto8.jpg"
-                        alt="Moment 10"
-                        class="gallery-photo"
-                        data-photo-id="p10"
-                        decoding="async"
-                        loading="eager"
-                      />
-                    </div>
-                    <div class="photo-caption editable-text" data-key="p10_cap">
-                      Pengen healing lagi bareng kamu, tapi sama sama sibuk
-                    </div>
-                  </div>
-                </div>
-
-                <div class="motion-photo photo-item-4c" data-motion-index="3">
-                  <div class="photo-frame polaroid tilt-3">
-                    <div class="photo-img-wrap">
-                      <img
-                        src="foto11.jpg"
-                        alt="Moment 11"
-                        class="gallery-photo"
-                        data-photo-id="p11"
-                        decoding="async"
-                        loading="eager"
-                      />
-                    </div>
-                    <div class="photo-caption editable-text" data-key="p11_cap">
-                      i wish we could stay like this forever, just you and me
-                    </div>
-                    <span class="pin-flower pin-bottom-right"></span>
-                  </div>
-                </div>
-
-                <div class="floating-sticker sticker-4">
-                  <span>My Endless Love 💍</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- SLIDE 5: JANJI MASA DEPAN & CELEBRATION CLIMAX -->
-        <article class="slide-item" data-slide="5">
-          <div class="slide-content-grid layout-future">
-            <div class="slide-text-side">
-              <div class="tag-badge">
-                <span class="tag-flower-icon"></span> Chapter 5: Menuju
-                Selamanya
-              </div>
-              <h2 class="slide-title editable-text" data-key="slide5_title">
-                Untuk Hari Ini, Esok, & <span>Selamanya</span>
-              </h2>
-              <p class="slide-desc editable-text" data-key="slide5_desc">
-                Empat tahun ini adalah bab terbaik dalam hidupku, dan aku tidak
-                sabar untuk menuliskan bab-bab berikutnya bersamamu hingga kita
-                menua bersama.
-              </p>
-
-              <div class="action-card-group">
-                <button id="trigger-confetti-btn" class="cta-celebrate-btn">
-                  <i class="fa-solid fa-champagne-glasses"></i> Rayakan 4 Tahun
-                  Ini! (Confetti)
-                </button>
-                <button id="read-love-letter-btn2" class="cta-letter-btn">
-                  <i class="fa-solid fa-envelope-open-text"></i> Buka Surat
-                  Rahasia Untukmu
-                </button>
-                <button id="open-minigame-btn" class="cta-game-btn">
-                  <i class="fa-solid fa-gamepad"></i> <span>Main Berdua (Mini Game)</span>
-                </button>
-              </div>
-
-              <div class="signature-block">
-                <div class="sig-note">Dengan segenap cintaku,</div>
-                <div class="sig-name editable-text" data-key="partner_name">
-                  Selalu Mencintaimu &bull; 10.11.2021 &infin;
-                </div>
-              </div>
-            </div>
-
-            <div class="slide-photos-side">
-              <div class="photo-composition comp-5">
-                <!-- Moving Photo 12 -->
-                <div class="motion-photo photo-item-5a" data-motion-index="1">
-                  <div class="photo-frame polaroid rotate-l">
-                    <div class="photo-img-wrap">
-                      <img
-                        src="foto10.jpg"
-                        alt="Moment 12"
-                        class="gallery-photo"
-                        data-photo-id="p12"
-                        decoding="async"
-                        loading="eager"
-                      />
-                    </div>
-                    <div class="photo-caption editable-text" data-key="p12_cap">
-                      4 Tahun Bersama, Menuju Selamanya 🤎
-                    </div>
-                    <span class="pin-flower"></span>
-                  </div>
-                </div>
-
-                <!-- Moving Photo 13 -->
-                <div class="motion-photo photo-item-5b" data-motion-index="2">
-                  <div class="photo-frame polaroid rotate-r">
-                    <div class="photo-img-wrap">
-                      <img
-                        src="foto13.jpg"
-                        alt="Moment 13"
-                        class="gallery-photo"
-                        data-photo-id="p13"
-                        decoding="async"
-                        loading="eager"
-                      />
-                    </div>
-                    <div class="photo-caption editable-text" data-key="p13_cap">
-                      Menua Bersama Kamu &bull; Forever & Always ✨
-                    </div>
-                    <span class="pin-flower pin-bottom-right"></span>
-                  </div>
-                </div>
-
-                <div class="floating-sticker sticker-5">
-                  <span>Forever & Always 🍂</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
+        </div>
       </section>
 
-      <!-- Bottom Controls & Presentation Navigation -->
-      <footer class="experience-footer">
-        <div class="footer-nav-left">
-          <button
-            id="prev-slide-btn"
-            class="nav-btn"
-            title="Slide Sebelumnya (Arrow Left)"
-          >
-            <i class="fa-solid fa-arrow-left"></i>
-            <span>Sebelumnya</span>
-          </button>
-        </div>
+      <!-- 4 Grand Destination Portals -->
+      <section class="grand-portals-grid">
+        <!-- PORTAL 1: CERITA & PERJALANAN KITA -->
+        <a href="cerita.html" class="grand-portal-card">
+          <div class="portal-card-top">
+            <span class="portal-badge-pill">
+              <i class="fa-solid fa-book-bookmark"></i> Portal 1
+            </span>
+            <div class="portal-card-icon">
+              <i class="fa-solid fa-photo-film"></i>
+            </div>
+          </div>
+          <div class="portal-card-middle">
+            <h2>Kisah & Perjalanan Kita</h2>
+            <p>
+              Jelajahi 5 chapter slide perjalanan cinta, foto polaroid bergerak dinamis (Posisi A &rarr; B), dan hitungan waktu cinta kita.
+            </p>
+          </div>
+          <div class="portal-card-bottom">
+            <span class="portal-action-cta">Masuk Portal Cerita</span>
+            <div class="portal-enter-bubble">
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+        </a>
 
-        <!-- Slide Indicator Dots -->
-        <div class="slide-dots-container">
-          <button class="dot-btn active" data-goto="1" title="Slide 1"></button>
-          <button class="dot-btn" data-goto="2" title="Slide 2"></button>
-          <button class="dot-btn" data-goto="3" title="Slide 3"></button>
-          <button class="dot-btn" data-goto="4" title="Slide 4"></button>
-          <button class="dot-btn" data-goto="5" title="Slide 5"></button>
-        </div>
+        <!-- PORTAL 2: SURAT CINTA RAHASIA -->
+        <a href="surat.html" class="grand-portal-card">
+          <div class="portal-card-top">
+            <span class="portal-badge-pill">
+              <i class="fa-solid fa-envelope-open-text"></i> Portal 2
+            </span>
+            <div class="portal-card-icon">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+          </div>
+          <div class="portal-card-middle">
+            <h2>Surat Cinta Rahasia</h2>
+            <p>
+              Buka amplop vintage bersegel lilin karamel hangat, bentangkan kertas cinta 3 lipatan otentik, dan baca isi hati terdalamku.
+            </p>
+          </div>
+          <div class="portal-card-bottom">
+            <span class="portal-action-cta">Buka Surat Rahasia</span>
+            <div class="portal-enter-bubble">
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+        </a>
 
-        <div class="footer-nav-right">
-          <span class="slide-counter-badge" id="slide-number-display"
-            >Slide 1 / 5</span
-          >
-          <button
-            id="next-slide-btn"
-            class="nav-btn primary-nav"
-            title="Slide Selanjutnya (Arrow Right / Space)"
-          >
-            <span>Lanjut Cerita</span>
-            <i class="fa-solid fa-arrow-right"></i>
-          </button>
-        </div>
+        <!-- PORTAL 3: MAIN BERDUA (MINI GAME) -->
+        <a href="game.html" class="grand-portal-card">
+          <div class="portal-card-top">
+            <span class="portal-badge-pill">
+              <i class="fa-solid fa-gamepad"></i> Portal 3
+            </span>
+            <div class="portal-card-icon">
+              <i class="fa-solid fa-heart-circle-bolt"></i>
+            </div>
+          </div>
+          <div class="portal-card-middle">
+            <h2>Pavilion Game Berdua</h2>
+            <p>
+              Bermain Tic-Tac-Toe romantis Mahkota 👑 vs Hati 💖 dan buka kartu rahasia berdua berisi pertanyaan intim serta tantangan manis.
+            </p>
+          </div>
+          <div class="portal-card-bottom">
+            <span class="portal-action-cta">Mulai Main Berdua</span>
+            <div class="portal-enter-bubble">
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+        </a>
+
+        <!-- PORTAL 4: GALERI & EDITOR KENANGAN -->
+        <a href="editor.html" class="grand-portal-card">
+          <div class="portal-card-top">
+            <span class="portal-badge-pill">
+              <i class="fa-solid fa-sliders"></i> Portal 4
+            </span>
+            <div class="portal-card-icon">
+              <i class="fa-solid fa-images"></i>
+            </div>
+          </div>
+          <div class="portal-card-middle">
+            <h2>Galeri Foto & Editor</h2>
+            <p>
+              Lihat galeri 13 foto dump kenangan, ganti foto dump langsung dari HP/Laptop, serta sesuaikan teks ucapan dan isi surat cinta.
+            </p>
+          </div>
+          <div class="portal-card-bottom">
+            <span class="portal-action-cta">Buka Galeri & Edit</span>
+            <div class="portal-enter-bubble">
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+        </a>
+      </section>
+
+      <!-- Footer Romantic Note -->
+      <footer class="portal-footer-note">
+        <i class="fa-solid fa-heart"></i>
+        <span>10 November 2021 &mdash; 10 November 2026 &infin; Selamanya Bersamamu</span>
       </footer>
     </main>
 
     <!-- ==========================================
-       MODAL: SURAT CINTA SPESIAL (LOVE LETTER)
+       UNIVERSAL PORTAL TELEPORTATION MODAL
        ========================================== -->
-    <div id="letter-modal" class="modal-backdrop hidden">
-      <!-- Floating Action Bar (Tutup & Lipat Kembali) -->
-      <div class="letter-top-controls">
-        <button
-          class="letter-replay-btn"
-          id="refold-letter-btn"
-          type="button"
-          title="Lipat Kembali ke Amplop"
-        >
-          <i class="fa-solid fa-envelope"></i>
-          <span>Lipat ke Amplop ✉️</span>
-        </button>
-        <button
-          class="modal-close-btn"
-          id="close-letter-btn"
-          type="button"
-          title="Tutup Surat"
-        >
+    <div id="portal-teleport-modal" class="portal-modal-backdrop">
+      <div class="portal-modal-content">
+        <button id="portal-modal-close-btn" class="portal-modal-close-btn" type="button" title="Tutup">
           <i class="fa-solid fa-xmark"></i>
         </button>
-      </div>
 
-      <!-- Main Scene Wrapper (Always centered) -->
-      <div class="letter-modal-scene" id="letter-modal-scene">
-        <!-- ========================================================
-           VIEW 1: ENVELOPE + PEEKING PAPER + BUTTON DIRECTLY BELOW
-           ======================================================== -->
-        <div class="envelope-preview-card" id="envelope-preview-card">
-          <!-- Physical Envelope Unit -->
-          <div
-            class="env-envelope"
-            id="env-envelope"
-            title="Klik untuk membuka surat"
-          >
-            <!-- Back Interior & Gold Pattern Lining -->
-            <div class="env-back">
-              <div class="env-lining"></div>
-            </div>
-
-            <!-- Open Triangular Flap Pointing Upward -->
-            <div class="env-flap-top">
-              <div class="env-flap-inner"></div>
-              <div class="env-seal-badge">
-                <span class="seal-icon">🤎</span>
-                <span class="seal-num">IV</span>
-              </div>
-            </div>
-
-            <!-- PEEKING LETTER CARD (Hanya bagian atas yang mengintip!) -->
-            <div class="env-peeking-card" id="env-peeking-card">
-              <div class="peeking-card-inner">
-                <div class="peeking-badge">
-                  <span class="peeking-spark">✧</span>
-                  <span class="peeking-text">Surat Rahasia Untukmu</span>
-                  <span class="peeking-spark">✧</span>
-                </div>
-                <div class="peeking-subtitle">
-                  10.11.2021 &bull; 4 Years of Forever
-                </div>
-                <div class="peeking-crease-mark"></div>
-              </div>
-            </div>
-
-            <!-- Front Pocket (Covers the bottom of the peeking card) -->
-            <div class="env-front-pocket">
-              <div class="pocket-inner-shadow"></div>
-            </div>
-          </div>
-
-          <!-- BUTTON DIRECTLY BENEATH THE ENVELOPE (Tepat di bawah amplop) -->
-          <div class="env-btn-row">
-            <button class="env-open-cta-btn" id="open-paper-btn" type="button">
-              <span class="btn-shimmer-sweep"></span>
-              <i class="fa-solid fa-envelope-open-text"></i>
-              <span>Buka Surat Rahasia</span>
-              <i class="fa-solid fa-wand-magic-sparkles"></i>
-            </button>
-            <div class="env-btn-hint">
-              <i class="fa-solid fa-heart"></i> Klik tombol atau surat untuk
-              membuka & membentangkan kertas
-            </div>
-          </div>
+        <div class="portal-modal-header">
+          <span class="portal-modal-tag"><i class="fa-solid fa-wand-magic-sparkles"></i> Pintu Dimensi Kenangan</span>
+          <h2 class="portal-modal-title">Teleportasi ke <span>Ruang Cinta</span></h2>
+          <p class="portal-modal-subtitle">Pilih portal yang ingin kamu masuki untuk langsung berpindah ke momen tersebut.</p>
         </div>
 
-        <!-- ========================================================
-           VIEW 2: FULL UNFOLDED READING VIEW
-           ======================================================== -->
-        <div class="letter-reading-card hidden" id="letter-reading-card">
-          <!-- Lembar Kertas Lengkap (The Full Letter Paper) -->
-          <div class="letter-paper" id="letter-paper">
-            <!-- Real Paper Fold Crease Shadows -->
-            <div class="paper-crease crease-line-1"></div>
-            <div class="paper-crease crease-line-2"></div>
-
-            <div class="letter-wax-seal">
-              <i class="fa-solid fa-heart"></i>
+        <div class="portal-grid-destinations">
+          <a href="index.html" class="portal-destination-card current">
+            <div class="portal-dest-icon"><i class="fa-solid fa-house"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Sedang Dibuka</span>
+              <h3 class="portal-dest-title">Portal Utama (Hub)</h3>
+              <p class="portal-dest-desc">Beranda gerbang & navigasi utama</p>
             </div>
+            <i class="fa-solid fa-check portal-dest-arrow"></i>
+          </a>
 
-            <div class="letter-scroll-area">
-              <div class="letter-date">
-                10 November 2021 &mdash; 10 November 2026
-              </div>
-              <h2 class="letter-salutation">Untuk Kesayanganku Tersayang,</h2>
-              <div
-                class="letter-body editable-text"
-                data-key="love_letter_content"
-              >
-                <p>
-                  Selamat ulang tahun hubungan kita yang ke-4 tahun, sayang.
-                  Melihat ke belakang, rasanya baru kemarin kita canggung
-                  mengobrol di awal pertemuan. Tapi hari ini, kamu sudah menjadi
-                  bagian paling penting dan rumah paling tenang dalam hidupku.
-                </p>
-                <p>
-                  Terima kasih telah bertahan di saat sulit, terima kasih sudah
-                  selalu tersenyum bahkan di hari-hari yang melelahkan, dan
-                  terima kasih telah mencintaiku dengan tulus dan tanpa syarat.
-                </p>
-                <p>
-                  Aku berjanji akan terus belajar menjadi pasangan yang lebih
-                  baik, menjaga hatimu, mendengarkan ceritamu, dan menggenggam
-                  tanganmu di setiap perjalanan yang akan kita tempuh di masa
-                  depan.
-                </p>
-                <p class="letter-closing">
-                  I love you today, tomorrow, and forever and always. ❤️
-                </p>
-              </div>
-              <div class="letter-signature">
-                <span>Your Forever Person</span>
-              </div>
+          <a href="cerita.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-book-open"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">5 Chapter Slide</span>
+              <h3 class="portal-dest-title">Kisah & Perjalanan</h3>
+              <p class="portal-dest-desc">Slide presentasi & foto bergerak</p>
             </div>
-          </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+
+          <a href="surat.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Surat Rahasia</span>
+              <h3 class="portal-dest-title">Amplop Surat Cinta</h3>
+              <p class="portal-dest-desc">Kertas lipat otentik & pesan hati</p>
+            </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+
+          <a href="game.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Pavilion Game</span>
+              <h3 class="portal-dest-title">Main Berdua</h3>
+              <p class="portal-dest-desc">Tic-Tac-Toe & Kartu Rahasia</p>
+            </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+
+          <a href="editor.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-images"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Kustomisasi</span>
+              <h3 class="portal-dest-title">Galeri & Edit Teks</h3>
+              <p class="portal-dest-desc">Ganti foto dump & teks ucapan</p>
+            </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+        </div>
+
+        <div class="portal-modal-footer">
+          <a href="index.html" class="portal-hub-return-btn">
+            <i class="fa-solid fa-house"></i> Kembali ke Gerbang Utama
+          </a>
         </div>
       </div>
     </div>
 
-    <!-- ==========================================
-       MODAL: ROMANTIC COUPLE'S MINIGAME PAVILION
-       ========================================== -->
-    <div id="minigame-modal" class="modal-backdrop hidden">
-      <div class="game-modal-container">
-        <!-- Royal Game Header -->
-        <div class="game-header">
-          <div class="game-header-title">
-            <i class="fa-solid fa-gamepad"></i>
-            <span>Pavilion Game Cinta &bull; Main Berdua ✨</span>
-          </div>
-          <button class="modal-close-btn" id="close-game-btn" type="button" title="Tutup Game">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-
-        <!-- Mode Switcher Tabs -->
-        <div class="game-tabs">
-          <button class="game-tab-btn active" data-game-tab="tictactoe" type="button">
-            <i class="fa-solid fa-crown"></i> Tic-Tac-Toe Cinta
-          </button>
-          <button class="game-tab-btn" data-game-tab="lovecards" type="button">
-            <i class="fa-solid fa-heart-circle-bolt"></i> Kartu Rahasia Berdua
-          </button>
-        </div>
-
-        <!-- ==========================================
-           GAME 1: ROYAL TIC-TAC-TOE (MAHKOTA 👑 vs HATI 💖)
-           ========================================== -->
-        <div id="game-tab-tictactoe" class="game-tab-panel active">
-          <!-- Turn Indicator Banner -->
-          <div class="turn-banner" id="turn-banner">
-            <div class="turn-player-card player-1 active" id="turn-card-p1">
-              <span class="player-symbol">👑</span>
-              <div class="player-info">
-                <span class="player-label">Pemain 1</span>
-                <span class="player-name" id="name-p1">Aku</span>
-              </div>
-              <span class="player-score" id="score-p1">0</span>
-            </div>
-
-            <div class="turn-vs-badge">
-              <span class="vs-text">VS</span>
-              <span class="draw-count" id="score-draw">Seri: 0</span>
-            </div>
-
-            <div class="turn-player-card player-2" id="turn-card-p2">
-              <span class="player-symbol">💖</span>
-              <div class="player-info">
-                <span class="player-label">Pemain 2</span>
-                <span class="player-name" id="name-p2">Kamu</span>
-              </div>
-              <span class="player-score" id="score-p2">0</span>
-            </div>
-          </div>
-
-          <!-- Dynamic Status Text -->
-          <div class="game-status-line" id="game-status-line">
-            <span class="pulse-sparkle">✨</span>
-            <span id="game-status-text">Giliran <strong>Aku (👑)</strong> - Pilih kotakmu!</span>
-            <span class="pulse-sparkle">✨</span>
-          </div>
-
-          <!-- 3x3 Luxury Game Board -->
-          <div class="board-wrapper">
-            <div class="tictactoe-board" id="tictactoe-board">
-              <button class="board-cell" data-index="0" type="button" aria-label="Kotak 1"></button>
-              <button class="board-cell" data-index="1" type="button" aria-label="Kotak 2"></button>
-              <button class="board-cell" data-index="2" type="button" aria-label="Kotak 3"></button>
-              <button class="board-cell" data-index="3" type="button" aria-label="Kotak 4"></button>
-              <button class="board-cell" data-index="4" type="button" aria-label="Kotak 5"></button>
-              <button class="board-cell" data-index="5" type="button" aria-label="Kotak 6"></button>
-              <button class="board-cell" data-index="6" type="button" aria-label="Kotak 7"></button>
-              <button class="board-cell" data-index="7" type="button" aria-label="Kotak 8"></button>
-              <button class="board-cell" data-index="8" type="button" aria-label="Kotak 9"></button>
-            </div>
-            <!-- Win Line Indicator -->
-            <div class="win-strike-line hidden" id="win-strike-line"></div>
-          </div>
-
-          <!-- Winner Reward Announcement Popup Card -->
-          <div class="game-reward-card hidden" id="game-reward-card">
-            <div class="reward-crown-glow">👑✨</div>
-            <h3 class="reward-title" id="reward-winner-text">Selamat, Kamu Menang!</h3>
-            <p class="reward-subtitle">Hadiah Romantis Ronde Ini:</p>
-            <div class="reward-box">
-              <i class="fa-solid fa-gift"></i>
-              <span id="reward-content-text">Pemenang berhak minta 1 pelukan erat & ciuman hangat!</span>
-            </div>
-          </div>
-
-          <!-- Game Controls Footer -->
-          <div class="game-controls">
-            <button class="game-action-btn primary" id="reset-board-btn" type="button">
-              <i class="fa-solid fa-rotate-right"></i> Main Ronde Baru
-            </button>
-            <button class="game-action-btn secondary" id="reset-score-btn" type="button">
-              <i class="fa-solid fa-arrow-rotate-left"></i> Reset Skor
-            </button>
-          </div>
-        </div>
-
-        <!-- ==========================================
-           GAME 2: KARTU RAHASIA & TANTANGAN CINTA BERDUA
-           ========================================== -->
-        <div id="game-tab-lovecards" class="game-tab-panel">
-          <div class="lovecards-intro">
-            <div class="lovecards-turn-pill" id="card-turn-pill">
-              <i class="fa-solid fa-crown"></i>
-              <span>Giliran: <strong id="card-turn-name">Aku</strong> yang Membuka Kartu</span>
-            </div>
-            <p class="lovecards-hint">
-              Sentuh kartu emas di bawah untuk membuka pertanyaan intim, kenangan manis, atau tantangan berdua secara bergantian!
-            </p>
-          </div>
-
-          <!-- 3D Flippable Royal Gold Card -->
-          <div class="lovecard-scene" id="lovecard-scene">
-            <div class="lovecard-3d" id="lovecard-3d">
-              <!-- FRONT OF CARD (Decorated Royal Gold Crest) -->
-              <div class="lovecard-face lovecard-front">
-                <div class="card-gold-frame"></div>
-                <div class="card-front-content">
-                  <div class="front-crest">
-                    <span class="front-crest-iv">IV</span>
-                  </div>
-                  <h4 class="front-title">Kartu Rahasia Cinta</h4>
-                  <div class="front-divider">
-                    <span>✧</span>
-                    <i class="fa-solid fa-heart"></i>
-                    <span>✧</span>
-                  </div>
-                  <p class="front-tap-prompt">Sentuh Untuk Membuka ✨</p>
-                </div>
-              </div>
-
-              <!-- BACK OF CARD (Prompt / Truth / Dare Revealed) -->
-              <div class="lovecard-face lovecard-back">
-                <div class="card-gold-frame"></div>
-                <div class="card-back-content">
-                  <span class="card-category-badge" id="card-category-badge">✨ Momen Indah</span>
-                  <p class="card-prompt-text" id="card-prompt-text">
-                    "Apa hal pertama yang terlintas di pikiranmu saat pertama kali kita balikan di 20.07.2026?"
-                  </p>
-                  <div class="card-prompt-note">
-                    <i class="fa-solid fa-quote-left"></i> Jawab dengan jujur & tatap mata pasanganmu!
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="lovecard-controls">
-            <button class="game-action-btn primary" id="next-card-btn" type="button">
-              <span>Ganti Giliran & Kartu Baru</span>
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==========================================
-       MODAL: EDITOR TEKS & FOTO DUMP
-       ========================================== -->
-    <div id="edit-modal" class="modal-backdrop hidden">
-      <div class="editor-modal-container">
-        <div class="editor-header">
-          <div class="editor-header-title">
-            <i class="fa-solid fa-sliders"></i> Sesuaikan Teks & Foto Dump
-          </div>
-          <button class="modal-close-btn" id="close-edit-btn">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-
-        <div class="editor-body">
-          <div class="editor-tabs">
-            <button class="tab-btn active" data-tab="tab-text">
-              Ubah Tulisan & Ucapan
-            </button>
-            <button class="tab-btn" data-tab="tab-photos">
-              Ganti Foto Dump
-            </button>
-          </div>
-
-          <!-- TAB 1: EDIT TEXT CONTENT -->
-          <div id="tab-text" class="tab-content active">
-            <p class="tab-tip">
-              <i class="fa-solid fa-circle-info"></i> Kamu juga bisa langsung
-              mengklik teks di layar mana pun untuk mengeditnya secara live! Di
-              bawah ini adalah ringkasan teks utama:
-            </p>
-
-            <div class="form-group">
-              <label for="input-slide1-title">Judul Utama Slide 1:</label>
-              <input
-                type="text"
-                id="input-slide1-title"
-                class="custom-input"
-                placeholder="Happy 4th Anniversary, Sayangku ❤️"
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="input-slide1-quote">Quotes / Kalimat Romantis:</label>
-              <textarea
-                id="input-slide1-quote"
-                class="custom-textarea"
-                rows="2"
-                placeholder="Empat tahun bukan sekadar perayaan angka..."
-              ></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="input-partner-name">Nama Panggilan / Penutup:</label>
-              <input
-                type="text"
-                id="input-partner-name"
-                class="custom-input"
-                placeholder="Selalu Mencintaimu • 10.11.2021 ∞"
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="input-letter"
-                >Isi Surat Cinta (Muncul di Surat Rahasia):</label
-              >
-              <textarea
-                id="input-letter"
-                class="custom-textarea"
-                rows="4"
-              ></textarea>
-            </div>
-          </div>
-
-          <!-- TAB 2: EDIT PHOTOS -->
-          <div id="tab-photos" class="tab-content">
-            <p class="tab-tip">
-              <i class="fa-solid fa-camera"></i> Ganti foto di slide dengan foto
-              kenangan kalian berdua! Masukkan URL foto atau upload langsung
-              dari HP/komputer:
-            </p>
-
-            <div class="photo-editor-grid">
-              <!-- Photo Item 1 -->
-              <div class="photo-edit-card">
-                <span class="p-num">Foto 1 (Slide 1)</span>
-                <img
-                  src=""
-                  id="preview-p1"
-                  class="edit-thumb"
-                  alt="Preview 1"
-                />
-                <input
-                  type="file"
-                  accept="image/*"
-                  class="file-uploader"
-                  data-target="p1"
-                />
-                <input
-                  type="text"
-                  class="custom-input url-uploader"
-                  data-target="p1"
-                  placeholder="Atau tempel Link Foto..."
-                />
-              </div>
-
-              <!-- Photo Item 2 -->
-              <div class="photo-edit-card">
-                <span class="p-num">Foto 2 (Slide 1)</span>
-                <img
-                  src=""
-                  id="preview-p2"
-                  class="edit-thumb"
-                  alt="Preview 2"
-                />
-                <input
-                  type="file"
-                  accept="image/*"
-                  class="file-uploader"
-                  data-target="p2"
-                />
-                <input
-                  type="text"
-                  class="custom-input url-uploader"
-                  data-target="p2"
-                  placeholder="Atau tempel Link Foto..."
-                />
-              </div>
-
-              <!-- Photo Item 3 -->
-              <div class="photo-edit-card">
-                <span class="p-num">Foto 3 (Slide 1)</span>
-                <img
-                  src=""
-                  id="preview-p3"
-                  class="edit-thumb"
-                  alt="Preview 3"
-                />
-                <input
-                  type="file"
-                  accept="image/*"
-                  class="file-uploader"
-                  data-target="p3"
-                />
-                <input
-                  type="text"
-                  class="custom-input url-uploader"
-                  data-target="p3"
-                  placeholder="Atau tempel Link Foto..."
-                />
-              </div>
-
-              <!-- Photo Item 4 -->
-              <div class="photo-edit-card">
-                <span class="p-num">Foto 4 (Slide 2)</span>
-                <img
-                  src=""
-                  id="preview-p4"
-                  class="edit-thumb"
-                  alt="Preview 4"
-                />
-                <input
-                  type="file"
-                  accept="image/*"
-                  class="file-uploader"
-                  data-target="p4"
-                />
-                <input
-                  type="text"
-                  class="custom-input url-uploader"
-                  data-target="p4"
-                  placeholder="Atau tempel Link Foto..."
-                />
-              </div>
-
-              <!-- Photo Item 5 -->
-              <div class="photo-edit-card">
-                <span class="p-num">Foto 5 (Slide 2)</span>
-                <img
-                  src=""
-                  id="preview-p5"
-                  class="edit-thumb"
-                  alt="Preview 5"
-                />
-                <input
-                  type="file"
-                  accept="image/*"
-                  class="file-uploader"
-                  data-target="p5"
-                />
-                <input
-                  type="text"
-                  class="custom-input url-uploader"
-                  data-target="p5"
-                  placeholder="Atau tempel Link Foto..."
-                />
-              </div>
-
-              <!-- Photo Item 6 -->
-              <div class="photo-edit-card">
-                <span class="p-num">Foto 6 (Slide 2)</span>
-                <img src="" id="preview-p6" class="edit-thumb" alt="Preview 6" />
-                <input type="file" accept="image/*" class="file-uploader" data-target="p6" />
-                <input type="text" class="custom-input url-uploader" data-target="p6" placeholder="Atau tempel Link Foto..." />
-              </div>
-
-              <!-- Photo Item 7 -->
-              <div class="photo-edit-card">
-                <span class="p-num">Foto 7 (Slide 3)</span>
-                <img src="" id="preview-p7" class="edit-thumb" alt="Preview 7" />
-                <input type="file" accept="image/*" class="file-uploader" data-target="p7" />
-                <input type="text" class="custom-input url-uploader" data-target="p7" placeholder="Atau tempel Link Foto..." />
-              </div>
-
-              <!-- Photo Item 8 -->
-              <div class="photo-edit-card">
-                <span class="p-num">Foto 8 (Slide 3)</span>
-                <img src="" id="preview-p8" class="edit-thumb" alt="Preview 8" />
-                <input type="file" accept="image/*" class="file-uploader" data-target="p8" />
-                <input type="text" class="custom-input url-uploader" data-target="p8" placeholder="Atau tempel Link Foto..." />
-              </div>
-
-              <!-- Photo Item 9 -->
-              <div class="photo-edit-card">
-                <span class="p-num">Foto 9 (Slide 4)</span>
-                <img src="" id="preview-p9" class="edit-thumb" alt="Preview 9" />
-                <input type="file" accept="image/*" class="file-uploader" data-target="p9" />
-                <input type="text" class="custom-input url-uploader" data-target="p9" placeholder="Atau tempel Link Foto..." />
-              </div>
-
-              <!-- Photo Item 10 -->
-              <div class="photo-edit-card">
-                <span class="p-num">Foto 10 (Slide 4)</span>
-                <img src="" id="preview-p10" class="edit-thumb" alt="Preview 10" />
-                <input type="file" accept="image/*" class="file-uploader" data-target="p10" />
-                <input type="text" class="custom-input url-uploader" data-target="p10" placeholder="Atau tempel Link Foto..." />
-              </div>
-
-              <!-- Photo Item 11 -->
-              <div class="photo-edit-card">
-                <span class="p-num">Foto 11 (Slide 4)</span>
-                <img src="" id="preview-p11" class="edit-thumb" alt="Preview 11" />
-                <input type="file" accept="image/*" class="file-uploader" data-target="p11" />
-                <input type="text" class="custom-input url-uploader" data-target="p11" placeholder="Atau tempel Link Foto..." />
-              </div>
-
-              <!-- Photo Item 12 -->
-              <div class="photo-edit-card">
-                <span class="p-num">Foto 12 (Slide 5)</span>
-                <img src="" id="preview-p12" class="edit-thumb" alt="Preview 12" />
-                <input type="file" accept="image/*" class="file-uploader" data-target="p12" />
-                <input type="text" class="custom-input url-uploader" data-target="p12" placeholder="Atau tempel Link Foto..." />
-              </div>
-
-              <!-- Photo Item 13 -->
-              <div class="photo-edit-card">
-                <span class="p-num">Foto 13 (Slide 5)</span>
-                <img src="" id="preview-p13" class="edit-thumb" alt="Preview 13" />
-                <input type="file" accept="image/*" class="file-uploader" data-target="p13" />
-                <input type="text" class="custom-input url-uploader" data-target="p13" placeholder="Atau tempel Link Foto..." />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="editor-footer">
-          <button id="reset-defaults-btn" class="reset-btn">
-            <i class="fa-solid fa-rotate-left"></i> Reset ke Awal
-          </button>
-          <button id="save-editor-btn" class="save-btn">
-            <i class="fa-solid fa-check"></i> Simpan Perubahan
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Audio Element for Sound FX and Romantic BGM -->
+    <!-- Background Audio & Scripts -->
     <audio id="bg-audio" src="magnolia.mp3" preload="auto" loop></audio>
-
-    <!-- Canvas Confetti Library for Festive Celebrations -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-    <script src="script.js"></script>
+    <script src="common.js"></script>
+    <script src="portal.js"></script>
   </body>
 </html>

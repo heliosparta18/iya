@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Surat Cinta Rahasia 🤎 4th Anniversary</title>
+
+    <!-- Google Fonts for Luxury & Romantic Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Modular Stylesheets -->
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="surat.css" />
+  </head>
+  <body>
+    <!-- Floating Petal Canvas -->
+    <canvas id="petal-canvas"></canvas>
+
+    <!-- ==========================================
+       UNIVERSAL PORTAL NAVBAR
+       ========================================== -->
+    <header class="portal-header">
+      <a href="index.html" class="portal-brand">
+        <div class="brand-crest">
+          <span>IV</span>
+        </div>
+        <div class="brand-info">
+          <span class="brand-title"><i class="fa-solid fa-heart"></i> Surat Cinta Rahasia</span>
+          <span class="brand-sub">Warkah Hati &bull; 10.11.2021</span>
+        </div>
+      </a>
+
+      <!-- Direct Navigation Links -->
+      <ul class="portal-nav-links">
+        <li class="nav-link-item">
+          <a href="index.html"><i class="fa-solid fa-house"></i> Portal Utama</a>
+        </li>
+        <li class="nav-link-item">
+          <a href="cerita.html"><i class="fa-solid fa-book-open"></i> Kisah Kita</a>
+        </li>
+        <li class="nav-link-item active">
+          <a href="surat.html"><i class="fa-solid fa-envelope"></i> Surat Rahasia</a>
+        </li>
+        <li class="nav-link-item">
+          <a href="game.html"><i class="fa-solid fa-gamepad"></i> Main Berdua</a>
+        </li>
+        <li class="nav-link-item">
+          <a href="editor.html"><i class="fa-solid fa-images"></i> Galeri & Edit</a>
+        </li>
+      </ul>
+
+      <!-- Controls Right -->
+      <div class="portal-controls-right">
+        <button class="portal-teleport-trigger-btn" type="button" title="Pindah Portal / Dimensi">
+          <i class="fa-solid fa-door-open"></i>
+          <span>Portal Kenangan</span>
+        </button>
+
+        <button id="audio-toggle-btn" class="audio-control-btn" type="button" title="Putar / Jeda Musik">
+          <i class="fa-solid fa-volume-high"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- ==========================================
+       MAIN SURAT CINTA CONTAINER
+       ========================================== -->
+    <main class="letter-page-wrapper">
+      <!-- Floating Action: Lipat Kembali ke Amplop -->
+      <div class="letter-top-controls">
+        <button class="letter-replay-btn" id="refold-letter-btn" type="button" title="Lipat Kembali ke Amplop">
+          <i class="fa-solid fa-envelope"></i>
+          <span>Lipat ke Amplop ✉️</span>
+        </button>
+      </div>
+
+      <!-- Main Letter Scene -->
+      <div class="letter-modal-scene" id="letter-modal-scene">
+        <!-- ========================================================
+           VIEW 1: ENVELOPE + PEEKING PAPER + BUTTON DIRECTLY BELOW
+           ======================================================== -->
+        <div class="envelope-preview-card" id="envelope-preview-card">
+          <!-- Physical Envelope Unit -->
+          <div class="env-envelope" id="env-envelope" title="Klik untuk membuka surat">
+            <!-- Back Interior & Gold Pattern Lining -->
+            <div class="env-back">
+              <div class="env-lining"></div>
+            </div>
+
+            <!-- Open Triangular Flap Pointing Upward -->
+            <div class="env-flap-top">
+              <div class="env-flap-inner"></div>
+              <div class="env-seal-badge">
+                <span class="seal-icon">🤎</span>
+                <span class="seal-num">IV</span>
+              </div>
+            </div>
+
+            <!-- PEEKING LETTER CARD (Ujung surat mengintip) -->
+            <div class="env-peeking-card" id="env-peeking-card">
+              <div class="peeking-card-inner">
+                <div class="peeking-badge">
+                  <span class="peeking-spark">✧</span>
+                  <span class="peeking-text">Surat Rahasia Untukmu</span>
+                  <span class="peeking-spark">✧</span>
+                </div>
+                <div class="peeking-subtitle">
+                  10.11.2021 &bull; 4 Years of Forever
+                </div>
+                <div class="peeking-crease-mark"></div>
+              </div>
+            </div>
+
+            <!-- Front Pocket (Covers bottom of the peeking card) -->
+            <div class="env-front-pocket">
+              <div class="pocket-inner-shadow"></div>
+            </div>
+          </div>
+
+          <!-- BUTTON DIRECTLY BENEATH THE ENVELOPE -->
+          <div class="env-btn-row">
+            <button class="env-open-cta-btn" id="open-paper-btn" type="button">
+              <span class="btn-shimmer-sweep"></span>
+              <i class="fa-solid fa-envelope-open-text"></i>
+              <span>Buka Surat Rahasia</span>
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </button>
+            <div class="env-btn-hint">
+              <i class="fa-solid fa-heart"></i> Klik tombol atau amplop untuk membuka & membentangkan kertas
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================
+           VIEW 2: FULL UNFOLDED READING VIEW
+           ======================================================== -->
+        <div class="letter-reading-card hidden" id="letter-reading-card" style="display: none;">
+          <!-- Lembar Kertas Lengkap (The Full Letter Paper) -->
+          <div class="letter-paper" id="letter-paper">
+            <!-- Real Paper Fold Crease Shadows -->
+            <div class="paper-crease crease-line-1"></div>
+            <div class="paper-crease crease-line-2"></div>
+
+            <div class="letter-wax-seal">
+              <i class="fa-solid fa-heart"></i>
+            </div>
+
+            <div class="letter-scroll-area">
+              <div class="letter-date">
+                10 November 2021 &mdash; Selamanya 🤎
+              </div>
+              <h2 class="letter-salutation">Untuk Kesayanganku Tersayang,</h2>
+              <div class="letter-body editable-text" data-key="love_letter_content">
+                <p>
+                  Selamat ulang tahun hubungan kita yang ke-4 tahun, sayang.
+                  Melihat ke belakang, rasanya baru kemarin kita canggung
+                  mengobrol di awal pertemuan. Tapi hari ini, kamu sudah menjadi
+                  bagian paling penting dan rumah paling tenang dalam hidupku.
+                </p>
+                <p>
+                  Terima kasih telah bertahan di saat sulit, terima kasih sudah
+                  selalu tersenyum bahkan di hari-hari yang melelahkan, dan
+                  terima kasih telah mencintaiku dengan tulus dan tanpa syarat.
+                </p>
+                <p>
+                  Aku berjanji akan terus belajar menjadi pasangan yang lebih
+                  baik, menjaga hatimu, mendengarkan ceritamu, dan menggenggam
+                  tanganmu di setiap perjalanan yang akan kita tempuh di masa
+                  depan.
+                </p>
+                <p class="letter-closing">
+                  I love you today, tomorrow, and forever and always. ❤️
+                </p>
+              </div>
+              <div class="letter-signature">
+                <span>Your Forever Person</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Room-to-Room Bottom Portal Bar -->
+      <section class="bottom-portal-bar" style="width: 100%; max-width: 620px; margin-top: 40px;">
+        <div class="bottom-portal-title">
+          <i class="fa-solid fa-door-open"></i>
+          <span>Portal Ruang Lainnya:</span>
+        </div>
+        <div class="bottom-portal-actions">
+          <a href="cerita.html" class="bottom-portal-btn">
+            <i class="fa-solid fa-book-open"></i> Cerita Kita
+          </a>
+          <a href="game.html" class="bottom-portal-btn primary">
+            <i class="fa-solid fa-gamepad"></i> Main Berdua
+          </a>
+          <a href="index.html" class="bottom-portal-btn">
+            <i class="fa-solid fa-house"></i> Portal Utama
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==========================================
+       UNIVERSAL PORTAL TELEPORTATION MODAL
+       ========================================== -->
+    <div id="portal-teleport-modal" class="portal-modal-backdrop">
+      <div class="portal-modal-content">
+        <button id="portal-modal-close-btn" class="portal-modal-close-btn" type="button" title="Tutup">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="portal-modal-header">
+          <span class="portal-modal-tag"><i class="fa-solid fa-wand-magic-sparkles"></i> Pintu Dimensi Kenangan</span>
+          <h2 class="portal-modal-title">Teleportasi ke <span>Ruang Cinta</span></h2>
+          <p class="portal-modal-subtitle">Pilih portal yang ingin kamu masuki untuk langsung berpindah ke momen tersebut.</p>
+        </div>
+
+        <div class="portal-grid-destinations">
+          <a href="index.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-house"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Beranda Hub</span>
+              <h3 class="portal-dest-title">Portal Utama</h3>
+              <p class="portal-dest-desc">Gerbang utama & ringkasan kenangan</p>
+            </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+
+          <a href="cerita.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-book-open"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">5 Chapter Slide</span>
+              <h3 class="portal-dest-title">Kisah & Perjalanan</h3>
+              <p class="portal-dest-desc">5 bab presentasi & foto bergerak</p>
+            </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+
+          <a href="surat.html" class="portal-destination-card current">
+            <div class="portal-dest-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Sedang Dibuka</span>
+              <h3 class="portal-dest-title">Amplop Surat Cinta</h3>
+              <p class="portal-dest-desc">Kertas lipat otentik & pesan hati</p>
+            </div>
+            <i class="fa-solid fa-check portal-dest-arrow"></i>
+          </a>
+
+          <a href="game.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Pavilion Game</span>
+              <h3 class="portal-dest-title">Main Berdua</h3>
+              <p class="portal-dest-desc">Tic-Tac-Toe & Kartu Rahasia</p>
+            </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+
+          <a href="editor.html" class="portal-destination-card">
+            <div class="portal-dest-icon"><i class="fa-solid fa-images"></i></div>
+            <div class="portal-dest-info">
+              <span class="portal-dest-badge">Kustomisasi</span>
+              <h3 class="portal-dest-title">Galeri & Edit Teks</h3>
+              <p class="portal-dest-desc">Ganti foto dump & teks ucapan</p>
+            </div>
+            <i class="fa-solid fa-arrow-right portal-dest-arrow"></i>
+          </a>
+        </div>
+
+        <div class="portal-modal-footer">
+          <a href="index.html" class="portal-hub-return-btn">
+            <i class="fa-solid fa-house"></i> Kembali ke Portal Utama
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="common.js"></script>
+    <script src="surat.js"></script>
+  </body>
+</html>

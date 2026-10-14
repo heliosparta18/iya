@@ -1,0 +1,641 @@
+/* ==========================================================================
+   SURAT CINTA RAHASIA - ENVELOPE & PAPER THEATER STYLESHEET (SURAT.CSS)
+   ========================================================================== */
+
+/* ==========================================================================
+   6. MODAL DIALOGS (LOVE LETTER & CUSTOM EDITOR)
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(14, 9, 6, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+  overflow: hidden;
+}
+.modal-backdrop.hidden {
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   LOVE LETTER - REALISTIC 3D ENVELOPE OPENING & PAPER UNFOLDING THEATER
+   ========================================================================== */
+
+/* Top Action Controls (Replay & Close) */
+.letter-top-controls {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 100;
+  pointer-events: auto;
+}
+
+.letter-replay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(42, 26, 18, 0.85);
+  border: 1px solid rgba(229, 169, 101, 0.55);
+  color: #FFFDF9;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+.letter-top-controls.show-replay .letter-replay-btn {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.letter-replay-btn:hover {
+  background: rgba(198, 139, 89, 0.4);
+  border-color: var(--gold-accent);
+  transform: translateY(-1px) scale(1.03);
+}
+.letter-replay-btn i {
+  color: var(--gold-accent);
+  transition: transform 0.4s ease;
+}
+.letter-replay-btn:hover i {
+  transform: rotate(180deg);
+}
+
+.letter-top-controls .modal-close-btn {
+  position: relative;
+  top: auto;
+  right: auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(229, 169, 101, 0.45);
+  background: rgba(42, 26, 18, 0.85);
+  color: #FFFDF9;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  transition: all 0.25s ease;
+}
+.letter-top-controls .modal-close-btn:hover {
+  background: #C24A22;
+  border-color: #E5A965;
+  color: #FFF;
+  transform: scale(1.08);
+}
+
+/* ==========================================================================
+   LOVE LETTER - MODEL AMPLOP, KERTAS MENGINTIP & TOMBOL BUKA SURAT
+   ========================================================================== */
+
+/* Main Scene Container (Always perfectly centered) */
+.letter-modal-scene {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  perspective: 1400px;
+  -webkit-perspective: 1400px;
+}
+
+/* --------------------------------------------------------------------------
+   VIEW 1: ENVELOPE PREVIEW CARD (AMPLOP + KERTAS MENGINTIP + TOMBOL)
+   -------------------------------------------------------------------------- */
+.envelope-preview-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.envelope-preview-card.is-leaving {
+  opacity: 0;
+  transform: translateY(30px) scale(0.92);
+  pointer-events: none;
+}
+
+/* Physical Envelope Object */
+.env-envelope {
+  position: relative;
+  width: min(440px, 88vw);
+  height: 250px;
+  border-radius: 14px;
+  background: linear-gradient(155deg, #2D1A10 0%, #1A0D07 100%);
+  border: 1px solid rgba(229, 169, 101, 0.45);
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.85), 0 0 35px rgba(198, 139, 89, 0.22);
+  cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  margin-top: 55px; /* Space for the top open flap */
+}
+
+.env-envelope:hover {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: 0 32px 75px rgba(0, 0, 0, 0.9), 0 0 45px rgba(229, 169, 101, 0.3);
+}
+
+/* Back Interior & Gold Pattern Lining */
+.env-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  background: #180C07;
+  overflow: hidden;
+}
+
+.env-lining {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 65%;
+  background: radial-gradient(circle at 50% 30%, rgba(229, 169, 101, 0.22) 0%, transparent 70%),
+              linear-gradient(135deg, rgba(198, 139, 89, 0.15) 25%, transparent 25%),
+              linear-gradient(225deg, rgba(198, 139, 89, 0.15) 25%, transparent 25%);
+  background-size: 100% 100%, 24px 24px, 24px 24px;
+  border-bottom: 1px dashed rgba(229, 169, 101, 0.3);
+}
+
+/* Open Triangular Flap Pointing Upward */
+.env-flap-top {
+  position: absolute;
+  top: -110px;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  clip-path: polygon(0% 100%, 100% 100%, 50% 0%);
+  -webkit-clip-path: polygon(0% 100%, 100% 100%, 50% 0%);
+  background: linear-gradient(to top, #2D1A10 0%, #3D2214 100%);
+  border-left: 1px solid rgba(229, 169, 101, 0.4);
+  border-right: 1px solid rgba(229, 169, 101, 0.4);
+  z-index: 1;
+}
+
+.env-flap-inner {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(229, 169, 101, 0.25), transparent);
+}
+
+.env-seal-badge {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #D45D2B 0%, #8C3415 65%, #501B08 100%);
+  border: 2px solid rgba(229, 169, 101, 0.85);
+  box-shadow: 0 4px 14px rgba(140, 52, 21, 0.7), 0 0 16px rgba(229, 169, 101, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #F8DFC0;
+}
+
+.env-seal-badge .seal-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+.env-seal-badge .seal-num {
+  font-family: var(--font-serif);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  margin-top: 1px;
+}
+
+/* PEEKING LETTER CARD (Ujung kertas yang mengintip!) */
+.env-peeking-card {
+  position: absolute;
+  bottom: 15px;
+  left: 6%;
+  width: 88%;
+  height: 220px;
+  border-radius: 12px 12px 4px 4px;
+  background: #FAF5EE;
+  background-image: linear-gradient(180deg, #FFFDF9 0%, #FAF5EE 100%);
+  border: 1px solid rgba(229, 169, 101, 0.45);
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.3);
+  z-index: 4;
+  transform: translateY(-55px);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  animation: peekingBreathe 3s ease-in-out infinite alternate;
+  overflow: hidden;
+}
+
+@keyframes peekingBreathe {
+  0% { transform: translateY(-55px); }
+  100% { transform: translateY(-63px); }
+}
+
+.env-envelope:hover .env-peeking-card {
+  animation-play-state: paused;
+  transform: translateY(-68px);
+}
+
+.env-peeking-card.is-pulling {
+  animation: none;
+  transform: translateY(-180px);
+  opacity: 0;
+}
+
+.peeking-card-inner {
+  padding: 16px 14px;
+  text-align: center;
+}
+
+.peeking-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-serif);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #8C4320;
+}
+.peeking-spark {
+  color: var(--gold-accent);
+  font-size: 0.95rem;
+}
+
+.peeking-subtitle {
+  font-size: 0.74rem;
+  color: #9E745A;
+  letter-spacing: 1px;
+  margin-top: 3px;
+}
+
+.peeking-crease-mark {
+  margin-top: 14px;
+  height: 1px;
+  background: rgba(140, 83, 60, 0.22);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Front Pocket of Envelope */
+.env-front-pocket {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0% 0%, 50% 50%, 100% 0%, 100% 100%, 0% 100%);
+  -webkit-clip-path: polygon(0% 0%, 50% 50%, 100% 0%, 100% 100%, 0% 100%);
+  background: linear-gradient(to top, #190D07 0%, #2A150D 70%, #201009 100%);
+  border-left: 1px solid rgba(229, 169, 101, 0.35);
+  border-right: 1px solid rgba(229, 169, 101, 0.35);
+  border-bottom: 1px solid rgba(229, 169, 101, 0.35);
+  border-radius: 0 0 14px 14px;
+  z-index: 6;
+  pointer-events: none;
+  box-shadow: inset 0 25px 35px rgba(0, 0, 0, 0.6);
+}
+
+.pocket-inner-shadow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 45%);
+}
+
+/* BUTTON DIRECTLY BENEATH THE ENVELOPE */
+.env-btn-row {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.env-open-cta-btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #F3C285 0%, #D8985A 45%, #9E5B3D 100%);
+  color: #1A0D07;
+  border: none;
+  padding: 15px 36px;
+  border-radius: 36px;
+  font-family: var(--font-sans);
+  font-size: 1.02rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(198, 139, 89, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.env-open-cta-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 16px 36px rgba(198, 139, 89, 0.65);
+}
+.env-open-cta-btn:active {
+  transform: scale(0.96);
+}
+
+.env-btn-hint {
+  font-size: 0.82rem;
+  color: var(--gold-accent);
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   VIEW 2: FULL UNFOLDED READING CARD
+   -------------------------------------------------------------------------- */
+.letter-reading-card {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.letter-reading-card.hidden {
+  display: none;
+  opacity: 0;
+  transform: scale(0.92);
+  pointer-events: none;
+}
+
+/* 3D Unfolding Animation when entering View 2 */
+.letter-reading-card.is-unfolding {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.letter-reading-card.is-unfolding .letter-paper {
+  animation: paperUnfold3D 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.15) forwards;
+}
+
+@keyframes paperUnfold3D {
+  0% {
+    transform: perspective(1000px) rotateX(25deg) scaleY(0.4) scaleX(0.85);
+    opacity: 0.6;
+  }
+  60% {
+    transform: perspective(1000px) rotateX(-8deg) scaleY(1.02) scaleX(1);
+    opacity: 0.95;
+  }
+  100% {
+    transform: perspective(1000px) rotateX(0deg) scaleY(1) scaleX(1);
+    opacity: 1;
+  }
+}
+
+.letter-reading-card.is-refolding .letter-paper {
+  animation: paperRefold3D 0.5s ease forwards;
+}
+
+@keyframes paperRefold3D {
+  0% {
+    transform: perspective(1000px) rotateX(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(1000px) rotateX(25deg) scaleY(0.4) scaleX(0.85);
+    opacity: 0;
+  }
+}
+
+/* The Parchment Letter Paper */
+.letter-paper {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  max-height: 84vh;
+  background: #FAF5EE;
+  background-image: 
+    radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.8) 0%, transparent 75%),
+    linear-gradient(180deg, rgba(245, 236, 222, 0.4) 0%, rgba(250, 245, 238, 0.95) 25%, rgba(245, 237, 225, 0.4) 100%);
+  border-radius: 20px;
+  color: #2A1A12;
+  border: 1px solid rgba(229, 169, 101, 0.45);
+  box-shadow: 0 35px 85px rgba(0, 0, 0, 0.8), 0 0 50px rgba(229, 169, 101, 0.18);
+  outline: 1px solid rgba(198, 139, 89, 0.25);
+  outline-offset: -10px;
+  padding: 46px 40px;
+  overflow: visible;
+  user-select: text;
+}
+
+/* Real Paper Fold Crease Shadows */
+.paper-crease {
+  position: absolute;
+  left: 3%;
+  width: 94%;
+  height: 1px;
+  background: rgba(140, 83, 60, 0.2);
+  box-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.65;
+}
+.paper-crease.crease-line-1 {
+  top: 33.3%;
+}
+.paper-crease.crease-line-2 {
+  top: 66.6%;
+}
+
+.letter-scroll-area {
+  position: relative;
+  max-height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom Scrollbar for Letter */
+.letter-scroll-area::-webkit-scrollbar {
+  width: 5px;
+}
+.letter-scroll-area::-webkit-scrollbar-track {
+  background: rgba(198, 139, 89, 0.1);
+  border-radius: 10px;
+}
+.letter-scroll-area::-webkit-scrollbar-thumb {
+  background: rgba(198, 139, 89, 0.35);
+  border-radius: 10px;
+}
+.letter-scroll-area::-webkit-scrollbar-thumb:hover {
+  background: rgba(198, 139, 89, 0.6);
+}
+
+/* Wax Seal on top of the unfolded letter */
+.letter-wax-seal {
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 52px;
+  height: 52px;
+  background: radial-gradient(circle at 35% 35%, #D45D2B 0%, #8C3415 65%, #501B08 100%);
+  color: #F8DFC0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(229, 169, 101, 0.75);
+  box-shadow: 0 8px 24px rgba(140, 52, 21, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.4), inset 0 -2px 5px rgba(0, 0, 0, 0.6);
+  font-size: 1.35rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.letter-date {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #9E745A;
+  text-align: right;
+  margin-bottom: 14px;
+}
+
+.letter-salutation {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2A1A12;
+  margin-bottom: 20px;
+}
+
+.letter-body {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #3F291C;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.letter-closing {
+  font-weight: 600;
+  color: #8C4320;
+  margin-top: 8px;
+}
+
+.letter-signature {
+  text-align: right;
+  margin-top: 25px;
+  font-family: var(--font-script);
+  font-size: 2.4rem;
+  color: #A65E36;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.08);
+  color: #444;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+.modal-close-btn:hover {
+  background: #FF5A5F;
+  color: #FFF;
+}
+
+
+@media (max-width: 768px) {
+  .letter-page-wrapper {
+    padding: 24px 12px 40px;
+    min-height: calc(100vh - 58px);
+    margin-top: 58px;
+  }
+  .letter-reading-card {
+    max-height: 84vh;
+    padding: 10px 0;
+  }
+  .letter-paper {
+    padding: 28px 16px;
+    max-width: min(540px, calc(100vw - 24px));
+    box-sizing: border-box;
+  }
+  .env-envelope {
+    width: min(320px, calc(100vw - 32px));
+    height: 200px;
+  }
+  .letter-top-controls {
+    top: 12px;
+    right: 12px;
+    gap: 8px;
+  }
+  .letter-salutation {
+    font-size: 1.35rem;
+    margin-bottom: 12px;
+  }
+  .letter-body {
+    font-size: 0.92rem;
+    line-height: 1.62;
+    gap: 12px;
+  }
+  .letter-signature {
+    font-size: 1.8rem;
+    margin-top: 16px;
+  }
+}
+
+/* Standalone Page Wrapper for Surat */
+.letter-page-wrapper {
+  position: relative;
+  min-height: calc(100vh - 68px);
+  margin-top: 68px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px 60px;
+  width: 100%;
+  box-sizing: border-box;
+}

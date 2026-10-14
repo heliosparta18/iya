@@ -1,0 +1,647 @@
+/* ==========================================================================
+   PORTAL UTAMA - GRAND MEMORY HUB STYLES (PORTAL.CSS)
+   ========================================================================== */
+
+/* --- 1. GERBANG BUNGA (ENTRANCE / PASSCODE GATE) --- */
+.gate-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 40%, rgba(42, 26, 18, 0.96) 0%, rgba(26, 17, 11, 0.98) 70%, #0E0704 100%);
+  overflow: hidden;
+  padding: 20px;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.gate-wrapper.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Floral Clusters & Garlands Decor */
+.floral-frame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floral-cluster {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  background-image: url('floral-corner.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.85;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.6));
+}
+
+.floral-cluster.top-left {
+  top: -30px;
+  left: -30px;
+}
+
+.floral-cluster.top-right {
+  top: -30px;
+  right: -30px;
+  transform: scaleX(-1);
+}
+
+.floral-cluster.bottom-left {
+  bottom: -30px;
+  left: -30px;
+  transform: scaleY(-1);
+}
+
+.floral-cluster.bottom-right {
+  bottom: -30px;
+  right: -30px;
+  transform: scale(-1);
+}
+
+.floral-garland {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 70px;
+  background-image: url('floral-garland.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.75;
+}
+
+.floral-garland.garland-top {
+  top: 10px;
+}
+
+.floral-garland.garland-bottom {
+  bottom: 10px;
+  transform: translateX(-50%) rotate(180deg);
+}
+
+/* Luxury Gate Intermediate Card */
+.luxury-gate-card {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 480px;
+  background: rgba(35, 22, 15, 0.82);
+  border: 1px solid rgba(229, 169, 101, 0.35);
+  border-radius: 32px;
+  padding: 44px 36px;
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 45px rgba(198, 139, 89, 0.25);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+}
+
+.royal-crest {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.crest-monogram {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--gold-accent);
+  text-shadow: 0 0 15px rgba(229, 169, 101, 0.5);
+  padding: 8px 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(229, 169, 101, 0.5);
+  background: rgba(198, 139, 89, 0.15);
+}
+
+.crest-sparkle {
+  color: var(--gold-accent);
+  font-size: 1.1rem;
+}
+
+.luxury-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 16px;
+  background: rgba(198, 139, 89, 0.2);
+  border: 1px solid rgba(229, 169, 101, 0.4);
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--gold-accent);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.luxury-shimmer-title {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #FFFDF9;
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+
+.luxury-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 16px 0 20px;
+}
+
+.divider-line {
+  width: 45px;
+  height: 1px;
+  background: rgba(229, 169, 101, 0.4);
+}
+
+.divider-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold-accent);
+}
+
+.divider-heart {
+  color: var(--gold-accent);
+  font-size: 0.85rem;
+}
+
+.gate-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.luxury-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 28px;
+  background: linear-gradient(135deg, #C68B59 0%, #8C533C 100%);
+  border: 1px solid rgba(253, 246, 238, 0.6);
+  border-radius: 30px;
+  color: #FFFDF9;
+  font-family: var(--font-sans);
+  font-size: 1.02rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(198, 139, 89, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.luxury-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 14px 40px rgba(198, 139, 89, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  border-color: #FFF;
+}
+
+.gate-hint-note {
+  margin-top: 18px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.gate-hint-note i {
+  color: var(--gold-accent);
+}
+
+/* --- 2. FLORAL CURTAIN GATE TRANSITION OVERLAY --- */
+.flower-curtain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 1;
+}
+
+.flower-curtain-overlay.active {
+  visibility: visible;
+  display: block;
+}
+
+.curtain-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50vw;
+  background: linear-gradient(135deg, #2A1A12 0%, #1A110B 60%, #120B07 100%);
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.curtain-panel.curtain-left {
+  left: 0;
+  transform: translateX(-100%);
+  border-right: 2px solid rgba(229, 169, 101, 0.6);
+}
+
+.curtain-panel.curtain-right {
+  right: 0;
+  transform: translateX(100%);
+  border-left: 2px solid rgba(229, 169, 101, 0.6);
+}
+
+.flower-curtain-overlay.closing .curtain-left {
+  transform: translateX(0);
+}
+
+.flower-curtain-overlay.closing .curtain-right {
+  transform: translateX(0);
+}
+
+.flower-curtain-overlay.opening .curtain-left {
+  transform: translateX(-100%);
+  transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.flower-curtain-overlay.opening .curtain-right {
+  transform: translateX(100%);
+  transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.curtain-floral-art {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 260px;
+  height: 480px;
+  background-image: url('curtain-floral.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.75;
+}
+
+.floral-art-left {
+  right: 15px;
+}
+
+.floral-art-right {
+  left: 15px;
+  transform: translateY(-50%) scaleX(-1);
+}
+
+/* --- 3. GRAND PORTAL HUB MAIN CONTENT --- */
+.portal-main-wrapper {
+  padding-top: 90px;
+  padding-bottom: 60px;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.portal-hero-section {
+  text-align: center;
+  margin-bottom: 42px;
+}
+
+.portal-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  border-radius: 30px;
+  background: rgba(198, 139, 89, 0.2);
+  border: 1px solid rgba(229, 169, 101, 0.4);
+  color: var(--gold-accent);
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.portal-hero-title {
+  font-family: var(--font-serif);
+  font-size: 2.8rem;
+  color: #FFFDF9;
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.portal-hero-title span {
+  color: var(--gold-accent);
+  font-style: italic;
+}
+
+.portal-hero-desc {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 680px;
+  margin: 0 auto 30px;
+  line-height: 1.6;
+}
+
+/* Realtime Love Counter Widget on Hub */
+.hub-counter-box {
+  background: rgba(42, 26, 18, 0.75);
+  border: 1px solid rgba(229, 169, 101, 0.35);
+  border-radius: 22px;
+  padding: 18px 24px;
+  display: block;
+  max-width: 460px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto 36px auto;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(198, 139, 89, 0.2);
+  backdrop-filter: blur(15px);
+}
+
+.hub-counter-header {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold-accent);
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.hub-counter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+.hub-time-block {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(229, 169, 101, 0.22);
+  border-radius: 14px;
+}
+
+.hub-time-val {
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(1.2rem, 3.8vw, 1.75rem);
+  font-weight: 700;
+  color: #FFFDF9;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.hub-time-lbl {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* --- THE 4 GRAND PORTAL GATEWAY CARDS --- */
+.grand-portals-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  margin-bottom: 40px;
+}
+
+.grand-portal-card {
+  position: relative;
+  background: linear-gradient(145deg, rgba(42, 26, 18, 0.8), rgba(26, 17, 11, 0.95));
+  border: 1px solid rgba(229, 169, 101, 0.3);
+  border-radius: 26px;
+  padding: 32px 28px;
+  text-decoration: none;
+  color: #FFFDF9;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.grand-portal-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(229, 169, 101, 0.2), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.grand-portal-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--gold-accent);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 45px rgba(198, 139, 89, 0.35);
+}
+
+.grand-portal-card:hover::before {
+  opacity: 1;
+}
+
+.portal-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.portal-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 16px;
+  background: rgba(198, 139, 89, 0.2);
+  border: 1px solid rgba(229, 169, 101, 0.35);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--gold-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.portal-card-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(198, 139, 89, 0.35), rgba(140, 83, 60, 0.5));
+  border: 1px solid rgba(229, 169, 101, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: var(--gold-accent);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.35s ease;
+}
+
+.grand-portal-card:hover .portal-card-icon {
+  transform: scale(1.1) rotate(5deg);
+  border-color: #FFF;
+}
+
+.portal-card-middle {
+  margin-bottom: 24px;
+}
+
+.portal-card-middle h2 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #FFFDF9;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.portal-card-middle p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.portal-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.portal-action-cta {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--gold-accent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap 0.25s ease;
+}
+
+.grand-portal-card:hover .portal-action-cta {
+  gap: 12px;
+  color: #FFF;
+}
+
+.portal-enter-bubble {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(229, 169, 101, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: var(--gold-accent);
+  transition: all 0.3s ease;
+}
+
+.grand-portal-card:hover .portal-enter-bubble {
+  background: var(--gold-accent);
+  color: #1A110B;
+  transform: scale(1.1);
+}
+
+/* Quick Note in Portal Footer */
+.portal-footer-note {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.portal-footer-note i {
+  color: var(--gold-accent);
+}
+
+/* Mobile Optimizations for Portal */
+@media (max-width: 850px) {
+  .grand-portals-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .portal-hero-title {
+    font-size: 2.1rem;
+  }
+
+  .luxury-gate-card {
+    padding: 34px 22px;
+  }
+
+  .luxury-shimmer-title {
+    font-size: 1.8rem;
+  }
+
+  .hub-counter-box {
+    padding: 12px 10px;
+    border-radius: 18px;
+    margin-bottom: 24px;
+    max-width: 100%;
+  }
+
+  .hub-counter-header {
+    font-size: 0.74rem;
+    margin-bottom: 8px;
+  }
+
+  .hub-counter-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+
+  .hub-time-block {
+    min-width: 0;
+    padding: 8px 2px;
+    border-radius: 10px;
+  }
+
+  .hub-time-val {
+    font-size: clamp(1.05rem, 4.6vw, 1.35rem);
+  }
+
+  .hub-time-lbl {
+    font-size: 0.6rem;
+    letter-spacing: 0.5px;
+  }
+
+  .curtain-panel {
+    width: 50vw;
+  }
+
+  .curtain-floral-art {
+    width: 180px;
+    height: 360px;
+  }
+}
