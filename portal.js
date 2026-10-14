@@ -22,50 +22,59 @@
     if (isUnlocked || isGateTransitioning) return;
     isGateTransitioning = true;
 
-    // Start Magnolia audio
+    // Start Magnolia audio immediately
     if (window.AnnivCore && window.AnnivCore.tryStartMusic) {
       window.AnnivCore.tryStartMusic();
     }
 
+    const gateCard = document.querySelector('.luxury-gate-card');
+    if (gateCard) {
+      gateCard.classList.add('gate-card-opening');
+    }
+
+    // Ensure portal hub is rendered underneath the parting curtain
+    if (portalHubContent) {
+      portalHubContent.style.display = 'block';
+      portalHubContent.style.opacity = '1';
+    }
+
     if (flowerGateCurtain) {
       flowerGateCurtain.classList.add('active');
-      flowerGateCurtain.classList.remove('opening');
-      
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          flowerGateCurtain.classList.add('closing');
-        });
+        flowerGateCurtain.classList.add('opening');
       });
     }
 
-    // After curtain closes (0.75s)
+    // Direct outward parting in 0.78s - zero stutter, pure 60fps
     setTimeout(() => {
       isUnlocked = true;
       sessionStorage.setItem('anniv_gate_unlocked', 'true');
-      
-      if (gateScreen) gateScreen.classList.add('hidden');
-      if (portalHubContent) {
-        portalHubContent.style.display = 'block';
-        portalHubContent.style.opacity = '1';
+
+      if (gateScreen) {
+        gateScreen.classList.add('hidden');
+        gateScreen.style.display = 'none';
       }
 
-      // Open curtain again smoothly
       if (flowerGateCurtain) {
-        flowerGateCurtain.classList.remove('closing');
-        flowerGateCurtain.classList.add('opening');
+        flowerGateCurtain.classList.remove('active', 'opening');
+        flowerGateCurtain.style.display = 'none';
       }
 
-      // Hide curtain overlay after opening
-      setTimeout(() => {
-        if (flowerGateCurtain) {
-          flowerGateCurtain.classList.remove('active', 'opening');
-        }
-        isGateTransitioning = false;
-        if (window.AnnivCore && window.AnnivCore.playSuccessFanfare) {
-          window.AnnivCore.playSuccessFanfare();
-        }
-      }, 950);
-    }, 750);
+      isGateTransitioning = false;
+
+      if (window.AnnivCore && window.AnnivCore.playSuccessFanfare) {
+        window.AnnivCore.playSuccessFanfare();
+      }
+
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 60,
+          spread: 80,
+          origin: { y: 0.6 },
+          colors: ['#C68B59', '#E5A965', '#8C533C', '#FFFDF9', '#F5DEB3']
+        });
+      }
+    }, 780);
   }
 
   if (openGateBtn) {
@@ -75,6 +84,7 @@
   // Check if previously unlocked in this session
   if (sessionStorage.getItem('anniv_gate_unlocked') === 'true') {
     if (gateScreen) gateScreen.style.display = 'none';
+    if (flowerGateCurtain) flowerGateCurtain.style.display = 'none';
     if (portalHubContent) {
       portalHubContent.style.display = 'block';
       portalHubContent.style.opacity = '1';

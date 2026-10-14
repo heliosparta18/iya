@@ -261,6 +261,9 @@
   // Keyboard navigation
   window.addEventListener('keydown', (e) => {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    const viewCerita = document.getElementById('view-cerita');
+    if (viewCerita && viewCerita.style.display === 'none') return;
+
     if (e.key === 'ArrowRight' || e.key === ' ') {
       e.preventDefault();
       goToNextSlide();
@@ -279,6 +282,9 @@
   }, { passive: true });
 
   window.addEventListener('touchend', (e) => {
+    const viewCerita = document.getElementById('view-cerita');
+    if (viewCerita && viewCerita.style.display === 'none') return;
+
     const touchEndX = e.changedTouches[0].screenX;
     const touchEndY = e.changedTouches[0].screenY;
     const diffX = touchEndX - touchStartX;

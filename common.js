@@ -72,6 +72,7 @@
 
   // --- BACKGROUND MUSIC MANAGER (MAGNOLIA.MP3) ---
   const STORAGE_KEY_MUSIC = 'anniv_music_playing_v4';
+  const STORAGE_KEY_TIME = 'anniv_music_time_v4';
   let bgAudio = null;
   let isMusicPlaying = false;
 
@@ -86,7 +87,22 @@
       document.body.appendChild(bgAudio);
     }
 
+    // Keep track of exact playback position so song NEVER restarts from 0:00!
+    bgAudio.addEventListener('timeupdate', () => {
+      if (bgAudio.currentTime > 0) {
+        localStorage.setItem(STORAGE_KEY_TIME, bgAudio.currentTime);
+      }
+    });
+
     const audioToggleBtn = document.getElementById('audio-toggle-btn');
+
+    // Restore saved playback time
+    const savedTime = parseFloat(localStorage.getItem(STORAGE_KEY_TIME) || '0');
+    if (savedTime > 0 && !isNaN(savedTime)) {
+      try {
+        bgAudio.currentTime = savedTime;
+      } catch (e) {}
+    }
 
     // Check if music was playing in previous page / session
     const savedMusicState = localStorage.getItem(STORAGE_KEY_MUSIC);
@@ -116,6 +132,14 @@
   function tryStartMusic() {
     if (!bgAudio) return;
     bgAudio.volume = 0.8;
+
+    const savedTime = parseFloat(localStorage.getItem(STORAGE_KEY_TIME) || '0');
+    if (savedTime > 0 && !isNaN(savedTime) && Math.abs(bgAudio.currentTime - savedTime) > 1.5) {
+      try {
+        bgAudio.currentTime = savedTime;
+      } catch (e) {}
+    }
+
     const playPromise = bgAudio.play();
     if (playPromise !== undefined) {
       playPromise.then(() => {
@@ -275,9 +299,13 @@
         if (f.x > width + 10) f.x = -10;
 
         ctx.save();
-        ctx.fillStyle = `rgba(229, 169, 101, ${Math.max(0, f.alpha)})`;
-        ctx.shadowColor = '#E5A965';
-        ctx.shadowBlur = 8;
+        // Fast, hardware-friendly soft glow (zero shadowBlur GPU penalty)
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.radius * 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(229, 169, 101, ${Math.max(0, f.alpha * 0.28)})`;
+        ctx.fill();
+
+        ctx.fillStyle = `rgba(255, 253, 249, ${Math.max(0, f.alpha)})`;
 
         if (f.isStar) {
           ctx.beginPath();
@@ -384,6 +412,112 @@
     }
   }
 
+  // --- SEAMLESS UNIVERSAL PORTAL ROUTER (ZERO MUSIC INTERRUPTION) ---
+  function initPortalRouter() {
+    const portalViews = document.querySelectorAll('.portal-view');
+    if (!portalViews || portalViews.length <= 1) return;
+
+    function activatePortal(portalId, pushState = true) {
+      if (!portalId) portalId = 'hub';
+      portalId = portalId.toLowerCase().replace(/^#/, '').replace(/\.html$/, '');
+      if (portalId === 'index') portalId = 'hub';
+
+      const targetView = document.getElementById(`view-${portalId}`);
+      if (!targetView) return false;
+
+      // Smooth switch of portal views
+      portalViews.forEach(v => {
+        if (v === targetView) {
+          v.classList.add('active');
+          v.style.display = 'block';
+        } else {
+          v.classList.remove('active');
+          v.style.display = 'none';
+        }
+      });
+
+      // Ensure gate screen is hidden if moving to another portal
+      const gateScreen = document.getElementById('gate-screen');
+      if (gateScreen && portalId !== 'hub') {
+        gateScreen.classList.add('hidden');
+        gateScreen.style.display = 'none';
+        sessionStorage.setItem('anniv_gate_unlocked', 'true');
+      }
+
+      // Update Nav active indicators
+      document.querySelectorAll('.portal-nav-links .nav-link-item').forEach(item => {
+        const link = item.querySelector('a');
+        if (link) {
+          const href = link.getAttribute('data-portal') || link.getAttribute('href') || '';
+          if ((portalId === 'hub' && (href.includes('index') || href.includes('hub'))) ||
+              (portalId !== 'hub' && (href.includes(portalId) || href === `#${portalId}`))) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        }
+      });
+
+      // Update browser history hash
+      if (pushState && window.location.hash !== `#${portalId}`) {
+        history.pushState({ portal: portalId }, '', `#${portalId}`);
+      }
+
+      // Close modal if teleporting from modal
+      closePortalModal();
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'instant' });
+
+      // Play portal chime
+      playChime(640, 0.08);
+
+      // Trigger resize for responsive calculations
+      window.dispatchEvent(new Event('resize'));
+      return true;
+    }
+
+    // Intercept clicks on links that lead to portals
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[data-portal], a[href*=".html"], a[href^="#"]');
+      if (!link) return;
+
+      const portalAttr = link.getAttribute('data-portal');
+      const href = link.getAttribute('href') || '';
+
+      let targetPortal = portalAttr;
+      if (!targetPortal && href) {
+        if (href.includes('index.html') || href === '#hub') targetPortal = 'hub';
+        else if (href.includes('cerita.html') || href === '#cerita') targetPortal = 'cerita';
+        else if (href.includes('surat.html') || href === '#surat') targetPortal = 'surat';
+        else if (href.includes('game.html') || href === '#game') targetPortal = 'game';
+        else if (href.includes('editor.html') || href === '#editor') targetPortal = 'editor';
+      }
+
+      if (targetPortal && document.getElementById(`view-${targetPortal}`)) {
+        e.preventDefault();
+        activatePortal(targetPortal, true);
+      }
+    });
+
+    // Handle browser Back / Forward buttons
+    window.addEventListener('popstate', () => {
+      const hash = window.location.hash.replace('#', '') || 'hub';
+      activatePortal(hash, false);
+    });
+
+    // Handle initial hash on page load
+    const initialHash = window.location.hash.replace('#', '');
+    if (initialHash && document.getElementById(`view-${initialHash}`)) {
+      activatePortal(initialHash, false);
+      sessionStorage.setItem('anniv_gate_unlocked', 'true');
+    }
+
+    if (window.AnnivCore) {
+      window.AnnivCore.activatePortal = activatePortal;
+    }
+  }
+
   // --- DATA SYNCHRONIZATION (CUSTOM TEXTS & PHOTOS FROM LOCALSTORAGE) ---
   const STORAGE_KEY_TEXT = 'anniv_custom_texts_v4';
   const STORAGE_KEY_PHOTOS = 'anniv_custom_photos_v4';
@@ -442,6 +576,7 @@
     initMusicPlayer();
     initClickHearts();
     initPortalModal();
+    initPortalRouter();
     loadCustomizations();
   });
 

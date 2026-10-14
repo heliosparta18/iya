@@ -41,9 +41,11 @@ Website ini terbagi menjadi 5 halaman terpisah dengan navigasi portal di masing-
 
 ---
 
-## 🌀 Fitur Portal di Setiap Halaman
+## 🌀 Fitur Portal & Musik Seamless (Tanpa Jeda / Cut)
 
-Di setiap halaman terdapat:
+Di setiap halaman dan di portal utama terdapat:
+- **Musik Mengalun Terus (Continuous Audio)**: Lagu romantis `magnolia.mp3` terus berputar tanpa henti (*zero interruption / no cut*). Pindah portal tidak lagi memotong lagu atau mengulang dari awal.
+- **Gerbang Bunga 60 FPS**: Gerbang kenangan terbuka ke kiri dan kanan dengan mulus tanpa lag di perangkat seluler.
 - **Navbar Universal**: Tombol langsung menuju setiap portal (*Portal Utama, Kisah Kita, Surat Rahasia, Main Berdua, Galeri & Edit*).
 - **Tombol "Portal Kenangan"**: Membuka modal teleportasi instan ke ruang cinta mana pun.
 - **Pengontrol Musik Magnolia**: Memutar/menjeda lagu latar di mana saja.

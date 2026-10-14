@@ -769,3 +769,27 @@ h1, h2, h3, h4, p {
     border-radius: 50%;
   }
 }
+
+/* ==========================================================================
+   PORTAL VIEW SWITCHER (SEAMLESS MULTI-PORTAL CONTAINER)
+   ========================================================================== */
+.portal-view {
+  display: none;
+  width: 100%;
+}
+
+.portal-view.active {
+  display: block;
+  animation: portalFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes portalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
