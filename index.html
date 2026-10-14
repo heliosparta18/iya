@@ -152,6 +152,8 @@
       <section class="slides-viewport">
         <div class="viewport-flower-decor top-right"></div>
         <div class="viewport-flower-decor bottom-left"></div>
+        <div class="viewport-flower-decor bottom-right"></div>
+        <div class="viewport-bottom-garland"></div>
 
         <!-- SLIDE 1: PERAYAAN 4 TAHUN & HITUNGAN CINTA -->
         <article class="slide-item active" data-slide="1">
@@ -219,6 +221,8 @@
                         alt="Moment 1"
                         class="gallery-photo"
                         data-photo-id="p1"
+                        decoding="async"
+                        loading="eager"
                       />
                     </div>
                     <div class="photo-caption editable-text" data-key="p1_cap">
@@ -238,6 +242,8 @@
                         alt="Moment 2"
                         class="gallery-photo"
                         data-photo-id="p2"
+                        decoding="async"
+                        loading="eager"
                       />
                     </div>
                     <div class="photo-caption editable-text" data-key="p2_cap">
@@ -256,6 +262,8 @@
                         alt="Moment 3"
                         class="gallery-photo"
                         data-photo-id="p3"
+                        decoding="async"
+                        loading="eager"
                       />
                     </div>
                     <div class="photo-caption editable-text" data-key="p3_cap">
@@ -331,6 +339,8 @@
                       alt="Moment 4"
                       class="gallery-photo"
                       data-photo-id="p4"
+                      decoding="async"
+                      loading="eager"
                     />
                     <div class="film-label editable-text" data-key="p4_cap">
                       sama aja cuma ini versiku
@@ -346,6 +356,8 @@
                         alt="Moment 5"
                         class="gallery-photo"
                         data-photo-id="p5"
+                        decoding="async"
+                        loading="eager"
                       />
                     </div>
                     <div class="photo-caption editable-text" data-key="p5_cap">
@@ -363,6 +375,8 @@
                         alt="Moment 6"
                         class="gallery-photo"
                         data-photo-id="p6"
+                        decoding="async"
+                        loading="eager"
                       />
                     </div>
                     <div class="photo-caption editable-text" data-key="p6_cap">
@@ -430,6 +444,8 @@
                         alt="Moment 7"
                         class="gallery-photo"
                         data-photo-id="p7"
+                        decoding="async"
+                        loading="eager"
                       />
                     </div>
                     <div
@@ -450,6 +466,8 @@
                         alt="Moment 8"
                         class="gallery-photo"
                         data-photo-id="p8"
+                        decoding="async"
+                        loading="eager"
                       />
                     </div>
                     <div class="photo-caption editable-text" data-key="p8_cap">
@@ -523,6 +541,8 @@
                         alt="Moment 9"
                         class="gallery-photo"
                         data-photo-id="p9"
+                        decoding="async"
+                        loading="eager"
                       />
                     </div>
                     <div class="photo-caption editable-text" data-key="p9_cap">
@@ -540,6 +560,8 @@
                         alt="Moment 10"
                         class="gallery-photo"
                         data-photo-id="p10"
+                        decoding="async"
+                        loading="eager"
                       />
                     </div>
                     <div class="photo-caption editable-text" data-key="p10_cap">
@@ -556,6 +578,8 @@
                         alt="Moment 11"
                         class="gallery-photo"
                         data-photo-id="p11"
+                        decoding="async"
+                        loading="eager"
                       />
                     </div>
                     <div class="photo-caption editable-text" data-key="p11_cap">
@@ -599,6 +623,9 @@
                   <i class="fa-solid fa-envelope-open-text"></i> Buka Surat
                   Rahasia Untukmu
                 </button>
+                <button id="open-minigame-btn" class="cta-game-btn">
+                  <i class="fa-solid fa-gamepad"></i> <span>Main Berdua (Mini Game)</span>
+                </button>
               </div>
 
               <div class="signature-block">
@@ -620,6 +647,8 @@
                         alt="Moment 12"
                         class="gallery-photo"
                         data-photo-id="p12"
+                        decoding="async"
+                        loading="eager"
                       />
                     </div>
                     <div class="photo-caption editable-text" data-key="p12_cap">
@@ -638,6 +667,8 @@
                         alt="Moment 13"
                         class="gallery-photo"
                         data-photo-id="p13"
+                        decoding="async"
+                        loading="eager"
                       />
                     </div>
                     <div class="photo-caption editable-text" data-key="p13_cap">
@@ -829,6 +860,168 @@
                 <span>Your Forever Person</span>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+       MODAL: ROMANTIC COUPLE'S MINIGAME PAVILION
+       ========================================== -->
+    <div id="minigame-modal" class="modal-backdrop hidden">
+      <div class="game-modal-container">
+        <!-- Royal Game Header -->
+        <div class="game-header">
+          <div class="game-header-title">
+            <i class="fa-solid fa-gamepad"></i>
+            <span>Pavilion Game Cinta &bull; Main Berdua ✨</span>
+          </div>
+          <button class="modal-close-btn" id="close-game-btn" type="button" title="Tutup Game">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- Mode Switcher Tabs -->
+        <div class="game-tabs">
+          <button class="game-tab-btn active" data-game-tab="tictactoe" type="button">
+            <i class="fa-solid fa-crown"></i> Tic-Tac-Toe Cinta
+          </button>
+          <button class="game-tab-btn" data-game-tab="lovecards" type="button">
+            <i class="fa-solid fa-heart-circle-bolt"></i> Kartu Rahasia Berdua
+          </button>
+        </div>
+
+        <!-- ==========================================
+           GAME 1: ROYAL TIC-TAC-TOE (MAHKOTA 👑 vs HATI 💖)
+           ========================================== -->
+        <div id="game-tab-tictactoe" class="game-tab-panel active">
+          <!-- Turn Indicator Banner -->
+          <div class="turn-banner" id="turn-banner">
+            <div class="turn-player-card player-1 active" id="turn-card-p1">
+              <span class="player-symbol">👑</span>
+              <div class="player-info">
+                <span class="player-label">Pemain 1</span>
+                <span class="player-name" id="name-p1">Aku</span>
+              </div>
+              <span class="player-score" id="score-p1">0</span>
+            </div>
+
+            <div class="turn-vs-badge">
+              <span class="vs-text">VS</span>
+              <span class="draw-count" id="score-draw">Seri: 0</span>
+            </div>
+
+            <div class="turn-player-card player-2" id="turn-card-p2">
+              <span class="player-symbol">💖</span>
+              <div class="player-info">
+                <span class="player-label">Pemain 2</span>
+                <span class="player-name" id="name-p2">Kamu</span>
+              </div>
+              <span class="player-score" id="score-p2">0</span>
+            </div>
+          </div>
+
+          <!-- Dynamic Status Text -->
+          <div class="game-status-line" id="game-status-line">
+            <span class="pulse-sparkle">✨</span>
+            <span id="game-status-text">Giliran <strong>Aku (👑)</strong> - Pilih kotakmu!</span>
+            <span class="pulse-sparkle">✨</span>
+          </div>
+
+          <!-- 3x3 Luxury Game Board -->
+          <div class="board-wrapper">
+            <div class="tictactoe-board" id="tictactoe-board">
+              <button class="board-cell" data-index="0" type="button" aria-label="Kotak 1"></button>
+              <button class="board-cell" data-index="1" type="button" aria-label="Kotak 2"></button>
+              <button class="board-cell" data-index="2" type="button" aria-label="Kotak 3"></button>
+              <button class="board-cell" data-index="3" type="button" aria-label="Kotak 4"></button>
+              <button class="board-cell" data-index="4" type="button" aria-label="Kotak 5"></button>
+              <button class="board-cell" data-index="5" type="button" aria-label="Kotak 6"></button>
+              <button class="board-cell" data-index="6" type="button" aria-label="Kotak 7"></button>
+              <button class="board-cell" data-index="7" type="button" aria-label="Kotak 8"></button>
+              <button class="board-cell" data-index="8" type="button" aria-label="Kotak 9"></button>
+            </div>
+            <!-- Win Line Indicator -->
+            <div class="win-strike-line hidden" id="win-strike-line"></div>
+          </div>
+
+          <!-- Winner Reward Announcement Popup Card -->
+          <div class="game-reward-card hidden" id="game-reward-card">
+            <div class="reward-crown-glow">👑✨</div>
+            <h3 class="reward-title" id="reward-winner-text">Selamat, Kamu Menang!</h3>
+            <p class="reward-subtitle">Hadiah Romantis Ronde Ini:</p>
+            <div class="reward-box">
+              <i class="fa-solid fa-gift"></i>
+              <span id="reward-content-text">Pemenang berhak minta 1 pelukan erat & ciuman hangat!</span>
+            </div>
+          </div>
+
+          <!-- Game Controls Footer -->
+          <div class="game-controls">
+            <button class="game-action-btn primary" id="reset-board-btn" type="button">
+              <i class="fa-solid fa-rotate-right"></i> Main Ronde Baru
+            </button>
+            <button class="game-action-btn secondary" id="reset-score-btn" type="button">
+              <i class="fa-solid fa-arrow-rotate-left"></i> Reset Skor
+            </button>
+          </div>
+        </div>
+
+        <!-- ==========================================
+           GAME 2: KARTU RAHASIA & TANTANGAN CINTA BERDUA
+           ========================================== -->
+        <div id="game-tab-lovecards" class="game-tab-panel">
+          <div class="lovecards-intro">
+            <div class="lovecards-turn-pill" id="card-turn-pill">
+              <i class="fa-solid fa-crown"></i>
+              <span>Giliran: <strong id="card-turn-name">Aku</strong> yang Membuka Kartu</span>
+            </div>
+            <p class="lovecards-hint">
+              Sentuh kartu emas di bawah untuk membuka pertanyaan intim, kenangan manis, atau tantangan berdua secara bergantian!
+            </p>
+          </div>
+
+          <!-- 3D Flippable Royal Gold Card -->
+          <div class="lovecard-scene" id="lovecard-scene">
+            <div class="lovecard-3d" id="lovecard-3d">
+              <!-- FRONT OF CARD (Decorated Royal Gold Crest) -->
+              <div class="lovecard-face lovecard-front">
+                <div class="card-gold-frame"></div>
+                <div class="card-front-content">
+                  <div class="front-crest">
+                    <span class="front-crest-iv">IV</span>
+                  </div>
+                  <h4 class="front-title">Kartu Rahasia Cinta</h4>
+                  <div class="front-divider">
+                    <span>✧</span>
+                    <i class="fa-solid fa-heart"></i>
+                    <span>✧</span>
+                  </div>
+                  <p class="front-tap-prompt">Sentuh Untuk Membuka ✨</p>
+                </div>
+              </div>
+
+              <!-- BACK OF CARD (Prompt / Truth / Dare Revealed) -->
+              <div class="lovecard-face lovecard-back">
+                <div class="card-gold-frame"></div>
+                <div class="card-back-content">
+                  <span class="card-category-badge" id="card-category-badge">✨ Momen Indah</span>
+                  <p class="card-prompt-text" id="card-prompt-text">
+                    "Apa hal pertama yang terlintas di pikiranmu saat pertama kali kita balikan di 20.07.2026?"
+                  </p>
+                  <div class="card-prompt-note">
+                    <i class="fa-solid fa-quote-left"></i> Jawab dengan jujur & tatap mata pasanganmu!
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lovecard-controls">
+            <button class="game-action-btn primary" id="next-card-btn" type="button">
+              <span>Ganti Giliran & Kartu Baru</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
           </div>
         </div>
       </div>

@@ -18,6 +18,19 @@
   let isUnlocked = false;
   let isMusicPlaying = false;
   let isGateTransitioning = false;
+  const SLIDE_TRANSITION_MS = 800;
+
+  // Preload all gallery photos into browser memory for silky-smooth 60fps transitions without decode stutter
+  const PHOTO_PRELOAD_LIST = [
+    'foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg',
+    'foto5.jpg', 'foto6.jpg', 'foto7.jpg', 'foto8.jpg',
+    'foto9.jpg', 'foto10.jpg', 'foto11.jpg', 'foto12.jpg', 'foto13.jpg'
+  ];
+  PHOTO_PRELOAD_LIST.forEach(src => {
+    const img = new Image();
+    img.decoding = 'async';
+    img.src = src;
+  });
 
   // --- DOM ELEMENTS ---
   const gateScreen = document.getElementById('gate-screen');
@@ -47,6 +60,7 @@
   const openEditModalBtn = document.getElementById('open-edit-modal');
   const closeEditBtn = document.getElementById('close-edit-btn');
   const editModal = document.getElementById('edit-modal');
+  const minigameModal = document.getElementById('minigame-modal');
   const triggerConfettiBtn = document.getElementById('trigger-confetti-btn');
 
   const petalCanvas = document.getElementById('petal-canvas');
@@ -99,9 +113,9 @@
             flowerGateCurtain.style.display = 'none';
           }
           isGateTransitioning = false;
-        }, 900);
-      }, 350);
-    }, 850);
+        }, 1000);
+      }, 300);
+    }, 200);
   }
 
   // HANYA tombol "Buka Pintu Kenangan" yang dapat membuka gerbang
@@ -170,7 +184,7 @@
       if (currentSlide === 5) {
         triggerGrandConfetti();
       }
-    }, 850);
+    }, SLIDE_TRANSITION_MS);
   }
 
   function goToNextSlide() {
@@ -492,8 +506,9 @@
   // 5. LIGHTWEIGHT ROSE PETAL & FIREFLY PARTICLE ENGINE (CANVAS 60FPS)
   // ==========================================================================
   function initPetalCanvas() {
-    if (!petalCanvas) return;
+    if (!petalCanvas || !petalCanvas.getContext) return;
     const ctx = petalCanvas.getContext('2d');
+    if (!ctx) return;
     let width = (petalCanvas.width = window.innerWidth);
     let height = (petalCanvas.height = window.innerHeight);
 
@@ -914,6 +929,9 @@
       if (editModal && !editModal.classList.contains('hidden')) {
         closeModal(editModal);
       }
+      if (minigameModal && !minigameModal.classList.contains('hidden')) {
+        minigameModal.classList.add('hidden');
+      }
     }
   });
 
@@ -1120,6 +1138,325 @@
       img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23C68B59"/><stop offset="100%" stop-color="%232A1A12"/></linearGradient></defs><rect width="600" height="600" fill="url(%23g)"/><text x="50%" y="46%" font-size="64" text-anchor="middle" fill="%23FDF6EE">🤎</text><text x="50%" y="56%" font-family="sans-serif" font-size="24" text-anchor="middle" fill="%23FDF6EE" font-weight="600">4 Years of Us</text></svg>';
     });
   });
+
+  // ==========================================================================
+  // 8. ROMANTIC COUPLE'S MINIGAME PAVILION (MAIN BERDUA GANTI-GANTIAN)
+  // ==========================================================================
+  const openMinigameBtn = document.getElementById('open-minigame-btn');
+  const closeGameBtn = document.getElementById('close-game-btn');
+  const gameTabBtns = document.querySelectorAll('.game-tab-btn');
+  const gameTabPanels = document.querySelectorAll('.game-tab-panel');
+
+  // Open & Close Modal
+  if (openMinigameBtn && minigameModal) {
+    openMinigameBtn.addEventListener('click', () => {
+      minigameModal.classList.remove('hidden');
+      playSuccessFanfare();
+      triggerGrandConfetti();
+    });
+  }
+
+  if (closeGameBtn && minigameModal) {
+    closeGameBtn.addEventListener('click', () => {
+      minigameModal.classList.add('hidden');
+      playChime(420, 0.1);
+    });
+  }
+
+  if (minigameModal) {
+    minigameModal.addEventListener('click', (e) => {
+      if (e.target === minigameModal) {
+        minigameModal.classList.add('hidden');
+      }
+    });
+  }
+
+  // Switch between Tic-Tac-Toe and Love Cards
+  gameTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetTab = btn.getAttribute('data-game-tab');
+      gameTabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      gameTabPanels.forEach(panel => {
+        if (panel.id === `game-tab-${targetTab}`) {
+          panel.classList.add('active');
+        } else {
+          panel.classList.remove('active');
+        }
+      });
+      playChime(560, 0.1);
+    });
+  });
+
+  // --- GAME 1: TIC-TAC-TOE CONTROLLER ---
+  const boardCells = document.querySelectorAll('.board-cell');
+  const turnCardP1 = document.getElementById('turn-card-p1');
+  const turnCardP2 = document.getElementById('turn-card-p2');
+  const gameStatusText = document.getElementById('game-status-text');
+  const scoreP1El = document.getElementById('score-p1');
+  const scoreP2El = document.getElementById('score-p2');
+  const scoreDrawEl = document.getElementById('score-draw');
+  const gameRewardCard = document.getElementById('game-reward-card');
+  const rewardWinnerText = document.getElementById('reward-winner-text');
+  const rewardContentText = document.getElementById('reward-content-text');
+  const resetBoardBtn = document.getElementById('reset-board-btn');
+  const resetScoreBtn = document.getElementById('reset-score-btn');
+  const nameP1El = document.getElementById('name-p1');
+  const nameP2El = document.getElementById('name-p2');
+
+  let tttBoard = Array(9).fill(null);
+  let tttCurrentPlayer = 'P1'; // 'P1' (👑) or 'P2' (💖)
+  let tttStartingPlayer = 'P1';
+  let tttP1Score = 0;
+  let tttP2Score = 0;
+  let tttDrawCount = 0;
+  let tttGameOver = false;
+
+  const ROMANTIC_REWARDS = [
+    '👑 Pemenang berhak minta 1 pelukan hangat paling erat selama 15 detik!',
+    '💖 Yang kalah harus traktir minuman atau camilan favorit pemenang minggu ini!',
+    '🤎 Pemenang boleh request dipijat pundak atau dimanjain seharian!',
+    '✨ Yang kalah harus sebutkan 3 hal yang paling disyukuri dari pasangannya!',
+    '🌹 Pemenang berhak memilih tempat jalan-jalan atau kencan berikutnya!',
+    '💌 Yang kalah harus bisikkan satu kalimat cinta paling manis di telinga pemenang!',
+    '🧁 Pemenang boleh minta disuapin makanan/dessert favorit!',
+    '📸 Yang kalah harus pasang foto berdua pilihan pemenang di lockscreen HP!',
+    '🎶 Yang kalah harus nyanyiin lagu kesukaan pemenang (atau lagu Magnolia)!',
+    '💍 Pemenang berhak dapat kecupan manis di kening dan kedua pipi!'
+  ];
+
+  const WINNING_COMBOS = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+  ];
+
+  function getPlayerName(player) {
+    if (player === 'P1') {
+      return (nameP1El && nameP1El.textContent.trim()) || 'Aku';
+    }
+    return (nameP2El && nameP2El.textContent.trim()) || 'Kamu';
+  }
+
+  function updateTTTTurnUI() {
+    const p1Name = getPlayerName('P1');
+    const p2Name = getPlayerName('P2');
+
+    if (tttCurrentPlayer === 'P1') {
+      if (turnCardP1) turnCardP1.classList.add('active');
+      if (turnCardP2) turnCardP2.classList.remove('active');
+      if (gameStatusText) {
+        gameStatusText.innerHTML = `Giliran <strong>${p1Name} (👑)</strong> - Sentuh kotakmu!`;
+      }
+    } else {
+      if (turnCardP2) turnCardP2.classList.add('active');
+      if (turnCardP1) turnCardP1.classList.remove('active');
+      if (gameStatusText) {
+        gameStatusText.innerHTML = `Giliran <strong>${p2Name} (💖)</strong> - Sentuh kotakmu!`;
+      }
+    }
+  }
+
+  function handleCellClick(e) {
+    if (tttGameOver) return;
+    const cell = e.currentTarget;
+    const index = parseInt(cell.getAttribute('data-index'));
+
+    if (tttBoard[index] !== null) return;
+
+    tttBoard[index] = tttCurrentPlayer;
+    const symbol = tttCurrentPlayer === 'P1' ? '👑' : '💖';
+    cell.innerHTML = `<span class="mark-pop">${symbol}</span>`;
+    cell.disabled = true;
+
+    if (tttCurrentPlayer === 'P1') {
+      playTone(587.33, 0.15, 'sine', 0.2);
+    } else {
+      playTone(783.99, 0.15, 'triangle', 0.2);
+    }
+
+    const winningCombo = checkTTTWin(tttCurrentPlayer);
+    if (winningCombo) {
+      tttGameOver = true;
+      highlightWinningCells(winningCombo);
+
+      const winnerName = getPlayerName(tttCurrentPlayer);
+      if (tttCurrentPlayer === 'P1') {
+        tttP1Score++;
+        if (scoreP1El) scoreP1El.textContent = tttP1Score;
+      } else {
+        tttP2Score++;
+        if (scoreP2El) scoreP2El.textContent = tttP2Score;
+      }
+
+      if (gameStatusText) {
+        gameStatusText.innerHTML = `🎉 <strong>${winnerName}</strong> Menang Ronde Ini!`;
+      }
+
+      playSuccessFanfare();
+      triggerGrandConfetti();
+
+      if (gameRewardCard && rewardWinnerText && rewardContentText) {
+        rewardWinnerText.textContent = `Selamat, ${winnerName} Menang! (${symbol})`;
+        const randomReward = ROMANTIC_REWARDS[Math.floor(Math.random() * ROMANTIC_REWARDS.length)];
+        rewardContentText.textContent = randomReward;
+        gameRewardCard.classList.remove('hidden');
+      }
+      return;
+    }
+
+    if (tttBoard.every(cell => cell !== null)) {
+      tttGameOver = true;
+      tttDrawCount++;
+      if (scoreDrawEl) scoreDrawEl.textContent = `Seri: ${tttDrawCount}`;
+      if (gameStatusText) {
+        gameStatusText.innerHTML = `🕊️ <strong>Hasil Seri!</strong> Dua hati sama hebatnya & saling melengkapi ❤️`;
+      }
+      playChime(440, 0.25);
+      return;
+    }
+
+    tttCurrentPlayer = tttCurrentPlayer === 'P1' ? 'P2' : 'P1';
+    updateTTTTurnUI();
+  }
+
+  function checkTTTWin(player) {
+    for (const combo of WINNING_COMBOS) {
+      const [a, b, c] = combo;
+      if (tttBoard[a] === player && tttBoard[b] === player && tttBoard[c] === player) {
+        return combo;
+      }
+    }
+    return null;
+  }
+
+  function highlightWinningCells(combo) {
+    combo.forEach(idx => {
+      const cell = document.querySelector(`.board-cell[data-index="${idx}"]`);
+      if (cell) cell.classList.add('win-cell');
+    });
+  }
+
+  function resetTTTBoard() {
+    tttBoard = Array(9).fill(null);
+    boardCells.forEach(cell => {
+      cell.innerHTML = '';
+      cell.disabled = false;
+      cell.classList.remove('win-cell');
+    });
+    if (gameRewardCard) gameRewardCard.classList.add('hidden');
+
+    tttStartingPlayer = tttStartingPlayer === 'P1' ? 'P2' : 'P1';
+    tttCurrentPlayer = tttStartingPlayer;
+    tttGameOver = false;
+
+    updateTTTTurnUI();
+    playChime(500, 0.1);
+  }
+
+  function resetTTTScores() {
+    tttP1Score = 0;
+    tttP2Score = 0;
+    tttDrawCount = 0;
+    if (scoreP1El) scoreP1El.textContent = '0';
+    if (scoreP2El) scoreP2El.textContent = '0';
+    if (scoreDrawEl) scoreDrawEl.textContent = 'Seri: 0';
+    resetTTTBoard();
+  }
+
+  boardCells.forEach(cell => {
+    cell.addEventListener('click', handleCellClick);
+  });
+
+  if (resetBoardBtn) resetBoardBtn.addEventListener('click', resetTTTBoard);
+  if (resetScoreBtn) resetScoreBtn.addEventListener('click', resetTTTScores);
+
+  // --- GAME 2: KARTU RAHASIA CINTA BERDUA ---
+  const lovecard3d = document.getElementById('lovecard-3d');
+  const cardTurnName = document.getElementById('card-turn-name');
+  const cardCategoryBadge = document.getElementById('card-category-badge');
+  const cardPromptText = document.getElementById('card-prompt-text');
+  const nextCardBtn = document.getElementById('next-card-btn');
+
+  let cardCurrentPlayer = 'P1';
+  let isCardFlipped = false;
+
+  const ROMANTIC_CARDS = [
+    { cat: '✨ Momen Indah', prompt: 'Apa hal pertama yang terlintas di pikiranmu saat pertama kali kita balikan di 20 Juli 2026?' },
+    { cat: '💖 Tantangan Manis', prompt: 'Tatap mata pasanganmu selama 10 detik tanpa tertawa, lalu peluk erat-erat!' },
+    { cat: '🍂 Deep Talk', prompt: 'Menurutmu, apa perubahan paling dewasa dan terbaik dari hubungan kita selama 4 tahun ini?' },
+    { cat: '✨ Momen Indah', prompt: 'Sebutkan satu lagu yang kalau kamu dengar, langsung bikin kamu kangen dan teringat padaku.' },
+    { cat: '💖 Tantangan Manis', prompt: 'Kecup kening pasanganmu dan bisikkan satu doa terbaikmu buat masa depan kita berdua.' },
+    { cat: '🍂 Deep Talk', prompt: 'Kapan terakhir kali kamu merasa sangat bangga dan bersyukur memiliki aku di hidupmu?' },
+    { cat: '👑 Tebak Pasangan', prompt: 'Sebutkan satu makanan atau kebiasaan kecil dariku yang paling bikin kamu gemas!' },
+    { cat: '💖 Tantangan Manis', prompt: 'Pegang kedua tangan pasanganmu dan sebutkan 3 hal yang paling kamu sukai dari senyumannya.' },
+    { cat: '🍂 Deep Talk', prompt: 'Kalau kita dikasih 1 hari libur tanpa HP dan tugas sama sekali, kencan seperti apa yang paling kamu impikan?' },
+    { cat: '✨ Momen Indah', prompt: 'Ceritakan momen lucu atau konyol kita berdua yang sampai sekarang masih bikin kamu tersenyum sendiri.' },
+    { cat: '💖 Tantangan Manis', prompt: 'Katakan "Aku sayang banget sama kamu" dengan 3 nada bicara berbeda: manja, tegas, dan bisikan lembut!' },
+    { cat: '🍂 Deep Talk', prompt: 'Apa satu impian masa depan kita berdua yang paling ingin kamu wujudkan bersama aku?' },
+    { cat: '👑 Tebak Pasangan', prompt: 'Menurutmu, hal apa yang paling bisa bikin aku langsung luluh dan ceria saat lagi ngambek atau capek?' },
+    { cat: '✨ Momen Indah', prompt: 'Dari semua tempat yang pernah kita datangi berdua, mana tempat yang paling berkesan di hatimu?' },
+    { cat: '💖 Tantangan Manis', prompt: 'Berikan pelukan hangat dari belakang (backhug) dan sebutkan satu panggilan sayang paling tulus.' },
+    { cat: '🍂 Deep Talk', prompt: 'Hal kecil apa yang sering aku lakukan tanpa sadar, tapi ternyata bikin hatimu hangat?' },
+    { cat: '👑 Tebak Pasangan', prompt: 'Kapan momen di mana kamu merasa paling jatuh cinta sedalam-dalamnya padaku?' },
+    { cat: '💖 Tantangan Manis', prompt: 'Tiru ekspresi wajah lucuku saat lagi ngambek atau merajuk, lalu kecup pipiku!' }
+  ];
+
+  let unvisitedCardIndices = [];
+
+  function drawNextCardPrompt() {
+    if (unvisitedCardIndices.length === 0) {
+      unvisitedCardIndices = ROMANTIC_CARDS.map((_, i) => i);
+    }
+    const randomIndex = Math.floor(Math.random() * unvisitedCardIndices.length);
+    const cardIdx = unvisitedCardIndices.splice(randomIndex, 1)[0];
+    const cardData = ROMANTIC_CARDS[cardIdx];
+
+    if (cardCategoryBadge) cardCategoryBadge.textContent = cardData.cat;
+    if (cardPromptText) cardPromptText.textContent = `"${cardData.prompt}"`;
+  }
+
+  function updateCardTurnUI() {
+    const currentName = getPlayerName(cardCurrentPlayer);
+    if (cardTurnName) cardTurnName.textContent = currentName;
+  }
+
+  if (lovecard3d) {
+    lovecard3d.addEventListener('click', () => {
+      isCardFlipped = !isCardFlipped;
+      if (isCardFlipped) {
+        lovecard3d.classList.add('flipped');
+        playSealPopSound();
+        playChime(660, 0.15);
+      } else {
+        lovecard3d.classList.remove('flipped');
+        playChime(480, 0.1);
+      }
+    });
+  }
+
+  if (nextCardBtn) {
+    nextCardBtn.addEventListener('click', () => {
+      if (isCardFlipped && lovecard3d) {
+        lovecard3d.classList.remove('flipped');
+        isCardFlipped = false;
+      }
+
+      cardCurrentPlayer = cardCurrentPlayer === 'P1' ? 'P2' : 'P1';
+      updateCardTurnUI();
+
+      setTimeout(() => {
+        drawNextCardPrompt();
+      }, 250);
+
+      playChime(620, 0.12);
+    });
+  }
+
+  drawNextCardPrompt();
+  updateTTTTurnUI();
+  updateCardTurnUI();
 
   // Initialize Customizations on Boot
   loadCustomizations();

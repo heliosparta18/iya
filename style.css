@@ -43,6 +43,7 @@
 html, body {
   width: 100%;
   height: 100%;
+  height: 100dvh;
   overflow-x: hidden;
   font-family: var(--font-sans);
   background: radial-gradient(circle at 50% 30%, var(--bg-gradient-mid) 0%, var(--bg-gradient-start) 65%, var(--bg-gradient-end) 100%);
@@ -525,7 +526,10 @@ html, body {
    2. MAIN ANNIVERSARY EXPERIENCE (HALAMAN ASLI)
    ========================================================================== */
 .main-container {
+  height: 100%;
+  height: 100dvh;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -933,15 +937,17 @@ html, body {
   flex-wrap: wrap;
   margin-top: 8px;
 }
-.cta-celebrate-btn, .cta-letter-btn {
-  padding: 13px 22px;
+.cta-celebrate-btn, .cta-letter-btn, .cta-game-btn {
+  padding: 12px 20px;
   border-radius: 30px;
-  font-size: 0.94rem;
+  font-size: 0.92rem;
   font-weight: 600;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
   border: none;
   transition: all 0.3s;
 }
@@ -964,6 +970,20 @@ html, body {
   background: rgba(255, 255, 255, 0.18);
   border-color: #E5A965;
   transform: translateY(-3px);
+}
+.cta-game-btn {
+  background: linear-gradient(135deg, rgba(229, 169, 101, 0.28) 0%, rgba(140, 83, 60, 0.55) 100%);
+  color: #FFFDF9;
+  border: 1px solid rgba(229, 169, 101, 0.5);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 16px rgba(229, 169, 101, 0.2);
+  justify-content: center;
+  text-align: center;
+}
+.cta-game-btn:hover {
+  background: linear-gradient(135deg, rgba(229, 169, 101, 0.45) 0%, rgba(140, 83, 60, 0.75) 100%);
+  border-color: #F3C285;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(198, 139, 89, 0.5);
 }
 
 .signature-block {
@@ -1000,8 +1020,22 @@ html, body {
 /* Individual Motion Photo Container */
 .motion-photo {
   position: absolute;
-  transition: transform 0.85s var(--motion-curve), opacity 0.75s ease;
-  will-change: transform, opacity;
+  translate: 0 0;
+  scale: 1;
+  opacity: 1;
+  transition: translate 0.65s var(--motion-curve), 
+              scale 0.65s var(--motion-curve), 
+              opacity 0.55s ease;
+  will-change: translate, scale, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.gallery-photo,
+.photo-frame img {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 /* Photo Frames (Polaroids, Filmstrip) */
@@ -1191,6 +1225,28 @@ html, body {
   left: 25px;
   transform: rotate(-145deg);
 }
+.viewport-flower-decor.bottom-right {
+  bottom: 18px;
+  right: 25px;
+  transform: rotate(145deg);
+}
+
+/* Botanical garland framing the bottom of the main viewport */
+.viewport-bottom-garland {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 52px;
+  background-image: url('floral-garland.svg');
+  background-repeat: repeat-x;
+  background-size: 480px 52px;
+  transform: scaleY(-1);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 -4px 12px rgba(0, 0, 0, 0.5));
+}
 
 .tag-badge .tag-flower-icon {
   display: inline-block;
@@ -1251,110 +1307,142 @@ html, body {
    TRANSITION MOTION DYNAMICS (DARI TEMPAT A KE B KETIKA NEXT/PREV!)
    -------------------------------------------------------------------------- */
 
-/* LEAVING TO NEXT: Element glides away from Position A to Position B with fade */
+/* LEAVING TO NEXT: Element glides away smoothly with fade */
 .slide-item.leaving-to-next .photo-composition .motion-photo:nth-child(1) {
-  transform: translate3d(-180px, -60px, 0) rotate(-16deg) scale(0.85);
+  translate: -80px -20px;
+  scale: 0.9;
   opacity: 0;
+  transition: translate 0.65s var(--motion-curve), scale 0.65s var(--motion-curve), opacity 0.55s ease;
   transition-delay: 0s;
 }
 .slide-item.leaving-to-next .photo-composition .motion-photo:nth-child(2) {
-  transform: translate3d(200px, 80px, 0) rotate(20deg) scale(0.8);
+  translate: 90px 25px;
+  scale: 0.9;
   opacity: 0;
-  transition-delay: 0.08s;
+  transition: translate 0.65s var(--motion-curve), scale 0.65s var(--motion-curve), opacity 0.55s ease;
+  transition-delay: 0.05s;
 }
 .slide-item.leaving-to-next .photo-composition .motion-photo:nth-child(3) {
-  transform: translate3d(-60px, 160px, 0) rotate(-12deg) scale(0.85);
+  translate: -35px 50px;
+  scale: 0.9;
   opacity: 0;
-  transition-delay: 0.16s;
+  transition: translate 0.65s var(--motion-curve), scale 0.65s var(--motion-curve), opacity 0.55s ease;
+  transition-delay: 0.1s;
 }
 .slide-item.leaving-to-next .slide-text-side {
-  transform: translate3d(-60px, 0, 0);
+  translate: -35px 0;
   opacity: 0;
-  transition: all 0.6s ease;
+  transition: translate 0.55s var(--motion-curve), opacity 0.5s ease;
+}
+.slide-item.leaving-to-next .floating-sticker {
+  opacity: 0;
+  scale: 0.88;
+  transition: opacity 0.45s ease, scale 0.45s ease;
 }
 
-/* ENTERING FROM NEXT: Element glides into place from Position A */
+/* ENTERING FROM NEXT: Element glides seamlessly into resting position */
 .slide-item.entering-from-next .photo-composition .motion-photo:nth-child(1) {
-  animation: enterFromRight1 0.9s var(--motion-curve) forwards;
+  animation: enterPhotoRight1 0.65s var(--motion-curve) 0s both;
 }
 .slide-item.entering-from-next .photo-composition .motion-photo:nth-child(2) {
-  animation: enterFromRight2 0.95s var(--motion-curve) 0.08s forwards;
+  animation: enterPhotoRight2 0.65s var(--motion-curve) 0.06s both;
 }
 .slide-item.entering-from-next .photo-composition .motion-photo:nth-child(3) {
-  animation: enterFromRight3 1s var(--motion-curve) 0.16s forwards;
+  animation: enterPhotoRight3 0.65s var(--motion-curve) 0.12s both;
 }
 .slide-item.entering-from-next .slide-text-side {
-  animation: enterTextRight 0.8s var(--motion-curve) forwards;
+  animation: enterTextRight 0.65s var(--motion-curve) both;
+}
+.slide-item.entering-from-next .floating-sticker {
+  animation: stickerEnter 0.6s var(--motion-curve) 0.1s both;
 }
 
-@keyframes enterFromRight1 {
-  from { transform: translate3d(220px, -80px, 0) rotate(14deg) scale(0.82); opacity: 0; }
-  to { transform: rotate(-5deg) translate3d(0, 0, 0) scale(1); opacity: 1; }
+@keyframes enterPhotoRight1 {
+  from { translate: 90px -20px; scale: 0.9; opacity: 0; }
+  to { translate: 0 0; scale: 1; opacity: 1; }
 }
-@keyframes enterFromRight2 {
-  from { transform: translate3d(260px, 100px, 0) rotate(24deg) scale(0.8); opacity: 0; }
-  to { transform: rotate(7deg) translate3d(0, 0, 0) scale(1); opacity: 1; }
+@keyframes enterPhotoRight2 {
+  from { translate: 110px 25px; scale: 0.9; opacity: 0; }
+  to { translate: 0 0; scale: 1; opacity: 1; }
 }
-@keyframes enterFromRight3 {
-  from { transform: translate3d(180px, 140px, 0) rotate(-10deg) scale(0.84); opacity: 0; }
-  to { transform: rotate(-3deg) translate3d(0, 0, 0) scale(1); opacity: 1; }
+@keyframes enterPhotoRight3 {
+  from { translate: 70px 40px; scale: 0.9; opacity: 0; }
+  to { translate: 0 0; scale: 1; opacity: 1; }
 }
 @keyframes enterTextRight {
-  from { transform: translate3d(60px, 0, 0); opacity: 0; }
-  to { transform: translate3d(0, 0, 0); opacity: 1; }
+  from { translate: 40px 0; opacity: 0; }
+  to { translate: 0 0; opacity: 1; }
 }
 
-/* LEAVING TO PREV: Opposite direction */
+/* LEAVING TO PREV: Opposite direction with graceful fade */
 .slide-item.leaving-to-prev .photo-composition .motion-photo:nth-child(1) {
-  transform: translate3d(180px, 60px, 0) rotate(16deg) scale(0.85);
+  translate: 80px 20px;
+  scale: 0.9;
   opacity: 0;
+  transition: translate 0.65s var(--motion-curve), scale 0.65s var(--motion-curve), opacity 0.55s ease;
   transition-delay: 0s;
 }
 .slide-item.leaving-to-prev .photo-composition .motion-photo:nth-child(2) {
-  transform: translate3d(-200px, -80px, 0) rotate(-20deg) scale(0.8);
+  translate: -90px -25px;
+  scale: 0.9;
   opacity: 0;
-  transition-delay: 0.08s;
+  transition: translate 0.65s var(--motion-curve), scale 0.65s var(--motion-curve), opacity 0.55s ease;
+  transition-delay: 0.05s;
 }
 .slide-item.leaving-to-prev .photo-composition .motion-photo:nth-child(3) {
-  transform: translate3d(60px, -160px, 0) rotate(12deg) scale(0.85);
+  translate: 35px -50px;
+  scale: 0.9;
   opacity: 0;
-  transition-delay: 0.16s;
+  transition: translate 0.65s var(--motion-curve), scale 0.65s var(--motion-curve), opacity 0.55s ease;
+  transition-delay: 0.1s;
 }
 .slide-item.leaving-to-prev .slide-text-side {
-  transform: translate3d(60px, 0, 0);
+  translate: 35px 0;
   opacity: 0;
-  transition: all 0.6s ease;
+  transition: translate 0.55s var(--motion-curve), opacity 0.5s ease;
+}
+.slide-item.leaving-to-prev .floating-sticker {
+  opacity: 0;
+  scale: 0.88;
+  transition: opacity 0.45s ease, scale 0.45s ease;
 }
 
-/* ENTERING FROM PREV */
+/* ENTERING FROM PREV: Element glides into place from left */
 .slide-item.entering-from-prev .photo-composition .motion-photo:nth-child(1) {
-  animation: enterFromLeft1 0.9s var(--motion-curve) forwards;
+  animation: enterPhotoLeft1 0.65s var(--motion-curve) 0s both;
 }
 .slide-item.entering-from-prev .photo-composition .motion-photo:nth-child(2) {
-  animation: enterFromLeft2 0.95s var(--motion-curve) 0.08s forwards;
+  animation: enterPhotoLeft2 0.65s var(--motion-curve) 0.06s both;
 }
 .slide-item.entering-from-prev .photo-composition .motion-photo:nth-child(3) {
-  animation: enterFromLeft3 1s var(--motion-curve) 0.16s forwards;
+  animation: enterPhotoLeft3 0.65s var(--motion-curve) 0.12s both;
 }
 .slide-item.entering-from-prev .slide-text-side {
-  animation: enterTextLeft 0.8s var(--motion-curve) forwards;
+  animation: enterTextLeft 0.65s var(--motion-curve) both;
+}
+.slide-item.entering-from-prev .floating-sticker {
+  animation: stickerEnter 0.6s var(--motion-curve) 0.1s both;
 }
 
-@keyframes enterFromLeft1 {
-  from { transform: translate3d(-220px, 80px, 0) rotate(-14deg) scale(0.82); opacity: 0; }
-  to { transform: rotate(-5deg) translate3d(0, 0, 0) scale(1); opacity: 1; }
+@keyframes enterPhotoLeft1 {
+  from { translate: -90px 20px; scale: 0.9; opacity: 0; }
+  to { translate: 0 0; scale: 1; opacity: 1; }
 }
-@keyframes enterFromLeft2 {
-  from { transform: translate3d(-260px, -100px, 0) rotate(-24deg) scale(0.8); opacity: 0; }
-  to { transform: rotate(7deg) translate3d(0, 0, 0) scale(1); opacity: 1; }
+@keyframes enterPhotoLeft2 {
+  from { translate: -110px -25px; scale: 0.9; opacity: 0; }
+  to { translate: 0 0; scale: 1; opacity: 1; }
 }
-@keyframes enterFromLeft3 {
-  from { transform: translate3d(-180px, -140px, 0) rotate(10deg) scale(0.84); opacity: 0; }
-  to { transform: rotate(-3deg) translate3d(0, 0, 0) scale(1); opacity: 1; }
+@keyframes enterPhotoLeft3 {
+  from { translate: -70px -40px; scale: 0.9; opacity: 0; }
+  to { translate: 0 0; scale: 1; opacity: 1; }
 }
 @keyframes enterTextLeft {
-  from { transform: translate3d(-60px, 0, 0); opacity: 0; }
-  to { transform: translate3d(0, 0, 0); opacity: 1; }
+  from { translate: -40px 0; opacity: 0; }
+  to { translate: 0 0; opacity: 1; }
+}
+@keyframes stickerEnter {
+  from { opacity: 0; scale: 0.88; }
+  to { opacity: 1; scale: 1; }
 }
 
 /* ==========================================================================
@@ -1363,6 +1451,7 @@ html, body {
 .experience-footer {
   height: 72px;
   padding: 0 40px;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2221,6 +2310,548 @@ html, body {
 }
 
 /* ==========================================================================
+   6.5 ROMANTIC COUPLE'S MINIGAME PAVILION
+   ========================================================================== */
+.game-modal-container {
+  background: radial-gradient(circle at 50% 10%, #2A170E 0%, #1A0D07 60%, #0E0704 100%);
+  border: 1px solid rgba(229, 169, 101, 0.45);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(198, 139, 89, 0.28);
+  border-radius: 28px;
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  animation: modalScaleUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.game-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(229, 169, 101, 0.18);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.game-header-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--gold-accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  text-shadow: 0 0 12px rgba(229, 169, 101, 0.4);
+}
+
+.game-header .modal-close-btn {
+  position: static;
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s;
+}
+.game-header .modal-close-btn:hover {
+  background: rgba(198, 139, 89, 0.35);
+  border-color: var(--gold-accent);
+  transform: rotate(90deg) scale(1.08);
+}
+
+/* Game Mode Tabs */
+.game-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 20px;
+  background: rgba(20, 10, 6, 0.45);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.game-tab-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(229, 169, 101, 0.25);
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  font-weight: 600;
+  padding: 9px 12px;
+  border-radius: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s;
+}
+.game-tab-btn:hover {
+  background: rgba(198, 139, 89, 0.2);
+  color: #FFFDF9;
+}
+.game-tab-btn.active {
+  background: linear-gradient(135deg, var(--primary-brown) 0%, var(--primary-deep) 100%);
+  border-color: var(--gold-accent);
+  color: #FFFDF9;
+  box-shadow: 0 4px 14px rgba(198, 139, 89, 0.35);
+}
+
+.game-tab-panel {
+  display: none;
+  padding: 18px 24px 22px 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+.game-tab-panel.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- GAME 1: TIC-TAC-TOE STYLES --- */
+.turn-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 440px;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.turn-player-card {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.turn-player-card.active {
+  border-color: var(--gold-accent);
+  background: linear-gradient(135deg, rgba(229, 169, 101, 0.22) 0%, rgba(140, 83, 60, 0.25) 100%);
+  box-shadow: 0 0 20px rgba(229, 169, 101, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  transform: scale(1.03);
+}
+.turn-player-card.player-2.active {
+  border-color: #F48FB1;
+  background: linear-gradient(135deg, rgba(244, 143, 177, 0.22) 0%, rgba(194, 24, 91, 0.22) 100%);
+  box-shadow: 0 0 20px rgba(244, 143, 177, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+.player-symbol {
+  font-size: 1.4rem;
+  filter: drop-shadow(0 0 8px rgba(229, 169, 101, 0.6));
+}
+.player-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+.player-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+}
+.player-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #FFFDF9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.player-score {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gold-accent);
+  padding-left: 4px;
+}
+.turn-vs-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  gap: 2px;
+}
+.vs-text {
+  font-weight: 800;
+  color: rgba(229, 169, 101, 0.8);
+  letter-spacing: 1px;
+}
+.draw-count {
+  font-size: 0.65rem;
+  opacity: 0.75;
+}
+
+.game-status-line {
+  font-size: 0.86rem;
+  color: var(--gold-light);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.pulse-sparkle {
+  color: var(--gold-accent);
+  animation: heartPulse 1.8s infinite ease-in-out;
+}
+
+/* 3x3 Board */
+.board-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1;
+  margin: 4px 0 16px 0;
+}
+.tictactoe-board {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 10px;
+}
+.board-cell {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(229, 169, 101, 0.3);
+  border-radius: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.3rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+.board-cell:hover:not(:disabled) {
+  background: rgba(198, 139, 89, 0.18);
+  border-color: var(--gold-accent);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5), 0 0 18px rgba(229, 169, 101, 0.3);
+}
+.board-cell:disabled {
+  cursor: default;
+}
+.board-cell .mark-pop {
+  display: inline-block;
+  animation: markBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  filter: drop-shadow(0 0 12px rgba(229, 169, 101, 0.7));
+}
+@keyframes markBounce {
+  0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+  70% { transform: scale(1.22) rotate(6deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.board-cell.win-cell {
+  background: linear-gradient(135deg, rgba(229, 169, 101, 0.35) 0%, rgba(140, 83, 60, 0.5) 100%) !important;
+  border-color: #FFFDF9 !important;
+  box-shadow: 0 0 25px rgba(229, 169, 101, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.4) !important;
+  animation: winPulse 1.2s infinite alternate ease-in-out;
+}
+@keyframes winPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+/* Winner Reward Card */
+.game-reward-card {
+  width: 100%;
+  max-width: 440px;
+  background: linear-gradient(135deg, rgba(46, 26, 17, 0.95) 0%, rgba(20, 11, 7, 0.98) 100%);
+  border: 1px solid rgba(229, 169, 101, 0.55);
+  border-radius: 20px;
+  padding: 14px 18px;
+  text-align: center;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(229, 169, 101, 0.3);
+  margin-bottom: 14px;
+  animation: rewardDropIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+@keyframes rewardDropIn {
+  from { opacity: 0; transform: translateY(-15px) scale(0.92); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.game-reward-card.hidden {
+  display: none;
+}
+.reward-crown-glow {
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+}
+.reward-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: #FFFDF9;
+  margin-bottom: 2px;
+}
+.reward-subtitle {
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold-accent);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.reward-box {
+  background: rgba(229, 169, 101, 0.12);
+  border: 1px dashed rgba(229, 169, 101, 0.4);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  color: #FFFDF9;
+  line-height: 1.45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.reward-box i {
+  color: var(--gold-accent);
+  flex-shrink: 0;
+}
+
+/* Game Controls */
+.game-controls {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 440px;
+}
+.game-action-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 24px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s;
+}
+.game-action-btn.primary {
+  background: linear-gradient(135deg, var(--primary-brown) 0%, var(--primary-deep) 100%);
+  border: none;
+  color: #FFFDF9;
+  box-shadow: 0 4px 16px rgba(198, 139, 89, 0.4);
+}
+.game-action-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(198, 139, 89, 0.55);
+}
+.game-action-btn.secondary {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--text-muted);
+}
+.game-action-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFF;
+}
+
+/* --- GAME 2: KARTU RAHASIA CINTA --- */
+.lovecards-intro {
+  text-align: center;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.lovecards-turn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(229, 169, 101, 0.18);
+  border: 1px solid rgba(229, 169, 101, 0.4);
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 0.82rem;
+  color: #FFFDF9;
+}
+.lovecards-turn-pill i {
+  color: var(--gold-accent);
+}
+.lovecards-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  max-width: 380px;
+  line-height: 1.45;
+}
+
+.lovecard-scene {
+  perspective: 1000px;
+  width: 100%;
+  max-width: 360px;
+  height: 230px;
+  margin: 6px 0 18px 0;
+}
+.lovecard-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+}
+.lovecard-3d.flipped {
+  transform: rotateY(180deg);
+}
+
+.lovecard-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.7), 0 0 25px rgba(198, 139, 89, 0.25);
+}
+
+/* Front Face (Royal Monogram Cover) */
+.lovecard-front {
+  background: radial-gradient(circle at 50% 25%, #382014 0%, #20120A 60%, #120904 100%);
+  border: 2px solid rgba(229, 169, 101, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.card-front-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+.front-crest {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #F3C285 0%, #D8985A 50%, #8C533C 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(229, 169, 101, 0.6);
+}
+.front-crest-iv {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1A0D07;
+  letter-spacing: 1px;
+}
+.front-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: #FFFDF9;
+  letter-spacing: 0.5px;
+}
+.front-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gold-accent);
+  font-size: 0.85rem;
+}
+.front-tap-prompt {
+  font-size: 0.76rem;
+  color: var(--gold-accent);
+  background: rgba(229, 169, 101, 0.15);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  animation: pulseTap 2s infinite ease-in-out;
+}
+@keyframes pulseTap {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+/* Back Face (Revealed Question / Challenge) */
+.lovecard-back {
+  background: linear-gradient(145deg, #FDF7EE 0%, #F5ECE0 60%, #E8D9C8 100%);
+  border: 2px solid var(--gold-accent);
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px 24px;
+  color: #2D1A10;
+}
+.card-back-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  width: 100%;
+}
+.card-category-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #8C533C;
+  background: rgba(198, 139, 89, 0.22);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(198, 139, 89, 0.35);
+}
+.card-prompt-text {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: #26150D;
+  font-weight: 600;
+  font-style: italic;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-prompt-note {
+  font-size: 0.74rem;
+  color: #6D4C3D;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.card-prompt-note i {
+  color: var(--primary-brown);
+}
+
+.lovecard-controls {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  justify-content: center;
+}
+.lovecard-controls .game-action-btn {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+/* ==========================================================================
    7. RESPONSIVENESS (MOBILE & TABLET OPTIMIZATIONS)
    ========================================================================== */
 @media (max-width: 1024px) {
@@ -2231,12 +2862,16 @@ html, body {
     padding: 16px 24px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .slide-content-grid {
     grid-template-columns: 1fr;
     gap: 24px;
     text-align: center;
     padding-bottom: 20px;
+    margin: auto auto;
   }
   .slide-text-side {
     align-items: center;
@@ -2299,14 +2934,15 @@ html, body {
     overflow: hidden;
   }
 
-  /* CRITICAL FIX: display: block removes flex centering clip that hid top badges & headers */
+  /* CRITICAL: display: flex with margin: auto centers content gracefully when space permits, preventing awkward empty space at bottom */
   .slide-item {
-    display: block;
+    display: flex;
+    flex-direction: column;
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    padding: 14px 16px 48px 16px;
+    padding: 12px 16px 18px 16px;
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
@@ -2321,8 +2957,8 @@ html, body {
     gap: 12px;
     width: 100%;
     max-width: 440px;
-    margin: 0 auto;
-    padding-bottom: 16px;
+    margin: auto auto;
+    padding-bottom: 8px;
   }
 
   .slide-text-side {
@@ -2482,11 +3118,12 @@ html, body {
     width: 100%;
     margin-top: 6px;
   }
-  .cta-celebrate-btn, .cta-letter-btn {
+  .cta-celebrate-btn, .cta-letter-btn, .cta-game-btn {
     padding: 9px 16px;
     font-size: 0.78rem;
     width: 100%;
     justify-content: center;
+    text-align: center;
   }
   .sig-note {
     font-size: 0.74rem;
@@ -2495,66 +3132,66 @@ html, body {
     font-size: 1.7rem;
   }
 
-  /* Photo Composition & Frames on Mobile */
+  /* Photo Composition & Frames on Mobile - Well proportioned to fill the slide nicely */
   .slide-photos-side {
     width: 100%;
-    height: 220px;
-    margin-top: 4px;
+    height: 255px;
+    margin-top: 6px;
     position: relative;
     overflow: visible;
   }
 
   .photo-frame.polaroid {
-    width: 130px;
-    padding: 5px 5px 10px 5px;
-    border-radius: 8px;
+    width: 142px;
+    padding: 6px 6px 12px 6px;
+    border-radius: 9px;
   }
   .photo-frame.polaroid .photo-img-wrap {
-    height: 110px;
-    border-radius: 5px;
+    height: 120px;
+    border-radius: 6px;
   }
   .photo-caption {
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     margin-top: 4px;
   }
 
   .photo-frame.hero-polaroid {
     width: 155px;
     padding: 6px 6px 12px 6px;
-    border-radius: 8px;
+    border-radius: 9px;
   }
   .photo-frame.hero-polaroid .photo-img-wrap {
     height: 130px;
   }
 
   .photo-frame.film-strip {
-    width: 125px;
-    padding: 5px;
-    border-radius: 6px;
+    width: 135px;
+    padding: 6px;
+    border-radius: 7px;
   }
   .photo-frame.film-strip img {
-    height: 110px;
+    height: 120px;
   }
   .film-label {
-    font-size: 0.7rem;
-    padding: 3px 0;
+    font-size: 0.72rem;
+    padding: 4px 0;
   }
 
   .photo-frame.hero-polaroid,
   .photo-frame.mini-photo {
-    width: 130px;
-    padding: 5px 5px 10px 5px;
-    border-radius: 8px;
+    width: 142px;
+    padding: 6px 6px 12px 6px;
+    border-radius: 9px;
   }
   .photo-frame.hero-polaroid .photo-img-wrap,
   .photo-frame.mini-photo .photo-img-wrap {
-    height: 110px;
-    border-radius: 5px;
+    height: 120px;
+    border-radius: 6px;
   }
 
   .floating-sticker {
-    font-size: 0.68rem;
-    padding: 4px 10px;
+    font-size: 0.7rem;
+    padding: 4px 12px;
   }
 
   /* Mobile Focused / Enlarge Photo State */
@@ -2563,7 +3200,7 @@ html, body {
   }
   .motion-photo.photo-focused .photo-frame,
   .motion-photo.photo-focused .photo-frame:hover {
-    transform: scale(1.22) rotate(0deg) !important;
+    transform: scale(1.2) rotate(0deg) !important;
     box-shadow: 0 25px 65px rgba(0, 0, 0, 0.95), 0 0 32px rgba(229, 169, 101, 0.5) !important;
   }
   .photo-composition.has-focused-photo .motion-photo:not(.photo-focused) .photo-frame {
@@ -2585,30 +3222,36 @@ html, body {
     width: 36px;
     height: 36px;
   }
+  .viewport-bottom-garland {
+    height: 38px;
+    background-size: 320px 38px;
+    opacity: 0.45;
+  }
 
   /* Restructured Mobile Resting Coordinates for Photos */
-  .comp-1 .photo-item-1 { top: 8px; left: 6%; transform: rotate(-3.5deg); z-index: 2; }
-  .comp-1 .photo-item-2 { top: 6px; right: 6%; transform: rotate(3.5deg); z-index: 2; }
+  .comp-1 .photo-item-1 { top: 6px; left: 5%; transform: rotate(-3.5deg); z-index: 2; }
+  .comp-1 .photo-item-2 { top: 4px; right: 5%; transform: rotate(3.5deg); z-index: 2; }
   .comp-1 .photo-item-3 { bottom: 8px; left: 50%; transform: translateX(-50%) rotate(-1deg); z-index: 4; }
 
-  .comp-2 .photo-item-2a { top: 8px; left: 6%; transform: rotate(-3deg); z-index: 2; }
-  .comp-2 .photo-item-2b { top: 6px; right: 6%; transform: rotate(3.5deg); z-index: 2; }
+  .comp-2 .photo-item-2a { top: 6px; left: 5%; transform: rotate(-3deg); z-index: 2; }
+  .comp-2 .photo-item-2b { top: 4px; right: 5%; transform: rotate(3.5deg); z-index: 2; }
   .comp-2 .photo-item-2c { bottom: 8px; left: 50%; transform: translateX(-50%) rotate(-1deg); z-index: 4; }
 
-  .comp-3 .photo-item-3a { top: 12px; left: 10%; transform: rotate(-3deg); z-index: 2; }
-  .comp-3 .photo-item-3b { bottom: 12px; right: 10%; transform: rotate(3deg); z-index: 3; }
+  .comp-3 .photo-item-3a { top: 12px; left: 8%; transform: rotate(-3.5deg); z-index: 2; }
+  .comp-3 .photo-item-3b { bottom: 14px; right: 8%; transform: rotate(3.5deg); z-index: 3; }
 
-  .comp-4 .photo-item-4a { top: 8px; left: 6%; transform: rotate(-3.5deg); z-index: 2; }
-  .comp-4 .photo-item-4b { top: 6px; right: 6%; transform: rotate(3.5deg); z-index: 2; }
+  .comp-4 .photo-item-4a { top: 6px; left: 5%; transform: rotate(-3.5deg); z-index: 2; }
+  .comp-4 .photo-item-4b { top: 4px; right: 5%; transform: rotate(3.5deg); z-index: 2; }
   .comp-4 .photo-item-4c { bottom: 8px; left: 50%; transform: translateX(-50%) rotate(1deg); z-index: 4; }
 
-  .comp-5 .photo-item-5a { top: 12px; left: 10%; transform: rotate(-3deg); z-index: 2; }
-  .comp-5 .photo-item-5b { bottom: 12px; right: 10%; transform: rotate(3deg); z-index: 3; }
+  .comp-5 .photo-item-5a { top: 12px; left: 8%; transform: rotate(-3.5deg); z-index: 2; }
+  .comp-5 .photo-item-5b { bottom: 14px; right: 8%; transform: rotate(3.5deg); z-index: 3; }
 
   /* Footer Navigation Bar */
   .experience-footer {
-    padding: 0 10px;
-    height: 52px;
+    padding: 0 12px;
+    height: calc(52px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   .nav-btn {
     padding: 7px 11px;
@@ -2727,5 +3370,102 @@ html, body {
 
   .photo-editor-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Minigame Pavilion Mobile Overrides */
+  .game-modal-container {
+    max-width: 95%;
+    max-height: 88vh;
+    border-radius: 24px;
+  }
+  .game-header {
+    padding: 12px 16px;
+  }
+  .game-header-title {
+    font-size: 0.95rem;
+    gap: 8px;
+  }
+  .game-tabs {
+    padding: 10px 14px;
+    gap: 6px;
+  }
+  .game-tab-btn {
+    padding: 7px 10px;
+    font-size: 0.78rem;
+    gap: 6px;
+  }
+  .game-tab-panel {
+    padding: 14px 14px 18px 14px;
+  }
+  .turn-banner {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .turn-player-card {
+    padding: 6px 10px;
+    gap: 6px;
+    border-radius: 12px;
+  }
+  .player-symbol {
+    font-size: 1.15rem;
+  }
+  .player-name {
+    font-size: 0.8rem;
+  }
+  .player-score {
+    font-size: 1.1rem;
+  }
+  .game-status-line {
+    font-size: 0.78rem;
+    margin-bottom: 8px;
+  }
+  .board-wrapper {
+    max-width: 250px;
+    margin: 4px 0 12px 0;
+  }
+  .tictactoe-board {
+    gap: 8px;
+  }
+  .board-cell {
+    font-size: 1.8rem;
+    border-radius: 14px;
+  }
+  .game-reward-card {
+    padding: 10px 14px;
+    margin-bottom: 10px;
+  }
+  .reward-title {
+    font-size: 1rem;
+  }
+  .reward-box {
+    font-size: 0.8rem;
+    padding: 8px 10px;
+  }
+  .game-action-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+  .lovecard-scene {
+    max-width: 300px;
+    height: 215px;
+    margin: 4px 0 14px 0;
+  }
+  .lovecard-front, .lovecard-back {
+    padding: 16px 18px;
+  }
+  .front-crest {
+    width: 48px;
+    height: 48px;
+  }
+  .front-crest-iv {
+    font-size: 1.25rem;
+  }
+  .front-title {
+    font-size: 1.05rem;
+  }
+  .card-prompt-text {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    min-height: 52px;
   }
 }
