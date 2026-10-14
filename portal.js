@@ -39,9 +39,13 @@
     }
 
     if (flowerGateCurtain) {
+      flowerGateCurtain.style.display = 'block';
       flowerGateCurtain.classList.add('active');
+      flowerGateCurtain.classList.remove('opening');
       requestAnimationFrame(() => {
-        flowerGateCurtain.classList.add('opening');
+        requestAnimationFrame(() => {
+          flowerGateCurtain.classList.add('opening');
+        });
       });
     }
 
@@ -78,13 +82,35 @@
   }
 
   if (openGateBtn) {
-    openGateBtn.addEventListener('click', openGateWithTransition);
+    const handleGateTrigger = (e) => {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      openGateWithTransition();
+    };
+
+    openGateBtn.addEventListener('click', handleGateTrigger);
+    let touchGateHandled = false;
+    openGateBtn.addEventListener('touchend', (e) => {
+      if (!touchGateHandled) {
+        touchGateHandled = true;
+        handleGateTrigger(e);
+        setTimeout(() => { touchGateHandled = false; }, 400);
+      }
+    }, { passive: false });
   }
 
   // Check if previously unlocked in this session
   if (sessionStorage.getItem('anniv_gate_unlocked') === 'true') {
-    if (gateScreen) gateScreen.style.display = 'none';
-    if (flowerGateCurtain) flowerGateCurtain.style.display = 'none';
+    if (gateScreen) {
+      gateScreen.classList.add('hidden');
+      gateScreen.style.display = 'none';
+    }
+    if (flowerGateCurtain) {
+      flowerGateCurtain.classList.remove('active', 'opening');
+      flowerGateCurtain.style.display = 'none';
+    }
     if (portalHubContent) {
       portalHubContent.style.display = 'block';
       portalHubContent.style.opacity = '1';

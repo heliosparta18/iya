@@ -474,29 +474,94 @@
 
       // Trigger resize for responsive calculations
       window.dispatchEvent(new Event('resize'));
+
+      // Re-bind interactive portal elements in new view
+      bindPortalElements();
       return true;
     }
 
-    // Intercept clicks on links that lead to portals
-    document.addEventListener('click', (e) => {
-      const link = e.target.closest('a[data-portal], a[href*=".html"], a[href^="#"]');
-      if (!link) return;
-
+    function extractPortalId(link) {
+      if (!link) return null;
       const portalAttr = link.getAttribute('data-portal');
-      const href = link.getAttribute('href') || '';
+      if (portalAttr) return portalAttr.toLowerCase().trim();
 
-      let targetPortal = portalAttr;
-      if (!targetPortal && href) {
-        if (href.includes('index.html') || href === '#hub') targetPortal = 'hub';
-        else if (href.includes('cerita.html') || href === '#cerita') targetPortal = 'cerita';
-        else if (href.includes('surat.html') || href === '#surat') targetPortal = 'surat';
-        else if (href.includes('game.html') || href === '#game') targetPortal = 'game';
-        else if (href.includes('editor.html') || href === '#editor') targetPortal = 'editor';
+      const href = link.getAttribute('href') || '';
+      if (!href) return null;
+
+      // Extract hash if present (e.g., "index.html#surat", "#cerita")
+      const hashIdx = href.indexOf('#');
+      if (hashIdx !== -1) {
+        const hash = href.substring(hashIdx + 1).toLowerCase().trim();
+        if (hash) {
+          if (hash === 'index') return 'hub';
+          return hash;
+        }
       }
 
+      // Check standalone file paths
+      if (href.includes('cerita.html')) return 'cerita';
+      if (href.includes('surat.html')) return 'surat';
+      if (href.includes('game.html')) return 'game';
+      if (href.includes('editor.html')) return 'editor';
+      if (href.includes('index.html')) return 'hub';
+      return null;
+    }
+
+    function navigateToPortal(portalId, pushState = true) {
+      if (!portalId) return false;
+      portalId = portalId.toLowerCase().replace(/^#/, '').replace(/\.html$/, '');
+      if (portalId === 'index') portalId = 'hub';
+      if (document.getElementById(`view-${portalId}`)) {
+        activatePortal(portalId, pushState);
+        return true;
+      }
+      return false;
+    }
+
+    // Direct touch & click binding on all portal cards, links, and buttons
+    function bindPortalElements() {
+      const portalSelector = 'a[data-portal], a[href*=".html"], a[href^="#"], .grand-portal-card, .portal-destination-card, .bottom-portal-btn, .cta-letter-btn, .cta-game-btn';
+      const items = document.querySelectorAll(portalSelector);
+      items.forEach(el => {
+        el.style.cursor = 'pointer';
+        el.style.touchAction = 'manipulation';
+        if (el._portalBound) return;
+        el._portalBound = true;
+
+        const onTrigger = (e) => {
+          const target = extractPortalId(el);
+          if (target && document.getElementById(`view-${target}`)) {
+            if (e) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+            navigateToPortal(target, true);
+          }
+        };
+
+        el.addEventListener('click', onTrigger);
+
+        let touchFired = false;
+        el.addEventListener('touchend', (e) => {
+          if (!touchFired) {
+            touchFired = true;
+            onTrigger(e);
+            setTimeout(() => { touchFired = false; }, 350);
+          }
+        }, { passive: false });
+      });
+    }
+
+    // Document-level delegation fallback
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[data-portal], a[href*=".html"], a[href^="#"], .grand-portal-card, .portal-destination-card, .bottom-portal-btn, .cta-letter-btn, .cta-game-btn');
+      if (!link) return;
+
+      const targetPortal = extractPortalId(link);
       if (targetPortal && document.getElementById(`view-${targetPortal}`)) {
         e.preventDefault();
-        activatePortal(targetPortal, true);
+        e.stopPropagation();
+        navigateToPortal(targetPortal, true);
       }
     });
 
@@ -513,8 +578,11 @@
       sessionStorage.setItem('anniv_gate_unlocked', 'true');
     }
 
+    bindPortalElements();
+
     if (window.AnnivCore) {
       window.AnnivCore.activatePortal = activatePortal;
+      window.AnnivCore.bindPortalElements = bindPortalElements;
     }
   }
 

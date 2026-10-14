@@ -477,6 +477,9 @@ h1, h2, h3, h4, p {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .portal-destination-card:hover {
@@ -626,6 +629,9 @@ h1, h2, h3, h4, p {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(229, 169, 101, 0.3);
   transition: all 0.25s ease;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .bottom-portal-btn:hover {
